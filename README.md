@@ -27,40 +27,37 @@ TODO
 Installation
 --------------
 
-Rewrite for clerk install
-
 To setup this module, you'll need an Clerk account.
 
   1. Create an [Clerk Account](https://www.clerk.io).
   2. Download the packaged Community Extension from [the magento-connect store](http://www.magentocommerce.com/magento-connect/clerk-search-extension.html)
   3. Install it on your Magento instance.
-  4. Configure your credentials from the **System** > **Configuration** > **Catalog** > **Clerk** administration panel.
+  4. Configure module 
   5. Force the re-indexing of all your products, categories with the **System > Index Management > Clerk Search** index.
   6. Force the re-indexing of all your pages with the **System > Index Management > ClerkSearch Pages** index.
   7. Force the re-indexing of all your suggestions with the **System > Index Management > Clerk Search Suggestions** index.
-
-**Note:** If you experience a 404 issue while accessing
-the *Clerk* administration panel, can follow this
-[procedure](http://www.fanplayr.com/1415/magento-404-error-page-not-found-in-c
-onfiguration/).
 
 Features
 --------
 
 #### Typo-tolerant full-text search
 
-If you choose not to use the instant search. The extension will replace the
-fulltext indexer providing you a typo-tolerant & relevant search experience.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat
+libero id aliquam vehicula. Nunc id tellus semper, vulputate neque at, porta
+quam. Mauris nulla turpis, lacinia quis sem ac, posuere mattis libero. Nunc
+mattis justo sed sagittis accumsan. Cum sociis natoque penatibus et magnis dis
+parturient montes, nascetur ridiculus mus.
 
-If you choose to use the instant search, when you search for something
-fulltext indexer replacement is still used so that you can have a backend
-implementation of the search in order to keep a good SEO
+Vivamus ac sem nec nisi condimentum malesuada quis eu elit. Vivamus in justo
+ligula. Fusce vestibulum nisi id efficitur condimentum. Integer dictum orci
+quam, ac mattis ligula imperdiet a
 
 #### Product recommendation sliders
 
-This extension adds a default implementation of an instant & faceted search
-results page. Just customize the underlying CSS & JavaScript to suits your shop
-theme.
+Cras quis maximus mauris. Fusce euismod lectus at magna rhoncus egestas.
+Mauris nec tellus ante. Donec euismod vitae nisl quis commodo. Sed iaculis
+eget leo eget vulputate. Cras nisl tellus, convallis et sem ut, luctus
+bibendum massa. Proin elit orci, sodales a porta eget, eleifend sed nulla.
 
 Contribute to the Extension
 ------------

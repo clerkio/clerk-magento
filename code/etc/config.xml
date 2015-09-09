@@ -3,7 +3,7 @@
   <modules>
     <Clerk_Clerk>
       <name>Clerk - Search And Recommendations</name>
-      <version>1.2.2</version>
+      <version>1.2.3</version>
     </Clerk_Clerk>
   </modules>
   <global>
