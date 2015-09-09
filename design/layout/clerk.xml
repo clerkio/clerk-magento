@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addItem"><type>skin_css</type><name>clerk/styles.css</name><params/></action>
+		</reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="clerk_livesearch_script" after="-">
+            	<action method="setTemplate" ifconfig="clerk/settings/active">
+				    <template>clerk/livesearch.phtml</template>
+				</action>
+            </block>
+            <block type="core/template" name="clerk_tracking_script" after="-">
+            	<action method="setTemplate" ifconfig="clerk/settings/active">
+				    <template>clerk/tracking.phtml</template>
+				</action>
+            </block>
+            <block type="core/template" name="clerk_power_popup" after="clerk_tracking_script">
+            	<action method="setTemplate" ifconfig="clerk/settings/active">
+				    <template>clerk/powerpopup.phtml</template>
+				</action>
+            </block>
+        </reference>
+	</default>
+	
+	<checkout_onepage_success>
+        <reference name="content">
+            <block type="core/template" name="clerk_sales_tracking_script">
+            	<action method="setTemplate" ifconfig="clerk/settings/active">
+				    <template>clerk/salestracking.phtml</template>
+				</action>
+            </block>
+        </reference>
+    </checkout_onepage_success>
+    
+    <checkout_cart_clerk>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+			<block type="core/template" template="clerk/powerpopup.phtml" />
+        </reference>
+    </checkout_cart_clerk>
+</layout>

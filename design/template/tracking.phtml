@@ -1,0 +1,17 @@
+<script type="text/javascript">
+	window.clerkAsyncInit = function() {
+		Clerk.config({
+			key: '<?php echo Mage::helper('clerk')->getApiKey(); ?>',
+			templateFormatters: {
+				form_key: function () {
+				    return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+				}
+			}
+		});
+	};
+	(function(){
+		var e = document.createElement('script'); e.type='text/javascript'; e.async = true;
+		e.src = document.location.protocol + '//api.clerk.io/static/clerk.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+	})();
+</script>

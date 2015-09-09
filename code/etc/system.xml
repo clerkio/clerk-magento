@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <sections>
+    <clerk translate="label" module="clerk">
+      <label>Clerk</label>
+      <tab>sales</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>1</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <settings translate="label comment">
+          <label>Settings</label>
+          <sort_order>1</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <comment>If you have multiple stores we recommend you to enable Clerk and set keys on the store view instead of default settings.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>0</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <apikey translate="label">
+              <label>Public API key</label>
+              <comment><![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </apikey>
+            <privateapikey translate="label">
+              <label>Private API key</label>
+              <comment><![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
+              <frontend_type>password</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </privateapikey>
+          </fields>
+        </settings>
+        <feeds translate="label comment">
+          <label>Feeds</label>
+          <sort_order>10</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <info>
+              <frontend_model>clerk/adminhtml_system_config_feedLocations</frontend_model>
+              <sort_order>0</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </info>
+            <filename_prefix translate="label">
+              <label>Filename Prefix</label>
+              <comment>Used for making the feeds not guessable</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </filename_prefix>
+            <image_height>
+              <label>Image height for products (pixels)</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </image_height>
+            <image_width>
+              <label>Image width for products (pixels)</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>30</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </image_width>
+            <create_product_data translate="label">
+              <label>Include "Product Data" in feed</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>40</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </create_product_data>
+            <create_category_data translate="label">
+              <label>Include "Category Data" in feed</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>50</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </create_category_data>
+            <create_sales_data translate="label">
+              <label>Include "Sales Data" in feed</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>60</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </create_sales_data>
+            <crontab_schedule translate="label">
+              <label>How often do you want the feeds to be updated?</label>
+              <comment>Use Crontab Format (Eg. "37 3 * * *" for every night at 3:37)</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>70</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </crontab_schedule>
+            <buildfeeds>
+              <label/>
+              <comment>Remember to save settings before building the feeds</comment>
+              <sort_order>80</sort_order>
+              <frontend_model>clerk/adminhtml_system_config_runFeedsAjax</frontend_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </buildfeeds>
+          </fields>
+        </feeds>
+        <search translate="label comment">
+          <label>Search</label>
+          <sort_order>20</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <template translate="label">
+              <label>Clerk Template ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </template>
+            <load_more_text translate="label">
+              <label>Load More Button Text</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>30</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </load_more_text>
+            <no_results_text translate="label">
+              <label>No results text</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>40</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </no_results_text>
+          </fields>
+        </search>
+        <livesearch translate="label comment">
+          <label>Live Search</label>
+          <sort_order>30</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <template translate="label">
+              <label>Clerk Template ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </template>
+          </fields>
+        </livesearch>
+        <productapi translate="label comment">
+          <label>Real-time Data Update</label>
+          <sort_order>40</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <active translate="label comment">
+              <label>Enabled</label>
+              <comment>Keeps your clerk product data in sync on the fly</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+          </fields>
+        </productapi>
+        <powerpopup translate="label comment">
+          <label>Powerstep</label>
+          <sort_order>50</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <active translate="label comment">
+              <label>Enabled</label>
+              <comment/>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <type translate="label">
+              <label>Powerstep Type</label>
+              <sort_order>15</sort_order>
+              <frontend_type>select</frontend_type>
+              <source_model>clerk/adminhtml_system_config_source_powerType</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </type>
+            <template translate="label comment">
+              <label>Clerk Template ID</label>
+              <comment>For multiple templates, separate with comma. eg. popup1,popup2</comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </template>
+          </fields>
+        </powerpopup>
+      </groups>
+    </clerk>
+  </sections>
+</config>
