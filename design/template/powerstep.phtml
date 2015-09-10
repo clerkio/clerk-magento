@@ -1,17 +1,16 @@
-<?php if(Mage::getStoreConfig('clerk/powerpopup/active') && 
-         Mage::getStoreConfig('clerk/powerpopup/type') == 'popup' &&
-         Mage::getSingleton('core/session')->getProductAddedToCartFlag(true)) : ?>
+<?php if(Mage::getStoreConfig('clerk/powerpopup/active') && Mage::getStoreConfig('clerk/powerpopup/type') == 'landingpage') : ?>
 
     <?php $productId = Mage::getSingleton('checkout/session')->getLastAddedProductId(); ?> 
-    <?php $product = Mage::getModel('catalog/product')->load($productId); ?>
+	<?php $product = Mage::getModel('catalog/product')->load($productId); ?>
     <?php $sidebar = $this->getLayout()->createBlock('checkout/cart_sidebar'); ?>
     <?php $totals = $sidebar->getTotalsCache(); ?>
     <?php $quote = Mage::getSingleton('checkout/session')->getQuote(); ?>
     <?php $items = $quote->getAllVisibleItems(); ?>
     
-    <span id="clerk-power-popup">
+    <span id="clerk-powerstep">
+
         <div class="clerk-top-wrapper">
-            
+
             <div class="col6 left">
                 <div class="col12">
                     <div class="alert alert-success">
@@ -36,12 +35,10 @@
                     <?php
                         $url = Mage::getUrl('checkout/cart');
                         $onclick = "setLocation('$url')";
-                        if($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'],"/")){
-                            $onclick = "clerk_close_power_popup();";
-                        }
                     ?>
                     <button type="button" onclick="<?php echo $onclick; ?>" class="button form-button clerk-to-cart"><span><span><?php echo Mage::helper('clerk')->__('View Shopping Cart'); ?></span></span></button>	
                 </div>
+
                 <div class="col12 padding10">
                     <table class="table">
                         <tr>
@@ -60,19 +57,13 @@
                         </tr>
                     </table>
                 </div>
+
                 <div class="col12 padding10">
-                    <div class="col8 left">
-                    <?php if(Mage::getStoreConfig('clerk/powerpopup/type') != 'landingpage') : ?> 
-                        <button type="button" onclick="clerk_close_power_popup();" class="button form-button clerk-continue-shopping"><span><span><?php echo Mage::helper('clerk')->__('Continue Shopping'); ?></span></span></button>
-                    <?php endif; ?>
-                    </div>
+                    <div class="col8 left"> </div>
                     <div class="col4 left">
                     <?php
                         $url = $sidebar->getCheckoutUrl();
                         $onclick = "setLocation('$url')";
-                        if($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'],"/")){
-                            $onclick = "clerk_close_power_popup();";
-                        }
                     ?>
                         <button type="button" onclick="<?php echo $onclick; ?>" class="button form-button clerk-to-checkout"><span><span><?php echo Mage::helper('clerk')->__('To Checkout'); ?></span></span></button>
                     </div>
@@ -88,12 +79,4 @@
             <?php endforeach; ?>
         </div>		
     </span>
-    <script type="text/javascript">
-        function clerk_fire_power_popup() {
-            Clerk.ui.popup('#clerk-power-popup').show();				
-        } 
-        function clerk_close_power_popup() {
-            Clerk.ui.popup('#clerk-power-popup').close();				
-        }
-    </script>
-<?php endif; ?>	
+<?php endif; ?>

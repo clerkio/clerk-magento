@@ -82,7 +82,7 @@
           <clerk_checkout_cart_add_product_complete>
             <type>singleton</type>
             <class>Clerk_Clerk_Model_Observer</class>
-            <method>setProductAdded</method>
+            <method>itemAddedToCard</method>
           </clerk_checkout_cart_add_product_complete>
         </observers>
       </checkout_cart_add_product_complete>

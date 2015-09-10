@@ -28,18 +28,41 @@ class Clerk_Clerk_Model_Observer
 		}
 	}
 
-	public function setProductAdded($observer)
+    /**
+     * The function is run by the observer when a new product is added to the cart
+     */
+	public function itemAddedToCard($observer)
+
 	{
-		if(Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/powerpopup/active')) {
-			$request = $observer->getEvent()->getRequest();
-			if (($request->getActionName() == 'add') && !$request->getParam('in_cart')) {
-				$product = $observer->getEvent()->getProduct();
-				Mage::getModel('core/cookie')->set('clerk_power_popup',$product->getId(),300);
-				if(Mage::getStoreConfig('clerk/powerpopup/type') == 'landingpage') {
-					$request = $observer->getEvent()->getRequest();
-					$request->setParam('return_url',Mage::getBaseUrl().'checkout/cart/clerk');
-				}
-			}
-		}
+        // Early return if module and powerstep is disabled
+        $clerk_is_active = Mage::getStoreConfig('clerk/settings/active');
+        $powerstep_is_active = Mage::getStoreConfig('clerk/powerpopup/active');
+        if (!($clerk_is_active && $powerstep_is_active)){ return; }
+        
+        // Not sure about these options, was in old codebase
+        $request = $observer->getEvent()->getRequest();
+        //$action_is_add = $request->getActionName() == 'add';
+        //$param_is_not_in_cart = !$request->getParam('in_cart');
+        //if (!($action_is_add && $param_is_not_in_cart)) { return; }
+
+        // set cookie clerk_powerstep
+        $product = $observer->getEvent()->getProduct();
+        $type = Mage::getStoreConfig('clerk/powerpopup/type');
+
+        // Signal that a new item was added to card
+        Mage::getSingleton('core/session')->setProductAddedToCartFlag(true);
+
+        // set return url for current action
+        switch ($type) {
+            // If type is custom_cart, we will take the user to the custom cart
+            case 'landingpage':
+                $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
+                break;
+            // If pop up we will stay on the same page 
+            case 'popup':
+                $referer = $request->getHeader('referer');
+                $request->setParam('return_url', $referer);
+                break;
+        }
 	}
 }

@@ -20,16 +20,11 @@
           <template>clerk/tracking.phtml</template>
         </action>
       </block>
-      <!-- TODO: Removeing these few lines fixes the dubplicate powerstep issue
-                 Remove commentbefore release
-                 Talk to JM and SO, Test with jm and so, that this does not break powerstep pop-up
-
       <block type="core/template" name="clerk_power_popup" after="clerk_tracking_script">
         <action method="setTemplate" ifconfig="clerk/settings/active">
           <template>clerk/powerpopup.phtml</template>
         </action>
       </block>
-      -->
     </reference>
   </default>
 
@@ -50,7 +45,7 @@
       </action>
     </reference>
     <reference name="content">
-      <block type="core/template" template="clerk/powerpopup.phtml"/>
+      <block type="core/template" template="clerk/powerstep.phtml"/>
     </reference>
   </checkout_cart_clerk>
 
