@@ -45,7 +45,7 @@
       </action>
     </reference>
     <reference name="content">
-      <block type="core/template" template="clerk/powerstep.phtml"/>
+      <block type="core/template" template="clerk/powerpopup.phtml"/>
     </reference>
   </checkout_cart_clerk>
 

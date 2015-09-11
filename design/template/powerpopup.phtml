@@ -1,6 +1,4 @@
-<?php if(Mage::getStoreConfig('clerk/powerpopup/active') && 
-         Mage::getStoreConfig('clerk/powerpopup/type') == 'popup' &&
-         Mage::getSingleton('core/session')->getProductAddedToCartFlag(true)) : ?>
+<?php if(Mage::getStoreConfig('clerk/powerpopup/active') && Mage::getSingleton('core/session')->getProductAddedToCartFlag(true)) : ?>
 
     <?php $productId = Mage::getSingleton('checkout/session')->getLastAddedProductId(); ?> 
     <?php $product = Mage::getModel('catalog/product')->load($productId); ?>
