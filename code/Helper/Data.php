@@ -124,18 +124,26 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 	    return $data;
 	}
 
-	// EXTRACTS DATA FROM ORDER USED FOR SALES TRACKING
-	public function getSalesData($_order,$feed = false)
+	// Extracts data from order used for sales tracking
+	public function getSalesData($_order, $feed = false)
 	{
 		$items = array();
 		foreach($_order->getAllVisibleItems() as $item) {
 			if($feed) {
 				$object = (int)$item->getProductId();
 			} else {				
+
+                // compute pr item price including taxes and discounts.
+                $total_before_deiscount = $item->getRowTotalInclTax();
+                $total_with_discount = (float)($total_before_deiscount -
+                                               $item->getDiscountAmount());
+                $actual_product_price = (float)($total_with_discount /
+                                                (int)$item->getQtyOrdered());
+
 				$object = new stdClass();
 				$object->id = (int)$item->getProductId();
 				$object->quantity = (int)$item->getQtyOrdered();
-				$object->price = (float)$item->getPriceInclTax();
+				$object->price = $actual_product_price;
 			}
 		    array_push($items,$object);
 		}
