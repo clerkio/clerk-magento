@@ -160,13 +160,23 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 	    return $data;
 	}
 	
-	// GETS THE FEED FILENAME FOR STORE
+    // TODO: remove tmp keyword argument and use build a json streamwriter instead.
 	public function getFileName($store,$tmp = false)
 	{
-		$prefix = Mage::getStoreConfig('clerk/feeds/filename_prefix',$store->getId());
-		$prefix = ($prefix) ? $prefix.'_' : $prefix;
-		
+        $valid_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$key = Mage::getStoreConfig('clerk/settings/privateapikey', $store->getId());
+
+        $prefix = '';
+        foreach (str_split(hash('md5', $key, true)) as $byte){
+            if (strlen($prefix) == 10){
+                $prefix .= '_';
+                break;
+            }
+            $prefix .= substr($valid_chars, (ord($byte) % 62), 1);
+        }
+
 		$filename = ($tmp) ? $prefix."clerk_".$store->getCode()."_tmp.json" : $prefix."clerk_".$store->getCode().".json";
+
 
 		return $filename;
 	}

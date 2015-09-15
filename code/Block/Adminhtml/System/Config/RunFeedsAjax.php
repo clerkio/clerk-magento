@@ -90,26 +90,6 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 			
 		</script>";
     	
-		$html .= '<script type="text/javascript">
-			function makePrefix()
-			{
-			    var text = "";
-			    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-			
-			    for( var i=0; i < 5; i++ )
-			        text += possible.charAt(Math.floor(Math.random() * possible.length));
-			
-			    return text;
-			}
-			
-			if(!$("clerk_feeds_filename_prefix").value) 
-			{ 
-				$("clerk_feeds_filename_prefix").value = makePrefix(); 
-			}
-			$("clerk_feeds_filename_prefix").addClassName("required-entry");
-		</script>';
-    	
-    	
     	$javascript = "buildAllAjaxFeed();";
     	
     	$html .= $this->getLayout()->createBlock('adminhtml/widget_button')
