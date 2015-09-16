@@ -6,7 +6,7 @@
     id="clerk-search"
     class="clerk"
  
-    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/search/template'),"@"); ?>"
+    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/search_template'),"@"); ?>"
     data-target="#clerk-search-results"
     data-after-render="_clerk_after_load_event"
     data-query="<?php echo addslashes($_GET['q']); ?>"> 
@@ -15,9 +15,9 @@
 <div class="category-products">
 	<ul id="clerk-search-results" class="products-grid"></ul>
 </div>
-<p id="clerk-search-no-results" class="note-msg" style="display: none;"><?php echo Mage::getStoreConfig('clerk/search/no_results_text') ?></p>
+<p id="clerk-search-no-results" class="note-msg" style="display: none;"><?php echo Mage::getStoreConfig('clerk/features/search_no_results_text') ?></p>
 
-<button id="clerk-search-load-more-button" class="button" style="display:block;margin:0 auto;"><span><span><?php echo Mage::getStoreConfig('clerk/search/load_more_text') ?></span></span></button>
+<button id="clerk-search-load-more-button" class="button" style="display:block;margin:0 auto;"><span><span><?php echo Mage::getStoreConfig('clerk/features/search_load_more_text') ?></span></span></button>
 
 <script type="text/javascript">
 	(function() { 

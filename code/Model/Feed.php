@@ -3,20 +3,16 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 {
 	public function buildFeeds()
 	{
+        Mage::log('Started');
 		foreach(Mage::app()->getStores() as $store)
 		{
 			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()))
 			{
 				$feedData = array();
-				if(Mage::getStoreConfig('clerk/feeds/create_product_data',$store->getId())) {
-					$feedData['products'] = $this->__getFeedProductData($store->getId());
-				}
-				if(Mage::getStoreConfig('clerk/feeds/create_category_data',$store->getId())) {
-					$feedData['categories'] = $this->__getFeedCategoryData($store->getId());
-				}
-				if(Mage::getStoreConfig('clerk/feeds/create_sales_data',$store->getId())) {
-					$feedData['sales'] = $this->__getFeedSalesData($store->getId());
-				}
+                $feedData['products'] = $this->__getFeedProductData($store->getId());
+                $feedData['categories'] = $this->__getFeedCategoryData($store->getId());
+                // TODO: Do only include sales data as specified in config
+				$feedData['sales'] = $this->__getFeedSalesData($store->getId());
 				
 				$feedData['created'] = (int)time();
 				

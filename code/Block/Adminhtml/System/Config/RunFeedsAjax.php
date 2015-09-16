@@ -98,6 +98,34 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
             ->setType('button')
             ->setClass('scalable')
             ->toHtml();
+
+
+        // set storeid
+        if (strlen($code = Mage::getSingleton('adminhtml/config_data')->getStore())) // store level
+        {
+            $store_id = Mage::getModel('core/store')->load($code)->getId();
+        }
+        elseif (strlen($code = Mage::getSingleton('adminhtml/config_data')->getWebsite())) // website level
+        {
+            $website_id = Mage::getModel('core/website')->load($code)->getId();
+            $store_id = Mage::app()->getWebsite($website_id)->getDefaultStore()->getId();
+        }
+        else // default level
+        {
+            $store_id = 0;
+        }
+
+        // If apikey is not set for store, use disabled button
+        if(!Mage::helper('clerk')->getPrivateApiKey($store_id) || !Mage::getStoreConfig('clerk/settings/active', $store_id)){
+            $html = $this->getLayout()->createBlock('adminhtml/widget_button')
+                ->setLabel(Mage::helper('clerk')->__('Build Feeds'))
+                ->setType('button')
+                ->setClass('scalable')
+                ->setDisabled(true)
+                ->toHtml();
+            return $html;
+        }
+
 				
 		return $html;
 			
@@ -131,11 +159,14 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					continue;
 				}
 			}
+
 			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()))
 			{	
 				$buildFeed = false;
 				$buildFeeds = array();
-				if(Mage::getStoreConfig('clerk/feeds/create_product_data',$store->getId())) 
+
+                // TODO: Fix dummy true, due to old config
+				if(true)
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');
@@ -157,7 +188,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					$buildFeeds['products'] = 0;
 				}
 				
-				if(Mage::getStoreConfig('clerk/feeds/create_category_data',$store->getId())) 
+                // TODO: Fix dummy true
+				if(true)
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');
@@ -174,7 +206,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					$buildFeeds['categories'] = 0;
 				}
 				
-				if(Mage::getStoreConfig('clerk/feeds/create_sales_data',$store->getId())) 
+                // TODO: Fix dummy true, Right now sales will always be in feed
+				if(true || Mage::getStoreConfig('clerk/feeds/create_sales_data',$store->getId())) 
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');

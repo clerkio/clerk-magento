@@ -5,7 +5,7 @@ class Clerk_Clerk_CatalogSearch_ResultController extends Mage_CatalogSearch_Resu
 {
 	public function indexAction()
 	{
-		if(Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/search/active')){
+		if(Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/features/search_active')){
 
 			$query = Mage::helper('catalogsearch')->getQuery();
 			$query->setStoreId(Mage::app()->getStore()->getId());

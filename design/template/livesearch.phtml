@@ -1,7 +1,7 @@
-<?php if(Mage::getStoreConfig('clerk/livesearch/active')) : ?>
+<?php if(Mage::getStoreConfig('clerk/features/livesearch_active')) : ?>
 <span
     class="clerk"
-    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/livesearch/template'),"@"); ?>"
+    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/livesearch_template'),"@"); ?>"
     data-bind-live-search="#search">
 </span>
 <style type="text/css">

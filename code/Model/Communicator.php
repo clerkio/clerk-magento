@@ -9,7 +9,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 	{
 		foreach(Mage::app()->getStores() as $store)
 		{
-			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()) && Mage::getStoreConfig('clerk/productapi/active',$store->getId()))
+			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()) && Mage::getStoreConfig('clerk/datasync/sync_immediately',$store->getId()))
 			{
 				$appEmulation = Mage::getSingleton('core/app_emulation');
 				$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());

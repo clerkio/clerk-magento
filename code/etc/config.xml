@@ -2,8 +2,8 @@
 <config>
   <modules>
     <Clerk_Clerk>
-      <name>Clerk - Search And Recommendations</name>
-      <version>1.2.3</version>
+      <name>Clerk - Clerk</name>
+      <version>1.2.4</version>
     </Clerk_Clerk>
   </modules>
   <global>
@@ -139,7 +139,7 @@
     <jobs>
       <clerk_build_feeds>
         <schedule>
-          <config_path>clerk/feeds/crontab_schedule</config_path>
+          <cron_expr>*/5 * * * *</cron_expr>
         </schedule>
         <run>
           <model>clerk/feed::buildFeeds</model>
@@ -152,30 +152,25 @@
       <settings>
         <active>0</active>
       </settings>
-      <feeds>
+      <datasync>
+        <include_emails>1</include_emails>
+        <include_historical_salesdata>365</include_historical_salesdata>
+        <custom_imagesize>0</custom_imagesize>
         <image_height>210</image_height>
         <image_width>210</image_width>
-        <create_product_data>1</create_product_data>
-        <create_category_data>1</create_category_data>
-        <create_sales_data>1</create_sales_data>
-        <crontab_schedule>37 3 * * *</crontab_schedule>
-      </feeds>
-      <search>
-        <active>0</active>
-        <template>search</template>
-        <load_more_text>Load More Results</load_more_text>
-        <no_results_text>There are no products matching your search. Check spelling and try again.</no_results_text>
-      </search>
-      <livesearch>
-        <active>0</active>
-        <template>live-search</template>
-      </livesearch>
-      <productapi>
-        <active>0</active>
-      </productapi>
-      <powerpopup>
-        <active>0</active>
-      </powerpopup>
+        <sync_immediately>1</sync_immediately>
+        <magentocron>1</magentocron>
+      </datasync>
+      <features>
+        <powerstep_active>0</powerstep_active>
+        <livesearch_active>0</livesearch_active>
+        <search_active>0</search_active>
+        <powerstep_template>powerstep</powerstep_template>
+        <livesearch_template>livesearch</livesearch_template>
+        <search_template>search</search_template>
+        <search_load_more_text>Load More Results</search_load_more_text>
+        <search_no_results_text>There are no products matching your search. Check spelling and try again.</search_no_results_text>
+      </features>
     </clerk>
   </default>
 </config>

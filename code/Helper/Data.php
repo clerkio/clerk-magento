@@ -34,7 +34,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         if(!$storeId){
             $storeId = Mage::app()->getStore()->getId();
         }
-        return trim(Mage::getStoreConfig('clerk/settings/apikey',$storeId));
+        return trim(Mage::getStoreConfig('clerk/settings/publicapikey',$storeId));
     }
     
     public function getPrivateApiKey($storeId = 0)
@@ -77,8 +77,9 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['url'] = (string)$_product->getProductUrl();
         $data['sku'] = (string)$_product->getSku();     
         
-        $imageHeight = (Mage::getStoreConfig('clerk/feeds/image_height')) ? Mage::getStoreConfig('clerk/feeds/image_height') : null;
-        $imageWidth = (Mage::getStoreConfig('clerk/feeds/image_width')) ? Mage::getStoreConfig('clerk/feeds/image_width') : null;
+        // TODO 210 is hardcoded values, not the best, take from default conf
+        $imageHeight = (Mage::getStoreConfig('clerk/datasync/custom_imagesize')) ? Mage::getStoreConfig('clerk/datasync/image_height') : 210;
+        $imageWidth = (Mage::getStoreConfig('clerk/datasync/custom_imagesize')) ? Mage::getStoreConfig('clerk/datasync/image_width') : 210;
         if(!$imageHeight){
             $data['image'] = (string)Mage::helper('catalog/image')->init($_product, 'small_image')->resize($imageWidth);
         }
@@ -180,4 +181,10 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $filename;
     }
+
+    public function getExtensionVersion()
+    {
+        return (string) Mage::getConfig()->getNode()->modules->Clerk_Clerk->version;
+    }
+
 }

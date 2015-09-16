@@ -34,9 +34,9 @@ class Clerk_Clerk_Model_Observer
 	public function itemAddedToCard($observer)
 
 	{
-        // Early return if module and powerstep is disabled
+        // Early return if module or powerstep is disabled
         $clerk_is_active = Mage::getStoreConfig('clerk/settings/active');
-        $powerstep_is_active = Mage::getStoreConfig('clerk/powerpopup/active');
+        $powerstep_is_active = Mage::getStoreConfig('clerk/features/powerstep_active');
         if (!($clerk_is_active && $powerstep_is_active)){ return; }
         
         // Not sure about these options, was in old codebase
@@ -47,10 +47,10 @@ class Clerk_Clerk_Model_Observer
 
         // set cookie clerk_powerstep
         $product = $observer->getEvent()->getProduct();
-        $type = Mage::getStoreConfig('clerk/powerpopup/type');
+        $type = Mage::getStoreConfig('clerk/features/powerstep_type');
 
         // Signal that a new item was added to card
-        Mage::getSingleton('core/session')->setProductAddedToCartFlag(true);
+        Mage::getSingleton('core/session')->setShowClerkPowerstep(true);
 
         // set return url for current action
         switch ($type) {

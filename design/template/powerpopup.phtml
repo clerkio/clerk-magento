@@ -1,22 +1,23 @@
-<?php if(Mage::getStoreConfig('clerk/powerpopup/active') && Mage::getSingleton('core/session')->getProductAddedToCartFlag(true)) : ?>
+<?php if (Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/features/powerstep_active') 
+          && Mage::getSingleton('core/session')->getShowClerkPowerstep(true)) : ?>
 
-    <?php $productId = Mage::getSingleton('checkout/session')->getLastAddedProductId(); ?> 
+    <?php $productId = Mage::getSingleton('checkout/session')->getLastAddedProductId(); ?>
     <?php $product = Mage::getModel('catalog/product')->load($productId); ?>
     <?php $sidebar = $this->getLayout()->createBlock('checkout/cart_sidebar'); ?>
     <?php $totals = $sidebar->getTotalsCache(); ?>
     <?php $quote = Mage::getSingleton('checkout/session')->getQuote(); ?>
     <?php $items = $quote->getAllVisibleItems(); ?>
-    
+
     <span id="clerk-power-popup">
         <div class="clerk-top-wrapper">
-            
+
             <div class="col6 left">
                 <div class="col12">
                     <div class="alert alert-success">
-                        <?php echo Mage::helper('clerk')->__("%s was successfully added to your shopping cart.",$this->helper('catalog/output')->productAttribute($product, $product->getName(), 'name')); ?>
+                        <?php echo Mage::helper('clerk')->__('%s was successfully added to your shopping cart.', $this->helper('catalog/output')->productAttribute($product, $product->getName(), 'name')); ?>
                     </div>
                 </div>
-                
+
                 <div class="col12">
                     <div class="col4 left clerk-product-image">
                         <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(100); ?>" width="100" height="100" alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
@@ -28,39 +29,39 @@
                 </div>
                 <div class="clerk-clearer"></div>
             </div>
-            
+
             <div class="col6 left">
                 <div class="col12 padding10-top">
                     <?php
                         $url = Mage::getUrl('checkout/cart');
                         $onclick = "setLocation('$url')";
-                        if($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'],"/")){
-                            $onclick = "clerk_close_power_popup();";
+                        if ($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'], '/')) {
+                            $onclick = 'clerk_close_power_popup();';
                         }
                     ?>
-                    <button type="button" onclick="<?php echo $onclick; ?>" class="button form-button clerk-to-cart"><span><span><?php echo Mage::helper('clerk')->__('View Shopping Cart'); ?></span></span></button>	
+                    <button type="button" onclick="<?php echo $onclick; ?>" class="button form-button clerk-to-cart"><span><span><?php echo Mage::helper('clerk')->__('View Shopping Cart'); ?></span></span></button>
                 </div>
                 <div class="col12 padding10">
                     <table class="table">
                         <tr>
-                            <td class="clerk-text"><?php echo Mage::helper('clerk')->__("%s products in your shopping cart",count($items)); ?></td>
-                            <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['subtotal']->getValue(),true,false); ?></td>
+                            <td class="clerk-text"><?php echo Mage::helper('clerk')->__('%s products in your shopping cart', count($items)); ?></td>
+                            <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['subtotal']->getValue(), true, false); ?></td>
                         </tr>
-                        <?php if(isset($totals['shipping'])) : ?>
+                        <?php if (isset($totals['shipping'])) : ?>
                             <tr class="clerk-shipping">
-                                <td class="clerk-text"><?php echo Mage::helper('clerk')->__("Shipping"); ?></td>
-                                <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['shipping']->getValue(),true,false); ?></td>
+                                <td class="clerk-text"><?php echo Mage::helper('clerk')->__('Shipping'); ?></td>
+                                <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['shipping']->getValue(), true, false); ?></td>
                             </tr>
                         <?php endif; ?>
                         <tr class="clerk-total">
-                            <td class="clerk-text"><?php echo Mage::helper('clerk')->__("Total"); ?></td>
-                            <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['grand_total']->getValue(),true,false); ?></td>
+                            <td class="clerk-text"><?php echo Mage::helper('clerk')->__('Total'); ?></td>
+                            <td class="clerk-price"><?php echo Mage::helper('core')->currency($totals['grand_total']->getValue(), true, false); ?></td>
                         </tr>
                     </table>
                 </div>
                 <div class="col12 padding10">
                     <div class="col8 left">
-                    <?php if(Mage::getStoreConfig('clerk/powerpopup/type') != 'landingpage') : ?> 
+                    <?php if (Mage::getStoreConfig('clerk/features/powerstep_type') != 'landingpage') : ?>
                         <button type="button" onclick="clerk_close_power_popup();" class="button form-button clerk-continue-shopping"><span><span><?php echo Mage::helper('clerk')->__('Continue Shopping'); ?></span></span></button>
                     <?php endif; ?>
                     </div>
@@ -68,8 +69,8 @@
                     <?php
                         $url = $sidebar->getCheckoutUrl();
                         $onclick = "setLocation('$url')";
-                        if($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'],"/")){
-                            $onclick = "clerk_close_power_popup();";
+                        if ($url == Mage::getBaseUrl().ltrim($_SERVER['REQUEST_URI'], '/')) {
+                            $onclick = 'clerk_close_power_popup();';
                         }
                     ?>
                         <button type="button" onclick="<?php echo $onclick; ?>" class="button form-button clerk-to-checkout"><span><span><?php echo Mage::helper('clerk')->__('To Checkout'); ?></span></span></button>
@@ -79,19 +80,19 @@
         </div>
         <div class="clerk-clearer"></div>
         <div class="clerk-results">
-            <?php $templates = Mage::getStoreConfig('clerk/powerpopup/template'); ?>
-            <?php $templates = explode(",",$templates); ?>
-            <?php foreach($templates as $key => $template) : ?>
-                <span class="clerk" data-template="@<?php echo trim($template); ?>" data-products="[<?php echo $product->getId(); ?>]" <?php if(!$key && Mage::getStoreConfig('clerk/powerpopup/type') == 'popup') : ?>data-after-render="clerk_fire_power_popup"<?php endif; ?>></span>
+            <?php $templates = Mage::getStoreConfig('clerk/features/powerstep_template'); ?>
+            <?php $templates = explode(',', $templates); ?>
+            <?php foreach ($templates as $key => $template) : ?>
+                <span class="clerk" data-template="@<?php echo trim($template); ?>" data-products="[<?php echo $product->getId(); ?>]" <?php if (!$key && Mage::getStoreConfig('clerk/features/powerstep_type') == 'popup') : ?>data-after-render="clerk_fire_power_popup"<?php endif; ?>></span>
             <?php endforeach; ?>
-        </div>		
+        </div>
     </span>
     <script type="text/javascript">
         function clerk_fire_power_popup() {
-            Clerk.ui.popup('#clerk-power-popup').show();				
-        } 
+            Clerk.ui.popup('#clerk-power-popup').show();
+        }
         function clerk_close_power_popup() {
-            Clerk.ui.popup('#clerk-power-popup').close();				
+            Clerk.ui.popup('#clerk-power-popup').close();
         }
     </script>
-<?php endif; ?>	
+<?php endif; ?>
