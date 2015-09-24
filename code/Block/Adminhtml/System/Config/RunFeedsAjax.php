@@ -206,8 +206,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					$buildFeeds['categories'] = 0;
 				}
 				
-                // TODO: Fix dummy true, Right now sales will always be in feed
-				if(true || Mage::getStoreConfig('clerk/feeds/create_sales_data',$store->getId())) 
+				if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata',$store->getId()) == -1) 
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');

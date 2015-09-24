@@ -10,24 +10,24 @@ class Clerk_Clerk_Model_Adminhtml_System_Config_Source_SalesData
 						'label' => Mage::helper('clerk')->__('No')
 					);
 
-		$power_types[] = array(
-						'value' => 30,
-						'label' => Mage::helper('clerk')->__('1 month')
-					);
+		//$power_types[] = array(
+		//				'value' => 30,
+		//				'label' => Mage::helper('clerk')->__('1 month')
+		//			);
 
-		$power_types[] = array(
-						'value' => 90,
-						'label' => Mage::helper('clerk')->__('3 month')
-					);
+		//$power_types[] = array(
+		//				'value' => 90,
+		//				'label' => Mage::helper('clerk')->__('3 month')
+		//			);
 
-		$power_types[] = array(
-						'value' => 365,
-						'label' => Mage::helper('clerk')->__('1 year')
-					);
+		//$power_types[] = array(
+		//				'value' => 365,
+		//				'label' => Mage::helper('clerk')->__('1 year')
+		//			);
 
 		$power_types[] = array(
 						'value' => -1,
-						'label' => Mage::helper('clerk')->__('all')
+						'label' => Mage::helper('clerk')->__('All')
 					);
 
 		return $power_types;

@@ -5,7 +5,6 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_FeedLocations extends Mage_Admin
     // TODO(brunsgaard): Rewrite function because of code quality
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
-        Mage::log('feedlocation');
         $html = '<div style="padding-bottom: 10px; border-bottom: 1px solid #ccc; margin: 0px 5px 10px;">';
         $html .= '<strong>Insert under Data sync at <a href="http://my.clerk.io" target="blank">my.clerk.io</a></strong><br/>';
         $params = Mage::app()->getRequest()->getParams();

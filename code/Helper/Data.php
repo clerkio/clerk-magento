@@ -54,23 +54,61 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['name'] = (string)$_product->getName();
         $data['description'] = (string)$_product->getDescription();
         $data['short_description'] = (string)$_product->getShortDescription();
-        
-        $data['price'] = (float)$_product->getPrice();  
-        
-        $final_price = $_product->getFinalPrice();
-        $time = Mage::app()->getLocale()->storeTimeStamp(Mage::app()->getStore()->getId());
-        $website_id = Mage::app()->getStore()->getWebsiteId();
-        $customer_group_id = 0;
 
-        $price_after_rule = Mage::getResourceModel('catalogrule/rule')->getRulePrice($time,$website_id,$customer_group_id,$_product->getId());
+        /*
+         * Bundle products with dynamic prices
+         */
+        if($_product->getTypeId() == 'bundle' && $_product->getPriceType() == '0')
+        {
 
-        if( $price_after_rule < $final_price && $price_after_rule != '' ) {
-            $final_price = $price_after_rule;       
-        }
-         
-        if($final_price < $_product->getPrice()) {
-            $data['is_on_sale'] = true;
-            $data['special_price'] = (float)$final_price;    
+            if(Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_PRICE_INCLUDES_TAX))
+            {
+                list($_minimalPrice, $_maximalPrice) = $_product->getPriceModel()->getTotalPrices($_product, null, true, false);
+            } else {
+                list($_minimalPrice, $_maximalPrice) = $_product->getPriceModel()->getTotalPrices($_product, null, null, false);
+            }
+ 
+            $data['price'] = $_minimalPrice;
+ 
+            $currentDate    = Mage::getModel('core/date')->timestamp(time());
+            $specialPrice   = $_product->getSpecialPrice();
+ 
+            $specialPriceFrom   = $_product->getSpecialFrom();
+            $specialpriceTo     = $_product->getSpecialTo();
+            
+            /*
+             * Dynamic discount
+             */
+            if(!empty($specialPrice)
+                && ((empty($specialPriceFrom) || strtotime($specialPriceFrom) >= $currentDate)
+                    && 
+                    (empty($specialpriceTo) || strtotime($specialpriceTo) <= $currentDate + 86400)
+                )
+            )
+            {
+                $oldPrice = round($_minimalPrice/$specialPrice * 100);
+                $data['special_price']  = $_minimalPrice;
+                $data['is_on_sale']     = true;
+                $data['price']          = $oldPrice;
+            }
+        } else {
+            $data['price'] = (float)$_product->getPrice();  
+           
+            $final_price = $_product->getFinalPrice();
+            $time = Mage::app()->getLocale()->storeTimeStamp(Mage::app()->getStore()->getId());
+            $website_id = Mage::app()->getStore()->getWebsiteId();
+            $customer_group_id = 0;        
+
+            $price_after_rule = Mage::getResourceModel('catalogrule/rule')->getRulePrice($time,$website_id,$customer_group_id,$_product->getId());
+
+            if( $price_after_rule < $final_price && $price_after_rule != '' ) {
+                $final_price = $price_after_rule;       
+            }
+            
+            if($final_price < $_product->getPrice()) {
+                $data['is_on_sale'] = true;
+                $data['special_price'] = (float)$final_price;    
+            }
         }
         
         $data['categories'] = array_map('intval', $_product->getCategoryIds());

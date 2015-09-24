@@ -3,16 +3,17 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 {
 	public function buildFeeds()
 	{
-        Mage::log('Started');
+
 		foreach(Mage::app()->getStores() as $store)
 		{
-			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()))
+			if(Mage::getStoreConfig('clerk/settings/active', $store->getId()) && Mage::getStoreConfig('clerk/datasync/magentocron', $store->getId()) )
 			{
 				$feedData = array();
                 $feedData['products'] = $this->__getFeedProductData($store->getId());
                 $feedData['categories'] = $this->__getFeedCategoryData($store->getId());
-                // TODO: Do only include sales data as specified in config
-				$feedData['sales'] = $this->__getFeedSalesData($store->getId());
+                if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata', $store->getId() == -1)){
+                    $feedData['sales'] = $this->__getFeedSalesData($store->getId());
+                }
 				
 				$feedData['created'] = (int)time();
 				
@@ -23,8 +24,6 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 				$file->checkAndCreateFolder($path);
 				$file->open(array('path' => $path));
 				$file->write($filename,json_encode($feedData,JSON_HEX_QUOT));
-				
-					
 				
 				Mage::getModel('clerk/communicator')->startImportOfFeed($store->getId());
 			}

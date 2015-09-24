@@ -139,7 +139,7 @@
     <jobs>
       <clerk_build_feeds>
         <schedule>
-          <cron_expr>*/5 * * * *</cron_expr>
+          <cron_expr>* 4 * * *</cron_expr>
         </schedule>
         <run>
           <model>clerk/feed::buildFeeds</model>
@@ -154,7 +154,7 @@
       </settings>
       <datasync>
         <include_emails>1</include_emails>
-        <include_historical_salesdata>365</include_historical_salesdata>
+        <include_historical_salesdata>-1</include_historical_salesdata>
         <custom_imagesize>0</custom_imagesize>
         <image_height>210</image_height>
         <image_width>210</image_width>
