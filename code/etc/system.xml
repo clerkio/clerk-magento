@@ -82,6 +82,7 @@
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </info>
+            <!--
             <include_emails>
               <label>Include emails</label>
               <comment>Required for clerk.io email and segmentation products</comment>
@@ -92,6 +93,7 @@
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </include_emails>
+            -->
             <include_historical_salesdata>
               <label>Include previous sales in feed</label>
               <comment>
