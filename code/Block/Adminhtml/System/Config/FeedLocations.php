@@ -14,7 +14,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_FeedLocations extends Mage_Admin
             foreach($stores as $store)
             {
                 $filename = Mage::helper('clerk')->getFileName($store);
-                $url = $store->getBaseUrl()."media/clerk/feeds/".$filename;
+                $url = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."media/clerk/feeds/".$filename;
                 if(file_exists(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)) {
                     $html .= '<a href="'.$url.'" target="_black">'.$url.'</a>&nbsp;(Last Modified: '.Mage::getModel('core/date')->date("d-m-Y H:i:s", filemtime(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)).')<br/>';
                 } else {
