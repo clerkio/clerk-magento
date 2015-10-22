@@ -1,5 +1,5 @@
 <?php
-class Clerk_Clerk_Model_Adminhtml_System_Config_Source_SalesData
+class Clerk_Clerk_Model_Adminhtml_System_Config_Source_Salesdata
 {
 	public function toOptionArray() 
 	{
