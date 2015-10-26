@@ -1,17 +1,34 @@
+<?php
+    $baseCurrencyCode = (string)Mage::app()->getBaseCurrencyCode();
+    $allowedCurrencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies(); 
+    $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, array_values($allowedCurrencies));
+    $currentCurrencyCode = (string)Mage::app()->getStore()->getCurrentCurrencyCode();
+    $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
+?>
+
 <script type="text/javascript">
-	window.clerkAsyncInit = function() {
-		Clerk.config({
-			key: '<?php echo Mage::helper('clerk')->getApiKey(); ?>',
-			templateFormatters: {
-				form_key: function () {
-				    return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-				}
-			}
-		});
-	};
-	(function(){
-		var e = document.createElement('script'); e.type='text/javascript'; e.async = true;
-		e.src = document.location.protocol + '//api.clerk.io/static/clerk.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
-	})();
+
+    window.clerkAsyncInit = function() {
+        Clerk.config({
+            key: '<?php echo Mage::helper('clerk')->getApiKey(); ?>',
+            templateFormatters: {
+                form_key: function () {
+                    return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+                },
+                currency_converter: function (price_in_base_currency) {
+                    return {
+                        price: price_in_base_currency * <?php echo $rates[$currentCurrencyCode]?>,
+                        code: '<?php echo $currentCurrencyCode; ?>',
+                        symbol: '<?php echo $currentCurrencySymbol; ?>'
+                    };
+                }
+            }
+        });
+    };
+    (function(){
+        var e = document.createElement('script'); e.type='text/javascript'; e.async = true;
+        e.src = document.location.protocol + '//api.clerk.io/static/clerk.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+    })();
+
 </script>
