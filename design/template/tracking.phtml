@@ -16,11 +16,13 @@
                     return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
                 },
                 currency_converter: function (price_in_base_currency) {
-                    return {
-                        price: price_in_base_currency * <?php echo $rates[$currentCurrencyCode]?>,
-                        code: '<?php echo $currentCurrencyCode; ?>',
-                        symbol: '<?php echo $currentCurrencySymbol; ?>'
-                    };
+                    return price_in_base_currency * <?php echo $rates[$currentCurrencyCode]; ?>
+                },
+                currency_code: function () {
+                    return '<?php echo $currentCurrencyCode; ?>'
+                },
+                currency_symbol: function () {
+                    return '<?php echo $currentCurrencySymbol; ?>'
                 }
             }
         });
