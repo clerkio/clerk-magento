@@ -3,7 +3,7 @@
   <modules>
     <Clerk_Clerk>
       <name>Clerk - Clerk</name>
-      <version>1.2.7</version>
+      <version>1.2.8</version>
     </Clerk_Clerk>
   </modules>
   <global>
@@ -126,13 +126,13 @@
   </frontend>
   <admin>
     <routers>
-      <clerk>
-        <use>admin</use>
+      <adminhtml>
         <args>
-          <module>Clerk_Clerk</module>
-          <frontName>clerk</frontName>
+          <modules>
+            <Clerk_Clerk after="Mage_Adminhtml">Clerk_Clerk_Adminhtml</Clerk_Clerk>
+          </modules>
         </args>
-      </clerk>
+      </adminhtml>
     </routers>
   </admin>
   <crontab>
