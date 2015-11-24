@@ -4,9 +4,9 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeeds extends Mage_Adminhtml_
 	protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
     	$html = '<br/>';
-    	
+
     	$testActionUrl = $this->getUrl('clerk/adminhtml_feeds/run');
-    	
+
     	$javascript = "
     		$(this).up('tr').down('td.label').setStyle({color:'#FF8D00',fontStyle:'italic',fontWeight:'bold'});
     		$(this).up('tr').down('td.label').update('".Mage::helper('clerk')->__('Build Feeds')."');
@@ -33,15 +33,15 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeeds extends Mage_Adminhtml_
     			}
     		});
     	";
-    	
+
     	$html .= $this->getLayout()->createBlock('adminhtml/widget_button')
     		->setLabel(Mage::helper('clerk')->__('Build Feeds'))
             ->setOnClick('javascript: '.$javascript)
             ->setType('button')
             ->setClass('scalable')
             ->toHtml();
-		
+
 		return $html;
-			
+
 	}
 }

@@ -5,11 +5,11 @@
 <span
     id="clerk-search"
     class="clerk"
- 
+
     data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/search_template'),"@"); ?>"
     data-target="#clerk-search-results"
     data-after-render="_clerk_after_load_event"
-    data-query="<?php echo addslashes($_GET['q']); ?>"> 
+    data-query="<?php echo addslashes($_GET['q']); ?>">
 </span>
 
 <div class="category-products">
@@ -20,14 +20,14 @@
 <button id="clerk-search-load-more-button" class="button" style="display:block;margin:0 auto;"><span><span><?php echo Mage::getStoreConfig('clerk/features/search_load_more_text') ?></span></span></button>
 
 <script type="text/javascript">
-	(function() { 
+	(function() {
 
 		function _checkVersion(strVersionA, strVersionB){
 		    var arrVersionA = strVersionA.split('.');
 		    var arrVersionB = strVersionB.split('.');
 		    var intVersionA = (100000000 * parseInt(arrVersionA[0])) + (1000000 * parseInt(arrVersionA[1])) + (10000 * parseInt(arrVersionA[2]));
 		    var intVersionB = (100000000 * parseInt(arrVersionB[0])) + (1000000 * parseInt(arrVersionB[1])) + (10000 * parseInt(arrVersionB[2]));
-		
+
 		    if (intVersionA > intVersionB) {
 		        return 1;
 		    }else if(intVersionA < intVersionB){
@@ -40,7 +40,7 @@
 
 		var _clerk_limit = null;
 		var _clerk_offset = null;
-		
+
 		function _click_load_more_button_event() {
 			if(typeof _$ === 'undefined') {
 				var _$ = (typeof jQuery !== 'undefined' && _checkVersion(jQuery.fn.jquery,'1.4.3')) ? jQuery : Clerk.ui.$;
@@ -52,7 +52,7 @@
 	            Clerk.renderBlocks('#clerk-search');
 	        });
 		}
-	
+
 	    window._clerk_after_load_event = function (data) {
 
 			if(typeof _$ === 'undefined') {
@@ -60,24 +60,24 @@
 			}
 	        // is this the first time
 	        var is_first = _clerk_limit == null && _clerk_offset == null;
-	
+
 	        if(is_first) {
 	            // first response
 				_click_load_more_button_event();
 	            // init limit and offset
 	            _clerk_limit = data.response.result.length;
 	            _clerk_offset = 0;
-	
+
 	            if(data.response.result.length == 0) {
 	                // no results at all
 	                _$('#clerk-search-load-more-button').hide();
 	                _$('#clerk-search-no-results').show();
-	
+
 	            } else if(data.response.result.length == data.response.hits) {
 	                // only one page
 					_$('#clerk-search-load-more-button').hide();
 	            }
-	
+
 	        } else {
 	            // all later responses
 	            if(data.response.result.length < _clerk_limit) {

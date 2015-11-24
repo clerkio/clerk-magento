@@ -38,7 +38,7 @@ class Clerk_Clerk_Model_Observer
         $clerk_is_active = Mage::getStoreConfig('clerk/settings/active');
         $powerstep_is_active = Mage::getStoreConfig('clerk/features/powerstep_active');
         if (!($clerk_is_active && $powerstep_is_active)){ return; }
-        
+
         // Not sure about these options, was in old codebase
         $request = $observer->getEvent()->getRequest();
         //$action_is_add = $request->getActionName() == 'add';
@@ -58,7 +58,7 @@ class Clerk_Clerk_Model_Observer
             case 'landingpage':
                 $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
                 break;
-            // If pop up we will stay on the same page 
+            // If pop up we will stay on the same page
             case 'popup':
                 $referer = $request->getHeader('referer');
                 $request->setParam('return_url', $referer);
