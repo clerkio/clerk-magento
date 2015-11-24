@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 {
     // INCLUDE ONLY SALEABLE PRODUCTS
@@ -6,7 +6,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return true;
     }
-    
+
     // FILTERS ADDED TO THE FEED PRODUCT COLLECTION
     public function getProductCollectionFilters()
     {
@@ -14,7 +14,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             'visibility' => array('neq'=>Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE),
             'status' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED,
         );
-        
+
         return $filters;
     }
 
@@ -25,10 +25,10 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             'status' => array('neq' => 'canceled'),
             'created_at' => array('gt' => date('Y-m-d H:i:s',strtotime(date('Y-m-d').' -1 year'))),
         );
-        
+
         return $filters;
-    }   
-    
+    }
+
     public function getApiKey($storeId = 0)
     {
         if(!$storeId){
@@ -36,7 +36,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return trim(Mage::getStoreConfig('clerk/settings/publicapikey',$storeId));
     }
-    
+
     public function getPrivateApiKey($storeId = 0)
     {
         if(!$storeId){
@@ -44,13 +44,13 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return trim(Mage::getStoreConfig('clerk/settings/privateapikey',$storeId));
     }
-    
+
     // EXPORTS PRODUCT DATA TO FEED
     public function getProductData($_product)
     {
         $data = array();
         $data['id'] = (int)$_product->getId();
-    
+
         $data['name'] = (string)$_product->getName();
         $data['description'] = (string)$_product->getDescription();
         $data['short_description'] = (string)$_product->getShortDescription();
@@ -67,21 +67,21 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             } else {
                 list($_minimalPrice, $_maximalPrice) = $_product->getPriceModel()->getTotalPrices($_product, null, null, false);
             }
- 
+
             $data['price'] = $_minimalPrice;
- 
+
             $currentDate    = Mage::getModel('core/date')->timestamp(time());
             $specialPrice   = $_product->getSpecialPrice();
- 
+
             $specialPriceFrom   = $_product->getSpecialFrom();
             $specialpriceTo     = $_product->getSpecialTo();
-            
+
             /*
              * Dynamic discount
              */
             if(!empty($specialPrice)
                 && ((empty($specialPriceFrom) || strtotime($specialPriceFrom) >= $currentDate)
-                    && 
+                    &&
                     (empty($specialpriceTo) || strtotime($specialpriceTo) <= $currentDate + 86400)
                 )
             )
@@ -92,29 +92,29 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['price']          = $oldPrice;
             }
         } else {
-            $data['price'] = (float)$_product->getPrice();  
-           
+            $data['price'] = (float)$_product->getPrice();
+
             $final_price = $_product->getFinalPrice();
             $time = Mage::app()->getLocale()->storeTimeStamp(Mage::app()->getStore()->getId());
             $website_id = Mage::app()->getStore()->getWebsiteId();
-            $customer_group_id = 0;        
+            $customer_group_id = 0;
 
             $price_after_rule = Mage::getResourceModel('catalogrule/rule')->getRulePrice($time,$website_id,$customer_group_id,$_product->getId());
 
             if( $price_after_rule < $final_price && $price_after_rule != '' ) {
-                $final_price = $price_after_rule;       
+                $final_price = $price_after_rule;
             }
-            
+
             if($final_price < $_product->getPrice()) {
                 $data['is_on_sale'] = true;
-                $data['special_price'] = (float)$final_price;    
+                $data['special_price'] = (float)$final_price;
             }
         }
-        
+
         $data['categories'] = array_map('intval', $_product->getCategoryIds());
         $data['url'] = (string)$_product->getProductUrl();
-        $data['sku'] = (string)$_product->getSku();     
-        
+        $data['sku'] = (string)$_product->getSku();
+
         // TODO 210 is hardcoded values, not the best, take from default conf
         $imageHeight = (Mage::getStoreConfig('clerk/datasync/custom_imagesize')) ? Mage::getStoreConfig('clerk/datasync/image_height') : 210;
         $imageWidth = (Mage::getStoreConfig('clerk/datasync/custom_imagesize')) ? Mage::getStoreConfig('clerk/datasync/image_width') : 210;
@@ -130,14 +130,15 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['meta_keywords'] = (string)$_product->getMetaKeyword();
         $data['meta_description'] = (string)$_product->getMetaDescription();
         $data['meta_title'] = (string)$_product->getMetaTitle();
-        
+
         $now = time();
         $your_date = strtotime($_product->getCreatedAt());
         $datediff = $now - $your_date;
         $data['age'] = (int)floor($datediff/(60*60*24));
-        
+
         // ADD EKSTRA DATA BELOW THIS POINT
-        
+        $data['jacob'] = "hej jacob";
+
         return $data;
     }
 
@@ -147,19 +148,19 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $subcats_array = array();
         $children = Mage::getModel('catalog/category')->getCollection()
                         ->addFieldToFilter("parent_id",array("eq"=>$_category->getId()));
-                
+
         foreach ($children as $child)
         {
             $subcats_array[] = (int)$child->getId();
         }
-    
+
         $data = array();
         $data['id'] = (int)$_category->getId();
         $data['name'] = (string)$_category->getName();
         $data['subcategories'] = array_map('intval',$subcats_array);
-        
+
         // ADD EKSTRA DATA BELOW THIS POINT
-        
+
         return $data;
     }
 
@@ -170,7 +171,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         foreach($_order->getAllVisibleItems() as $item) {
             if($feed) {
                 $object = (int)$item->getProductId();
-            } else {                
+            } else {
 
                 // compute pr item price including taxes and discounts.
                 $total_before_deiscount = $item->getRowTotalInclTax();
@@ -186,19 +187,19 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             }
             array_push($items,$object);
         }
-    
+
         $data = array();
         $data['id'] = (int)$_order->getIncrementId();
         $data['customer'] = (int)$_order->getCustomerId();
         $data['products'] = $items;
         $data['email'] = (string)$_order->getCustomerEmail();
         $data['time'] = (int)strtotime($_order->getCreatedAt());
-    
+
         // ADD EKSTRA DATA BELOW THIS POINT
-    
+
         return $data;
     }
-    
+
     // TODO: remove tmp keyword argument and use build a json streamwriter instead.
     public function getFileName($store,$tmp = false)
     {
@@ -213,7 +214,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             }
             $prefix .= substr($valid_chars, (ord($byte) % 62), 1);
         }
-        
+
         $filename = ($tmp) ? $prefix."clerk_".$store->getCode()."_tmp.json" : $prefix."clerk_".$store->getCode().".json";
 
 
