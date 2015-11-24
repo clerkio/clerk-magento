@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 {
 	public function buildFeeds()
@@ -14,17 +14,17 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
                 if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata', $store->getId() == -1)){
                     $feedData['sales'] = $this->__getFeedSalesData($store->getId());
                 }
-				
+
 				$feedData['created'] = (int)time();
-				
+
 				$filename = Mage::helper('clerk')->getFileName($store);
 				$path = Mage::getBaseDir('media')."/clerk/feeds/";
-				
+
 				$file = new Varien_Io_File();
 				$file->checkAndCreateFolder($path);
 				$file->open(array('path' => $path));
 				$file->write($filename,json_encode($feedData,JSON_HEX_QUOT));
-				
+
 				Mage::getModel('clerk/communicator')->startImportOfFeed($store->getId());
 			}
 		}
@@ -40,14 +40,14 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
 
 			$collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeId);
-			
+
 			$filters = Mage::helper('clerk')->getProductCollectionFilters();
 			foreach($filters as $key => $value){
 				$collection->addFieldToFilter($key,$value);
 			}
-			
+
 			$collection->setPageSize(500);
-			
+
 			while($collection->getCurPage() <= $collection->getLastPageNumber())
 			{
 				foreach($collection as $product)
@@ -62,7 +62,7 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 					}
 					$_product->clearInstance();
 			    }
-	
+
 				if($collection->getCurPage() == $collection->getLastPageNumber()) {
 					break;
 				}
@@ -70,13 +70,13 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 				$collection->clear();
 			}
 
-		$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);	
-		
+		$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
 		return $products;
 	}
-	
-	
-	
+
+
+
 	private function __getFeedCategoryData($storeId)
 	{
 		$categories = array();
@@ -84,9 +84,9 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 
 		$appEmulation = Mage::getSingleton('core/app_emulation');
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
-			
+
 			$collection = Mage::getModel('catalog/category')->getCollection();
-			
+
 			foreach($collection as $category)
 			{
 				$_category = Mage::getModel('catalog/category')->load($category->getId());
@@ -94,36 +94,36 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 				if($data['name']) {
 					$categories[] = $data;
 				}
-				$_category->clearInstance();   
+				$_category->clearInstance();
 			}
-			
-		$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);	
-		
+
+		$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
 		return $categories;
 	}
-	
-	
+
+
 	private function __getFeedSalesData($storeId)
 	{
 		$sales = array();
 		$feedHelper = Mage::helper('clerk');
-		
+
 		$collection = Mage::getModel('sales/order')->getCollection()
 						->addFieldToFilter('store_id',$storeId);
-			
+
 		$filters = Mage::helper('clerk')->getSalesCollectionFilters();
 		foreach($filters as $key => $value){
 			$collection->addFieldToFilter($key,$value);
 		}
-		
+
 		foreach($collection as $order)
 		{
 			$_order = Mage::getModel('sales/order')->load($order->getId());
 			$data = $feedHelper->getSalesData($_order,true);
 			$sales[] = $data;
-			$_order->clearInstance();   
+			$_order->clearInstance();
 		}
-		
-		return $sales;	
+
+		return $sales;
 	}
 }
