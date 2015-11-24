@@ -3,7 +3,7 @@
   <modules>
     <Clerk_Clerk>
       <name>Clerk - Clerk</name>
-      <version>1.2.8</version>
+      <version>1.2.9</version>
     </Clerk_Clerk>
   </modules>
   <global>
@@ -124,15 +124,16 @@
       </checkout>
     </routers>
   </frontend>
+  <!-- TODO: SUPEE-6788 -->
   <admin>
     <routers>
-      <adminhtml>
+      <clerk>
+        <use>admin</use>
         <args>
-          <modules>
-            <Clerk_Clerk after="Mage_Adminhtml">Clerk_Clerk_Adminhtml</Clerk_Clerk>
-          </modules>
+          <module>Clerk_Clerk</module>
+          <frontName>clerk</frontName>
         </args>
-      </adminhtml>
+      </clerk>
     </routers>
   </admin>
   <crontab>

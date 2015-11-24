@@ -144,9 +144,10 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
     // EXPORTS PRODUCT DATA TO FEED
     public function getCategoryData($_category)
     {
+
         $subcats_array = array();
         $children = Mage::getModel('catalog/category')->getCollection()
-                        ->addFieldToFilter("parent_id",array("eq"=>$_category->getId()));
+            ->addFieldToFilter("parent_id", array("eq"=>$_category->getId()));
                 
         foreach ($children as $child)
         {
@@ -157,7 +158,14 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['id'] = (int)$_category->getId();
         $data['name'] = (string)$_category->getName();
         $data['subcategories'] = array_map('intval',$subcats_array);
-        
+
+        $parent_id_index = array_search(
+            $_category->parent_id,
+            $data['subcategories']);
+        if($parent_id_index !== false) {
+            unset($data['subcategories'][$parent_id_index]);
+        }
+
         // ADD EKSTRA DATA BELOW THIS POINT
         
         return $data;
