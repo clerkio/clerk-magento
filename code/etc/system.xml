@@ -230,7 +230,6 @@
             </livesearch_active>
             <livesearch_template>
               <label>- Clerk Template ID</label>
-              <comment>Separate with comma. eg. popup1,popup2</comment>
               <depends>
                 <livesearch_active>1</livesearch_active>
               </depends>
@@ -251,7 +250,6 @@
             </search_active>
             <search_template>
               <label>- Clerk Template ID</label>
-              <comment>Separate with comma. eg. popup1,popup2</comment>
               <depends>
                 <search_active>1</search_active>
               </depends>
