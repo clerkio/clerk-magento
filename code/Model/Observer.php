@@ -1,6 +1,13 @@
 <?php
 class Clerk_Clerk_Model_Observer
 {
+	public function cleanImagecache($observer)
+	{
+		if(Mage::getStoreConfig('clerk/settings/active')){
+            Mage::log('clean image event');
+		}
+	}
+
 	public function updateProduct($observer)
 	{
 		if(Mage::getStoreConfig('clerk/settings/active')){

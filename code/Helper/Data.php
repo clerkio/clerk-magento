@@ -138,14 +138,24 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 
         // ADD EKSTRA DATA BELOW THIS POINT
         $taxClassId = $_product->getTaxClassId();
-        $store = Mage::app()->getStore('default'); # Magento 1.7 and newer versions.
-        //$store = Mage::app()->getRequest()->getParam('store');; for Magento 1.6
+
+        //Magento 1.7 and newer versions.
+        $store = Mage::app()->getStore('default');
+        // for Magento 1.6
+        //$store = Mage::app()->getRequest()->getParam('store');
         $taxCalculation = Mage::getModel('tax/calculation');
         $request = $taxCalculation->getRateRequest(null, null, null, $store);
-        $data['tax_rate'] = $taxCalculation->getRate($request->setProductClassId($taxClassId)); #Shows indivudial product tax rate. If no tax class is set it is 0.
-        $taxPrice =  ($_product->getPrice() / 100 * $taxCalculation->getRate($request->setProductClassId($taxClassId))) + $_product->getPrice(); #Calculates price including individual products tax rate
+        // Shows indivudial product tax rate. If no tax class is set it is 0.
+        $data['tax_rate'] = $taxCalculation->
+            getRate($request->setProductClassId($taxClassId));
+        // Calculates price including individual products tax rate
+        $taxPrice =  ($_product->getPrice() / 100 * $taxCalculation->
+            getRate($request->setProductClassId($taxClassId))) +
+            $_product->getPrice();
         if($_product->getTaxClassId() != 0) {
-          $data['priceTax'] = round($taxPrice,2); # If product has a tax class other than 'none' price including tax is added as an attribute, and rounded to 2 decimals.
+        // If product has a tax class other than 'none' price including tax is
+        // added as an attribute, and rounded to 2 decimals>>.
+            $data['price_tax_incl'] = round($taxPrice, 2);
         }
 
         return $data;
@@ -170,10 +180,12 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['subcategories'] = array_map('intval',$subcats_array);
 
         $parent_id_index = array_search(
-            $_category->parent_id,
-            $data['subcategories']);
+            $_category->parent_id, $data['subcategories']);
+
+        Mage::log($data['subcategories']);
         if($parent_id_index !== false) {
             unset($data['subcategories'][$parent_id_index]);
+            $data['subcategories'] = array_values($data['subcategories']);
         }
 
         // ADD EKSTRA DATA BELOW THIS POINT
