@@ -1,6 +1,6 @@
 <?php
     $baseCurrencyCode = (string)Mage::app()->getBaseCurrencyCode();
-    $allowedCurrencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies(); 
+    $allowedCurrencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies();
     $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, array_values($allowedCurrencies));
     $currentCurrencyCode = (string)Mage::app()->getStore()->getCurrentCurrencyCode();
     $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();

@@ -3,7 +3,7 @@ class Clerk_Clerk_Adminhtml_FeedsController extends Mage_Adminhtml_Controller_Ac
 {
 	public function runAction()
 	{
-		
+
 		$this->getResponse()->setHeader('Content-type', 'text/json; charset=UTF-8');
 		try {
 			if(Mage::getModel('clerk/feed')->buildFeeds())
@@ -19,14 +19,14 @@ class Clerk_Clerk_Adminhtml_FeedsController extends Mage_Adminhtml_Controller_Ac
 	{
 		$params = $this->getRequest()->getParams();
 		$this->getResponse()->setHeader('Content-type', 'text/json; charset=UTF-8');
-		
+
 		if((!isset($params['store_id']) && $params['store_id']) || (!isset($params['type']) && $params['type']) || (!isset($params['page']) && $params['page'])) {
 			$this->getResponse()->setBody(json_encode(array('done' => false,'error' => 'missing params or not valid')));
-		} 
+		}
 		else  {
-			
+
 			try {
-	
+
 				if(Mage::getModel('clerk/feedAjax')->buildFeeds($params['store_id'],$params['type'],$params['page']))
 				{
 					$this->getResponse()->setBody(json_encode(array('done' => true)));

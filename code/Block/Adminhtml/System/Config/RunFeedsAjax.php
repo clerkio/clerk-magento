@@ -4,15 +4,15 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 	protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
     	$html = '';
-    	
+
     	$stores = $this->getFeedsToBuild();
-    	
+
     	$html .= '<script type="text/javascript">';
-		
+
 		$html .= "
 			function buildAllAjaxFeed() {
 				_clerk_stores = ".json_encode($stores).";
-				
+
 				for (_clerk_store_id in _clerk_stores) {
 					for(_clerk_type in _clerk_stores[_clerk_store_id]) {
 						_clerk_pages = _clerk_stores[_clerk_store_id][_clerk_type];
@@ -27,17 +27,17 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 				}
 				buildAjaxFeed(_clerk_stores,_clerk_store_id,_clerk_type,_clerk_pages,1)
 			}
-			
+
 			function buildAjaxFeed(_clerk_stores,_clerk_store_id,_clerk_type,_clerk_pages,page)
 			{
 				if(_clerk_type != 'done') {
-					var html = '<span class=\"storeid\">Store Id: '+_clerk_store_id+'</span><br/><span class=\"type\">'+(_clerk_type.charAt(0).toUpperCase()+_clerk_type.slice(1))+'</span>&nbsp;<span class=\"page\">'+Math.round(((page-1)/_clerk_pages)*100)+'%</span>';					
+					var html = '<span class=\"storeid\">Store Id: '+_clerk_store_id+'</span><br/><span class=\"type\">'+(_clerk_type.charAt(0).toUpperCase()+_clerk_type.slice(1))+'</span>&nbsp;<span class=\"page\">'+Math.round(((page-1)/_clerk_pages)*100)+'%</span>';
 				} else {
 					var html = '<span class=\"storeid\">Store Id: '+_clerk_store_id+'</span><br/><span class=\"type\">'+(_clerk_type.charAt(0).toUpperCase()+_clerk_type.slice(1))+'</span>';
 				}
 
 				if($$('#loading_mask_loader #status').length) {
-					
+
 					$$('#loading_mask_loader #status')[0].innerHTML = html;
 
 				} else {
@@ -47,7 +47,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					status.innerHTML = html;
 					$('loading_mask_loader').appendChild(status);
 				}
-				
+
 				var ajaxUrl = '".$this->getUrl('clerk/adminhtml_feeds/ajax')."';
 				new Ajax.Request(ajaxUrl, {
 					method: 'post',
@@ -57,8 +57,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 		    			if(page < _clerk_pages) {
 			    			page++;
 			    			buildAjaxFeed(_clerk_stores,_clerk_store_id,_clerk_type,_clerk_pages,page);
-		    			} 
-		    			else 
+		    			}
+		    			else
 		    			{
 			    			delete(_clerk_stores[_clerk_store_id][_clerk_type]);
 			    			if(_clerk_type == 'done') {
@@ -79,7 +79,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 								break;
 							}
 							if(_clerk_type) {
-								buildAjaxFeed(_clerk_stores,_clerk_store_id,_clerk_type,_clerk_pages,1);								
+								buildAjaxFeed(_clerk_stores,_clerk_store_id,_clerk_type,_clerk_pages,1);
 							} else {
 								window.location = window.location;
 							}
@@ -87,11 +87,11 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					}
 				});
 			}
-			
+
 		</script>";
-    	
+
     	$javascript = "buildAllAjaxFeed();";
-    	
+
     	$html .= $this->getLayout()->createBlock('adminhtml/widget_button')
     		->setLabel(Mage::helper('clerk')->__('Build Feeds'))
             ->setOnClick('javascript: '.$javascript)
@@ -126,26 +126,26 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
             return $html;
         }
 
-				
+
 		return $html;
-			
+
 	}
-	
+
 	private function getFeedsToBuild()
 	{
 		$storeId = false;
 		$websiteId = false;
-		if($storecode = Mage::app()->getRequest()->getParam('store')) 
+		if($storecode = Mage::app()->getRequest()->getParam('store'))
 		{
-		    $storeCollection = Mage::getModel('core/store')->getCollection()->addFieldToFilter('code', $storecode);        
+		    $storeCollection = Mage::getModel('core/store')->getCollection()->addFieldToFilter('code', $storecode);
 		    $storeId = $storeCollection->getFirstItem()->getStoreId();
-		} 
-		elseif($websitecode = Mage::app()->getRequest()->getParam('website')) 
+		}
+		elseif($websitecode = Mage::app()->getRequest()->getParam('website'))
 		{
 			$websiteCollection = Mage::getModel('core/website')->getCollection()->addFieldToFilter('code', $websitecode);
 			$websiteId = $websiteCollection->getFirstItem()->getWebsiteId();
 		}
-		
+
 		$stores = array();
 
 		foreach(Mage::app()->getStores() as $store)
@@ -161,7 +161,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 			}
 
 			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()))
-			{	
+			{
 				$buildFeed = false;
 				$buildFeeds = array();
 
@@ -171,65 +171,65 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');
 					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
-			
+
 						$collection = Mage::getModel('catalog/product')->getCollection();
-						
+
 						$filters = Mage::helper('clerk')->getProductCollectionFilters();
 						foreach($filters as $key => $value){
 							$collection->addFieldToFilter($key,$value);
 						}
-						
+
 						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
-						
+
 						$buildFeeds['products'] = $collection->getLastPageNumber();
-						
+
 					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
 				} else {
 					$buildFeeds['products'] = 0;
 				}
-				
+
                 // TODO: Fix dummy true
 				if(true)
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');
 					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
-			
+
 						$collection = Mage::getModel('catalog/category')->getCollection();
 						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
-						
+
 						$buildFeeds['categories'] = $collection->getLastPageNumber();
-						
+
 					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
-	
+
 				} else {
 					$buildFeeds['categories'] = 0;
 				}
-				
-				if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata',$store->getId()) == -1) 
+
+				if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata',$store->getId()) == -1)
 				{
 					$buildFeed = true;
 					$appEmulation = Mage::getSingleton('core/app_emulation');
 					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
-		
+
 						$collection = Mage::getModel('sales/order')->getCollection()
 										->addFieldToFilter('store_id',$store->getId());
-				
+
 						$filters = Mage::helper('clerk')->getSalesCollectionFilters();
 						foreach($filters as $key => $value){
 							$collection->addFieldToFilter($key,$value);
 						}
-			
+
 						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
-					
+
 						$buildFeeds['sales'] = $collection->getLastPageNumber();
-						
+
 					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
-	
+
 				} else {
 					$buildFeeds['sales'] = 0;
 				}
-				
+
 				if($buildFeed && !empty($buildFeeds))
 				{
 					$stores[$store->getId()] = $buildFeeds;
@@ -239,6 +239,6 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 
 		return $stores;
 	}
-	
-	
+
+
 }

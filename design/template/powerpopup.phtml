@@ -1,4 +1,4 @@
-<?php if (Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/features/powerstep_active') 
+<?php if (Mage::getStoreConfig('clerk/settings/active') && Mage::getStoreConfig('clerk/features/powerstep_active')
           && Mage::getSingleton('core/session')->getShowClerkPowerstep(true)) : ?>
 
     <?php $productId = Mage::getSingleton('checkout/session')->getLastAddedProductId(); ?>

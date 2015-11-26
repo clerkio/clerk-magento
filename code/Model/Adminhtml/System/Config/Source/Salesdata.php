@@ -1,10 +1,10 @@
 <?php
 class Clerk_Clerk_Model_Adminhtml_System_Config_Source_Salesdata
 {
-	public function toOptionArray() 
+	public function toOptionArray()
 	{
 		$power_types = array();
-		
+
 		$power_types[] = array(
 						'value' => 0,
 						'label' => Mage::helper('clerk')->__('No')

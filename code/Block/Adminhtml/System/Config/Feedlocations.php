@@ -19,7 +19,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_FeedLocations extends Mage_Admin
                     $html .= '<a href="'.$url.'" target="_black">'.$url.'</a>&nbsp;(Last Modified: '.Mage::getModel('core/date')->date("d-m-Y H:i:s", filemtime(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)).')<br/>';
                 } else {
                     $html .= "Feed not build yet: $url<br/>";
-                }   
+                }
             }
         } elseif(isset($params['website']) && !isset($params['store']))
         {
@@ -43,12 +43,12 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_FeedLocations extends Mage_Admin
             $filename = Mage::helper('clerk')->getFileName($store);
             $url = $store->getBaseUrl()."media/clerk/feeds/".$filename;
             if(file_exists(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)) {
-                $html .= '<a href="'.$url.'" target="_black">'.$url.'</a>&nbsp;(Last Modified: '.Mage::getModel('core/date')->date("d-m-Y H:i:s", filemtime(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)).')<br/>';                
+                $html .= '<a href="'.$url.'" target="_black">'.$url.'</a>&nbsp;(Last Modified: '.Mage::getModel('core/date')->date("d-m-Y H:i:s", filemtime(Mage::getBaseDir('base')."/media/clerk/feeds/".$filename)).')<br/>';
             } else {
                 $html .= "Feed not build yet: $url<br/>";
             }
         }
-        
+
         $html .= '</div>';
 
 
@@ -75,10 +75,10 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_FeedLocations extends Mage_Admin
         if(!Mage::helper('clerk')->getPrivateApiKey($store_id) || !Mage::getStoreConfig('clerk/settings/active', $store_id)) {
             return '';
         }
-        
 
-        
+
+
         return $html;
-            
+
     }
 }
