@@ -178,6 +178,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['id'] = (int)$_category->getId();
         $data['name'] = (string)$_category->getName();
         $data['subcategories'] = array_map('intval',$subcats_array);
+        $data['url'] =  $_category->getUrl();
 
         $parent_id_index = array_search(
             $_category->parent_id, $data['subcategories']);
