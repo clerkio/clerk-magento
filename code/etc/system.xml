@@ -229,7 +229,7 @@
               <show_in_store>1</show_in_store>
             </livesearch_active>
             <livesearch_template>
-              <label>- Clerk Template ID</label>
+              <label>- Live Search Clerk Template ID</label>
               <depends>
                 <livesearch_active>1</livesearch_active>
               </depends>
@@ -239,6 +239,18 @@
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </livesearch_template>
+            <livesearch_categories>
+              <label>- Live Search Show Categories</label>
+              <depends>
+                <livesearch_active>1</livesearch_active>
+              </depends>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>31</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </livesearch_categories>
             <search_active>
               <label>Search Enabled</label>
               <frontend_type>select</frontend_type>

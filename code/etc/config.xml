@@ -3,7 +3,7 @@
   <modules>
     <Clerk_Clerk>
       <name>Clerk - Clerk</name>
-      <version>1.2.12</version>
+      <version>1.2.13</version>
     </Clerk_Clerk>
   </modules>
   <global>
@@ -177,6 +177,7 @@
         <search_active>0</search_active>
         <powerstep_template>powerstep</powerstep_template>
         <livesearch_template>livesearch</livesearch_template>
+        <livesearch_categories>livesearch</livesearch_categories>
         <search_template>search</search_template>
         <search_load_more_text>Load More Results</search_load_more_text>
         <search_no_results_text>There are no products matching your search. Check spelling and try again.</search_no_results_text>
