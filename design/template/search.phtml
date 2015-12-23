@@ -9,7 +9,7 @@
     data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/search_template'),"@"); ?>"
     data-target="#clerk-search-results"
     data-after-render="_clerk_after_load_event"
-    data-query="<?php echo addslashes($_GET['q']); ?>">
+    data-query="<?php echo htmlentities($_GET['q']); ?>">
 </span>
 
 <div class="category-products">
