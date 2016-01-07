@@ -133,18 +133,17 @@
       </checkout>
     </routers>
   </frontend>
-  <!-- TODO: SUPEE-6788 -->
   <admin>
     <routers>
-      <clerk>
-        <use>admin</use>
+      <adminhtml>
         <args>
-          <module>Clerk_Clerk</module>
-          <frontName>clerk</frontName>
+          <modules>
+            <clerk before="Mage_Adminhtml">Clerk_Clerk_Adminhtml</clerk>
+          </modules>
         </args>
-      </clerk>
+      </adminhtml>
     </routers>
-  </admin>
+</admin>
   <crontab>
     <jobs>
       <clerk_build_feeds>
