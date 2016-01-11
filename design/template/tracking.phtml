@@ -4,7 +4,7 @@
     $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, array_values($allowedCurrencies));
     $currentCurrencyCode = (string)Mage::app()->getStore()->getCurrentCurrencyCode();
     $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
-    // TODO: <?php echo $rates[$currentCurrencyCode]; ?>
+    // TODO: <?php echo $rates[$currentCurrencyCode];
 ?>
 
 <script type="text/javascript">
