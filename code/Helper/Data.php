@@ -93,6 +93,8 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             }
         } else {
             $data['price'] = (float)$_product->getPrice();
+            // Send is on sale as false, if there is no special price. 
+            $data['is_on_sale'] = false;
 
             $final_price = $_product->getFinalPrice();
             $time = Mage::app()->getLocale()->storeTimeStamp(Mage::app()->getStore()->getId());
