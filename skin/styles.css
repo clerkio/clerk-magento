@@ -3,6 +3,7 @@ GENERAL
 --------------------------------------------------------- */
 #clerk-power-popup{
 	max-width: 785px;
+	width: 100%;
 	margin: 30px auto;
 }
 #clerk-power-popup .clerk-top-wrapper {
@@ -125,3 +126,7 @@ RESULTS
 	clear: both;
 	text-align: center;
 }
+@media (max-width: 767px){
+.col6{
+width: 100% !important;
+display: inline-block;
