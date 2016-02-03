@@ -93,7 +93,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             }
         } else {
             $data['price'] = (float)$_product->getPrice();
-            // Send is on sale as false, if there is no special price. 
+            // Send is on sale as false, if there is no special price.
             $data['is_on_sale'] = false;
 
             $final_price = $_product->getFinalPrice();
@@ -139,26 +139,25 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $data['age'] = (int)floor($datediff/(60*60*24));
 
         // ADD EKSTRA DATA BELOW THIS POINT
-//        $taxClassId = $_product->getTaxClassId();
-//
-        ////Magento 1.7 and newer versions.
-        //$store = Mage::app()->getStore('default');
-        //// for Magento 1.6
-        ////$store = Mage::app()->getRequest()->getParam('store');
-        //$taxCalculation = Mage::getModel('tax/calculation');
-        //$request = $taxCalculation->getRateRequest(null, null, null, $store);
-        //// Shows indivudial product tax rate. If no tax class is set it is 0.
-        //$data['tax_rate'] = $taxCalculation->
-        //    getRate($request->setProductClassId($taxClassId));
-        //// Calculates price including individual products tax rate
-        //$taxPrice =  ($_product->getPrice() / 100 * $taxCalculation->
-        //    getRate($request->setProductClassId($taxClassId))) +
-        //    $_product->getPrice();
-        //if($_product->getTaxClassId() != 0) {
-        //// If product has a tax class other than 'none' price including tax is
-        //// added as an attribute, and rounded to 2 decimals>>.
-        //    $data['price_tax_incl'] = round($taxPrice, 2);
-        //}
+
+        //Get price of grouped products
+			  if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_GROUPED){
+				      $_groupedProductChildPrices = array();
+				      $_childProductIds = $_product->getTypeInstance()->getChildrenIds($_product->getId());
+				      // 'Array' is apparently returned as an one element array, with the acutal 'array' inside.
+				      $_childsList = array_values($_childProductIds)[0];
+				      foreach ($_childsList as $_id) {
+					           $_childProduct = Mage::getModel('catalog/product')->load($_id);
+					           $_groupedProductChildPrices[] = $_childProduct['price'];
+					           if ($_childProduct->getTierPrice() != null) {
+						            foreach ($_childProduct as $_tier) {
+							              $_groupedProductChildPrices[] = $_tier['price'];
+						            }
+					           }
+				      }
+				$_minValue = min($_groupedProductChildPrices);
+				$data['price'] = (float)$_minValue;
+        }
 
         return $data;
     }
