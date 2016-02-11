@@ -39,6 +39,10 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 		$appEmulation = Mage::getSingleton('core/app_emulation');
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
 
+			// http://magento.stackexchange.com/questions/25808
+			Mage::getResourceModel('catalog/product_collection')
+				->setStore($storeId);
+
 			$collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeId);
 
 			$filters = Mage::helper('clerk')->getProductCollectionFilters();
@@ -85,7 +89,7 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 		$appEmulation = Mage::getSingleton('core/app_emulation');
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
 
-			$collection = Mage::getModel('catalog/category')->getCollection();
+			$collection = Mage::getModel('catalog/category')->getCollection()->addIsActiveFilter();
 
 			foreach($collection as $category)
 			{

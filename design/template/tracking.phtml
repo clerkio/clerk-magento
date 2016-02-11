@@ -4,6 +4,7 @@
     $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, array_values($allowedCurrencies));
     $currentCurrencyCode = (string)Mage::app()->getStore()->getCurrentCurrencyCode();
     $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
+    // TODO: <?php echo $rates[$currentCurrencyCode];
 ?>
 
 <script type="text/javascript">
@@ -16,7 +17,7 @@
                     return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
                 },
                 currency_converter: function (price_in_base_currency) {
-                    return price_in_base_currency * <?php echo $rates[$currentCurrencyCode]; ?>
+                    return price_in_base_currency * 1
                 },
                 currency_code: function () {
                     return '<?php echo $currentCurrencyCode; ?>'

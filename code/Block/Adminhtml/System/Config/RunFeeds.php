@@ -5,7 +5,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeeds extends Mage_Adminhtml_
     {
     	$html = '<br/>';
 
-    	$testActionUrl = $this->getUrl('clerk/adminhtml_feeds/run');
+    	$testActionUrl = $this->getUrl('adminhtml/feeds/run');
 
     	$javascript = "
     		$(this).up('tr').down('td.label').setStyle({color:'#FF8D00',fontStyle:'italic',fontWeight:'bold'});

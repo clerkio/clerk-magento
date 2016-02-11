@@ -2,6 +2,9 @@
 <span
     class="clerk"
     data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/livesearch_template'),"@"); ?>"
+    data-live-search-categories="<?php echo Mage::getStoreConfig('clerk/features/livesearch_categories')?>"
+    data-live-search-categories-title="<?php echo $this->__('Categories') ?>"
+    data-live-search-products-title="<?php echo $this->__('Products') ?>"
     data-bind-live-search="#search">
 </span>
 <style type="text/css">

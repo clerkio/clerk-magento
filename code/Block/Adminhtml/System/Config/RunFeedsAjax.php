@@ -48,7 +48,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 					$('loading_mask_loader').appendChild(status);
 				}
 
-				var ajaxUrl = '".$this->getUrl('clerk/adminhtml_feeds/ajax')."';
+				var ajaxUrl = '".$this->getUrl('adminhtml/feeds/ajax')."';
 				new Ajax.Request(ajaxUrl, {
 					method: 'post',
 					parameters: {store_id:_clerk_store_id,type:_clerk_type,page:page},

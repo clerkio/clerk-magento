@@ -127,7 +127,7 @@ class Clerk_Clerk_Model_FeedAjax extends Mage_Core_Helper_Abstract
 		$appEmulation = Mage::getSingleton('core/app_emulation');
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
 
-			$collection = Mage::getModel('catalog/category')->getCollection();
+			$collection = Mage::getModel('catalog/category')->getCollection()->addIsActiveFilter();
 
 			$pageSize = $this->getPageSize($collection);
 			$collection->setPageSize($pageSize);
