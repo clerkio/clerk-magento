@@ -107,27 +107,13 @@ class Clerk_Clerk_Model_Feed extends Mage_Core_Helper_Abstract
 	}
 
 
+    /*Sales is only ever needed for first import. 
+    And if needed is always accessible with manual build.
+    To save memory and time in cron job, sales is left out. 
+    */
 	private function __getFeedSalesData($storeId)
 	{
 		$sales = array();
-		$feedHelper = Mage::helper('clerk');
-
-		$collection = Mage::getModel('sales/order')->getCollection()
-						->addFieldToFilter('store_id',$storeId);
-
-		$filters = Mage::helper('clerk')->getSalesCollectionFilters();
-		foreach($filters as $key => $value){
-			$collection->addFieldToFilter($key,$value);
-		}
-
-		foreach($collection as $order)
-		{
-			$_order = Mage::getModel('sales/order')->load($order->getId());
-			$data = $feedHelper->getSalesData($_order,true);
-			$sales[] = $data;
-			$_order->clearInstance();
-		}
-
 		return $sales;
 	}
 }
