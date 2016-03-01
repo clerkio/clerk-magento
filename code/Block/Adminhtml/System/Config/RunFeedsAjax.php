@@ -1,17 +1,18 @@
 <?php
+
 class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminhtml_Block_System_Config_Form_Field
 {
-	protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
-    	$html = '';
+        $html = '';
 
-    	$stores = $this->getFeedsToBuild();
+        $stores = $this->getFeedsToBuild();
 
-    	$html .= '<script type="text/javascript">';
+        $html .= '<script type="text/javascript">';
 
-		$html .= "
+        $html .= '
 			function buildAllAjaxFeed() {
-				_clerk_stores = ".json_encode($stores).";
+				_clerk_stores = '.json_encode($stores).";
 
 				for (_clerk_store_id in _clerk_stores) {
 					for(_clerk_type in _clerk_stores[_clerk_store_id]) {
@@ -90,155 +91,141 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_RunFeedsAjax extends Mage_Adminh
 
 		</script>";
 
-    	$javascript = "buildAllAjaxFeed();";
+        $javascript = 'buildAllAjaxFeed();';
 
-    	$html .= $this->getLayout()->createBlock('adminhtml/widget_button')
-    		->setLabel(Mage::helper('clerk')->__('Build Feeds'))
+        $html .= $this->getLayout()->createBlock('adminhtml/widget_button')
+            ->setLabel(Mage::helper('clerk')->__('Build Feeds'))
             ->setOnClick('javascript: '.$javascript)
             ->setType('button')
             ->setClass('scalable')
             ->toHtml();
 
-
         // set storeid
-        if (strlen($code = Mage::getSingleton('adminhtml/config_data')->getStore())) // store level
-        {
+        if (strlen($code = Mage::getSingleton('adminhtml/config_data')->getStore())) {
+            // store level
+
             $store_id = Mage::getModel('core/store')->load($code)->getId();
-        }
-        elseif (strlen($code = Mage::getSingleton('adminhtml/config_data')->getWebsite())) // website level
-        {
+        } elseif (strlen($code = Mage::getSingleton('adminhtml/config_data')->getWebsite())) {
+            // website level
+
             $website_id = Mage::getModel('core/website')->load($code)->getId();
             $store_id = Mage::app()->getWebsite($website_id)->getDefaultStore()->getId();
-        }
-        else // default level
-        {
+        } else {
+            // default level
+
             $store_id = 0;
         }
 
         // If apikey is not set for store, use disabled button
-        if(!Mage::helper('clerk')->getPrivateApiKey($store_id) || !Mage::getStoreConfig('clerk/settings/active', $store_id)){
+        if (!Mage::helper('clerk')->getPrivateApiKey($store_id) || !Mage::getStoreConfig('clerk/settings/active', $store_id)) {
             $html = $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setLabel(Mage::helper('clerk')->__('Build Feeds'))
                 ->setType('button')
                 ->setClass('scalable')
                 ->setDisabled(true)
                 ->toHtml();
+
             return $html;
         }
 
+        return $html;
+    }
 
-		return $html;
+    private function getFeedsToBuild()
+    {
+        $storeId = false;
+        $websiteId = false;
+        if ($storecode = Mage::app()->getRequest()->getParam('store')) {
+            $storeCollection = Mage::getModel('core/store')->getCollection()->addFieldToFilter('code', $storecode);
+            $storeId = $storeCollection->getFirstItem()->getStoreId();
+        } elseif ($websitecode = Mage::app()->getRequest()->getParam('website')) {
+            $websiteCollection = Mage::getModel('core/website')->getCollection()->addFieldToFilter('code', $websitecode);
+            $websiteId = $websiteCollection->getFirstItem()->getWebsiteId();
+        }
 
-	}
+        $stores = array();
 
-	private function getFeedsToBuild()
-	{
-		$storeId = false;
-		$websiteId = false;
-		if($storecode = Mage::app()->getRequest()->getParam('store'))
-		{
-		    $storeCollection = Mage::getModel('core/store')->getCollection()->addFieldToFilter('code', $storecode);
-		    $storeId = $storeCollection->getFirstItem()->getStoreId();
-		}
-		elseif($websitecode = Mage::app()->getRequest()->getParam('website'))
-		{
-			$websiteCollection = Mage::getModel('core/website')->getCollection()->addFieldToFilter('code', $websitecode);
-			$websiteId = $websiteCollection->getFirstItem()->getWebsiteId();
-		}
+        foreach (Mage::app()->getStores() as $store) {
+            if ($storeId !== false) {
+                if ($store->getId() != $storeId) {
+                    continue;
+                }
+            } elseif ($websiteId !== false) {
+                if ($store->getWebsiteId() != $websiteId) {
+                    continue;
+                }
+            }
 
-		$stores = array();
-
-		foreach(Mage::app()->getStores() as $store)
-		{
-			if($storeId !== false) {
-				if($store->getId() != $storeId) {
-					continue;
-				}
-			} elseif($websiteId !== false) {
-				if($store->getWebsiteId() != $websiteId) {
-					continue;
-				}
-			}
-
-			if(Mage::getStoreConfig('clerk/settings/active',$store->getId()))
-			{
-				$buildFeed = false;
-				$buildFeeds = array();
+            if (Mage::getStoreConfig('clerk/settings/active', $store->getId())) {
+                $buildFeed = false;
+                $buildFeeds = array();
 
                 // TODO: Fix dummy true, due to old config
-				if(true)
-				{
-					$buildFeed = true;
-					$appEmulation = Mage::getSingleton('core/app_emulation');
-					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
+                if (true) {
+                    $buildFeed = true;
+                    $appEmulation = Mage::getSingleton('core/app_emulation');
+                    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
 
-						$collection = Mage::getModel('catalog/product')->getCollection();
+                    $collection = Mage::getModel('catalog/product')->getCollection();
 
-						$filters = Mage::helper('clerk')->getProductCollectionFilters();
-						foreach($filters as $key => $value){
-							$collection->addFieldToFilter($key,$value);
-						}
+                    $filters = Mage::helper('clerk')->getProductCollectionFilters();
+                    foreach ($filters as $key => $value) {
+                        $collection->addFieldToFilter($key, $value);
+                    }
 
-						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
+                    $collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
 
-						$buildFeeds['products'] = $collection->getLastPageNumber();
+                    $buildFeeds['products'] = $collection->getLastPageNumber();
 
-					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
-				} else {
-					$buildFeeds['products'] = 0;
-				}
+                    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+                } else {
+                    $buildFeeds['products'] = 0;
+                }
 
                 // TODO: Fix dummy true
-				if(true)
-				{
-					$buildFeed = true;
-					$appEmulation = Mage::getSingleton('core/app_emulation');
-					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
+                if (true) {
+                    $buildFeed = true;
+                    $appEmulation = Mage::getSingleton('core/app_emulation');
+                    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
 
-						$collection = Mage::getModel('catalog/category')->getCollection();
-						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
+                    $collection = Mage::getModel('catalog/category')->getCollection();
+                    $collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
 
-						$buildFeeds['categories'] = $collection->getLastPageNumber();
+                    $buildFeeds['categories'] = $collection->getLastPageNumber();
 
-					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+                    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+                } else {
+                    $buildFeeds['categories'] = 0;
+                }
 
-				} else {
-					$buildFeeds['categories'] = 0;
-				}
+                if (Mage::getStoreConfig('clerk/datasync/include_historical_salesdata', $store->getId()) == -1) {
+                    $buildFeed = true;
+                    $appEmulation = Mage::getSingleton('core/app_emulation');
+                    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
 
-				if(Mage::getStoreConfig('clerk/datasync/include_historical_salesdata',$store->getId()) == -1)
-				{
-					$buildFeed = true;
-					$appEmulation = Mage::getSingleton('core/app_emulation');
-					$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
+                    $collection = Mage::getModel('sales/order')->getCollection()
+                                        ->addFieldToFilter('store_id', $store->getId());
 
-						$collection = Mage::getModel('sales/order')->getCollection()
-										->addFieldToFilter('store_id',$store->getId());
+                    $filters = Mage::helper('clerk')->getSalesCollectionFilters();
+                    foreach ($filters as $key => $value) {
+                        $collection->addFieldToFilter($key, $value);
+                    }
 
-						$filters = Mage::helper('clerk')->getSalesCollectionFilters();
-						foreach($filters as $key => $value){
-							$collection->addFieldToFilter($key,$value);
-						}
+                    $collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
 
-						$collection->setPageSize(Mage::getModel('clerk/feedAjax')->getPageSize($collection));
+                    $buildFeeds['sales'] = $collection->getLastPageNumber();
 
-						$buildFeeds['sales'] = $collection->getLastPageNumber();
+                    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+                } else {
+                    $buildFeeds['sales'] = 0;
+                }
 
-					$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+                if ($buildFeed && !empty($buildFeeds)) {
+                    $stores[$store->getId()] = $buildFeeds;
+                }
+            }
+        }
 
-				} else {
-					$buildFeeds['sales'] = 0;
-				}
-
-				if($buildFeed && !empty($buildFeeds))
-				{
-					$stores[$store->getId()] = $buildFeeds;
-				}
-			}
-		}
-
-		return $stores;
-	}
-
-
+        return $stores;
+    }
 }

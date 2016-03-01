@@ -1,50 +1,51 @@
 <?php
+
 class Clerk_Clerk_Model_Observer
 {
-	public function cleanImagecache($observer)
-	{
-		if(Mage::getStoreConfig('clerk/settings/active')){
+    public function cleanImagecache($observer)
+    {
+        if (Mage::getStoreConfig('clerk/settings/active')) {
             Mage::log('clean image event');
-		}
-	}
+        }
+    }
 
-	public function updateProduct($observer)
-	{
-		if(Mage::getStoreConfig('clerk/settings/active')){
-			$product = $observer->getEvent()->getProduct();
-			Mage::getModel('clerk/communicator')->updateProductId($product->getId());
-		}
-	}
+    public function updateProduct($observer)
+    {
+        if (Mage::getStoreConfig('clerk/settings/active')) {
+            $product = $observer->getEvent()->getProduct();
+            Mage::getModel('clerk/communicator')->updateProductId($product->getId());
+        }
+    }
 
-	public function updateProductIds($observer)
-	{
-		if(Mage::getStoreConfig('clerk/settings/active')){
-			$productIds = $observer->getEvent()->getProductIds();
-			foreach($productIds as $productId)
-			{
-				Mage::getModel('clerk/communicator')->updateProductId($productId);
-			}
-		}
-	}
+    public function updateProductIds($observer)
+    {
+        if (Mage::getStoreConfig('clerk/settings/active')) {
+            $productIds = $observer->getEvent()->getProductIds();
+            foreach ($productIds as $productId) {
+                Mage::getModel('clerk/communicator')->updateProductId($productId);
+            }
+        }
+    }
 
-	public function updateStockProductIds($observer)
-	{
-		if(Mage::getStoreConfig('clerk/settings/active')){
-			$stock_item = $observer->getEvent()->getItem();
-			Mage::getModel('clerk/communicator')->updateProductId($stock_item->getProductId());
-		}
-	}
+    public function updateStockProductIds($observer)
+    {
+        if (Mage::getStoreConfig('clerk/settings/active')) {
+            $stock_item = $observer->getEvent()->getItem();
+            Mage::getModel('clerk/communicator')->updateProductId($stock_item->getProductId());
+        }
+    }
 
     /**
-     * The function is run by the observer when a new product is added to the cart
+     * The function is run by the observer when a new product is added to the cart.
      */
-	public function itemAddedToCard($observer)
-
-	{
+    public function itemAddedToCard($observer)
+    {
         // Early return if module or powerstep is disabled
         $clerk_is_active = Mage::getStoreConfig('clerk/settings/active');
         $powerstep_is_active = Mage::getStoreConfig('clerk/features/powerstep_active');
-        if (!($clerk_is_active && $powerstep_is_active)){ return; }
+        if (!($clerk_is_active && $powerstep_is_active)) {
+            return;
+        }
 
         // Not sure about these options, was in old codebase
         $request = $observer->getEvent()->getRequest();
@@ -71,5 +72,5 @@ class Clerk_Clerk_Model_Observer
                 $request->setParam('return_url', $referer);
                 break;
         }
-	}
+    }
 }

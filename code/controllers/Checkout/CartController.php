@@ -1,9 +1,10 @@
 <?php
-require_once(Mage::getModuleDir('controllers','Mage_Checkout').DS.'CartController.php');
+
+require_once Mage::getModuleDir('controllers', 'Mage_Checkout').DS.'CartController.php';
 
 class Clerk_Clerk_Checkout_CartController extends Mage_Checkout_CartController
 {
-	public function clerkAction()
+    public function clerkAction()
     {
         $this->loadLayout();
         $this->_initLayoutMessages('catalog/session');
