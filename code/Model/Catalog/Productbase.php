@@ -1,0 +1,190 @@
+<?php
+
+class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
+{
+    public $excludeReason = null;
+
+    /* Returns the age of the product in days */
+    public function getAge()
+    {
+        $your_date = strtotime($this->getCreatedAt());
+        $datediff = time() - $your_date;
+
+        return (int) floor($datediff / (60 * 60 * 24));
+    }
+
+    public function setExcludeReason()
+    {
+        // subclass this method
+    }
+
+    public function isExcluded()
+    {
+        $this->setExcludeReason();
+
+        return isset($this->excludeReason);
+    }
+
+    /* Return True if Specialprice is set and we are in the Specialprice period */
+    public function isSpecialPriceActive()
+    {
+        $currentDate = Mage::getModel('core/date')->timestamp(time());
+        $currentDate = $currentDate - ($currentDate % 86400);
+
+        $specialPrice = $this->getSpecialPrice();
+        $specialPriceFrom = $this->getSpecialFromDate();
+        $specialPriceTo = $this->getSpecialToDate();
+
+        return isset($specialPrice) && (
+                (empty($specialPriceFrom) || strtotime($specialPriceFrom) <= $currentDate) &&
+                (empty($specialPriceTo) || strtotime($specialPriceTo) >= $currentDate)
+            );
+    }
+
+    /* Returns array representation of clerk product */
+    public function getInfo()
+    {
+        return array(
+            'clerk_data' => $this->getClerkExportData(),
+            'exclude' => $this->isExcluded(),
+            'exclude_reason' => $this->excludeReason,
+            'mage_object' => $this->getData(),
+        );
+    }
+
+    /* Function for calculating prices based on Magento settings */
+    public function getClerkPrice($includeDiscounts = false, $includeTax = false)
+    {
+        // Does prices entered in the backend include tax
+        $pricesIncludeTax = Mage::getStoreConfig(
+            Mage_Tax_Model_Config::CONFIG_XML_PATH_PRICE_INCLUDES_TAX);
+
+        // Find a base price. We use getFinalPrice if we want to include
+        // discounts.
+        $price = $this->getPrice();
+        if ($includeDiscounts) {
+            $price = Mage::getModel('catalogrule/rule')
+                ->calcProductPriceRule($this, $this->getFinalPrice());
+            if (!isset($price)) {
+                $price = $this->getFinalPrice();
+            }
+        }
+
+        // Set price based on Magento product type. If product type is
+        // not supported return null. Note that the switch overwrites the
+        // $price variable and may set the taxClassId variable used in tax
+        // calculation
+        switch ($this->getTypeId()) {
+
+            case Mage_Catalog_Model_Product_Type::TYPE_SIMPLE:
+                break;
+
+            case Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE:
+                break;
+
+            case Mage_Catalog_Model_Product_Type::TYPE_GROUPED:
+
+                // Find product with min price and getClerkPrice from that product.
+                $_product = Mage::helper('clerk')->getMinPricedProductFromGroup($this);
+                if (isset($_product)) {
+                    $_product = Mage::getModel('clerk/product')->load($_product->getId());
+
+                    return $_product->getClerkPrice($includeDiscounts, $includeTax);
+                }
+
+            case Mage_Catalog_Model_Product_Type::TYPE_BUNDLE:
+
+                // TODO: How does fixed priced bundels behave?
+
+                // NOTE: Category Rule prices have no effect on bundled
+                // products. Also note that bundles have no taxclass in
+                // Magento, so taxrate is taken from an item in the bundle.
+
+                // price is finalprice, discounts are included.
+                list($price, $_) = $this->getPriceModel()
+                    ->getTotalPrices($this, null, null, false);
+
+                // If discounts should not be included. Go ahead and find retail price.
+                // We should only run the snippet below when SpecialPrice is active
+                // for product. Otherwise our final price is equal to our retail price.
+                if (!$includeDiscounts && $this->isSpecialPriceActive()) {
+                    $price = $price / $this->getSpecialPrice() * 100;
+                }
+
+                // Set taxclass based on first product in bundle
+                $selectionCollection = $this->getTypeInstance(true)->getSelectionsCollection(
+                    $this->getTypeInstance(true)->getOptionsIds($this), $this);
+                $idents = $selectionCollection->getAllIds();
+                if (count($idents) > 0) {
+                    $taxClassId = Mage::getModel('clerk/product')
+                        ->load($idents[0])->getTaxClassId();
+                }
+                break;
+            default:
+                return;
+        }
+
+        // Use price, tax param and magento tax settings to add tax if needed.
+        if ($pricesIncludeTax && !$includeTax) {
+            $price = Mage::helper('tax')->getPrice($this, $price);
+        }
+        if (!$pricesIncludeTax && $includeTax) {
+
+            // this variable might have been set in switch statement
+            if (!isset($taxClassId)) {
+                $taxClassId = $this->getTaxClassId();
+            }
+            $taxCalculation = Mage::getModel('tax/calculation');
+            $request = $taxCalculation->getRateRequest();
+            $taxRate = $taxCalculation->getRate($request->setProductClassId($taxClassId));
+            $price = ($price / 100 * $taxRate) + $price;
+        }
+
+        return (float) $price;
+    }
+
+    public function isOnSale()
+    {
+        return !Mage::helper('clerk')->floatEq(
+            $this->getClerkRetailPrice(),
+            $this->getClerkFinalPrice()
+        );
+    }
+
+    public function getClerkFinalPrice()
+    {
+        return $this->getClerkPrice(true, false);
+    }
+
+    public function getClerkFinalPriceInclTax()
+    {
+        return $this->getClerkPrice(true, true);
+    }
+
+    public function getClerkRetailPrice()
+    {
+        return $this->getClerkPrice(false, false);
+    }
+
+    public function getClerkRetailPriceInclTax()
+    {
+        return $this->getClerkPrice(false, true);
+    }
+
+    public function getClerkImageUrl()
+    {
+        return (string) Mage::helper('catalog/image')
+            ->init($this, 'small_image')
+            ->resize($this->imageHeight, $this->imageWidth);
+    }
+
+    public function getManufacturer()
+    {
+        return Mage::helper('clerk')->getAttributeSafe($this, 'manufacturer');
+    }
+
+    public function hasTierPrice()
+    {
+        return count($this->getTierPrice()) > 0;
+    }
+}

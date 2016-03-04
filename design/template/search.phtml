@@ -1,91 +1,61 @@
 <div class="page-title">
-    <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Search results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+  <h1><?php echo $this->titleText ?></h1>
 </div>
 
 <span
     id="clerk-search"
     class="clerk"
-
-    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/search_template'),"@"); ?>"
+    data-template="@<?php echo $this->template ?>"
+    data-offset="0"
     data-target="#clerk-search-results"
     data-after-render="_clerk_after_load_event"
-    data-query="<?php echo htmlentities($_GET['q']); ?>">
+    data-query="<?php echo htmlentities($_GET['q']); ?>"> 
 </span>
-
+ 
 <div class="category-products">
-	<ul id="clerk-search-results" class="products-grid"></ul>
+    <ul id="clerk-search-results" class="products-grid"></ul>
 </div>
-<p id="clerk-search-no-results" class="note-msg" style="display: none;"><?php echo Mage::getStoreConfig('clerk/features/search_no_results_text') ?></p>
 
-<button id="clerk-search-load-more-button" class="button" style="display:block;margin:0 auto;"><span><span><?php echo Mage::getStoreConfig('clerk/features/search_load_more_text') ?></span></span></button>
-
+<div id="clerk-search-no-results" style="display: none;">
+    <p class="note-msg"><?php echo $this->noResultsText ?></p>
+</div>
+ 
+<div id="clerk-search-load-more-button" style="text-align:center; display: none;">
+    <button class="button"><?php echo $this->loadMoreText ?></button>
+</div>
+ 
 <script type="text/javascript">
-	(function() {
+    var total_loaded = 0;
+    function _clerk_after_load_event(data) {
+        total_loaded += data.response.result.length;
 
-		function _checkVersion(strVersionA, strVersionB){
-		    var arrVersionA = strVersionA.split('.');
-		    var arrVersionB = strVersionB.split('.');
-		    var intVersionA = (100000000 * parseInt(arrVersionA[0])) + (1000000 * parseInt(arrVersionA[1])) + (10000 * parseInt(arrVersionA[2]));
-		    var intVersionB = (100000000 * parseInt(arrVersionB[0])) + (1000000 * parseInt(arrVersionB[1])) + (10000 * parseInt(arrVersionB[2]));
+        // Use Clerk jQuery if needed (this is when site version is <= 1.4.3)
+        $_ = useClerkjQuery() ? Clerk.iu.$ : jQuery 
 
-		    if (intVersionA > intVersionB) {
-		        return 1;
-		    }else if(intVersionA < intVersionB){
-		        return -1;
-		    }else{
-		        return 0;
-		    }
-		    return false;
-		}
+        // If limit is undefined set limit to result length
+        var e = $_('#clerk-search');
+        if (typeof e.data('limit') === "undefined"){
+        e.data('limit', data.response.result.length) 
+        }
 
-		var _clerk_limit = null;
-		var _clerk_offset = null;
+        // Setup eventhandler for loadmore button
+        $_('#clerk-search-load-more-button').on('click', function() {
+            e.data('offset', e.data('offset') + e.data('limit'));
+            Clerk.renderBlocks('#clerk-search');
+        });
 
-		function _click_load_more_button_event() {
-			if(typeof _$ === 'undefined') {
-				var _$ = (typeof jQuery !== 'undefined' && _checkVersion(jQuery.fn.jquery,'1.4.3')) ? jQuery : Clerk.ui.$;
-			}
-			_$('#clerk-search-load-more-button').on('click', function() {
-	            // increment offset and load next slice
-	            _clerk_offset += _clerk_limit;
-	            _$('#clerk-search').data('offset', _clerk_offset);
-	            Clerk.renderBlocks('#clerk-search');
-	        });
-		}
+        // If total is 0, show no results
+        if (total_loaded == 0) {
+            $_('#clerk-search-no-results').show();
+        } else {
+            $_('#clerk-search-no-results').hide();
+        }
 
-	    window._clerk_after_load_event = function (data) {
-
-			if(typeof _$ === 'undefined') {
-				var _$ = (typeof jQuery !== 'undefined' && _checkVersion(jQuery.fn.jquery,'1.4.3')) ? jQuery : Clerk.ui.$;
-			}
-	        // is this the first time
-	        var is_first = _clerk_limit == null && _clerk_offset == null;
-
-	        if(is_first) {
-	            // first response
-				_click_load_more_button_event();
-	            // init limit and offset
-	            _clerk_limit = data.response.result.length;
-	            _clerk_offset = 0;
-
-	            if(data.response.result.length == 0) {
-	                // no results at all
-	                _$('#clerk-search-load-more-button').hide();
-	                _$('#clerk-search-no-results').show();
-
-	            } else if(data.response.result.length == data.response.hits) {
-	                // only one page
-					_$('#clerk-search-load-more-button').hide();
-	            }
-
-	        } else {
-	            // all later responses
-	            if(data.response.result.length < _clerk_limit) {
-	                // no more results
-	                _$('#clerk-search-load-more-button').hide();
-	            }
-	        }
-	    }
-    })();
-
+        // Show LoadMore button if totalloadses is not eq to hits
+        if (total_loaded == data.response.hits) {
+            $_('#clerk-search-load-more-button').hide();
+        } else{
+            $_('#clerk-search-load-more-button').show();
+        }
+    }
 </script>

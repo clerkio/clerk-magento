@@ -2,90 +2,40 @@
 <config>
   <modules>
     <Clerk_Clerk>
-      <name>Clerk - Clerk</name>
-      <version>1.2.15</version>
+      <version>0.1.0</version>
     </Clerk_Clerk>
   </modules>
-  <global>
-    <blocks>
+  <frontend>
+    <routers>
       <clerk>
-        <class>Clerk_Clerk_Block</class>
+        <use>standard</use>
+        <args>
+          <module>Clerk_Clerk</module>
+          <frontName>clerk</frontName>
+        </args>
       </clerk>
-    </blocks>
+    </routers>
+  </frontend>
+  <global>
+    <models>
+      <clerk>
+        <class>Clerk_Clerk_Model</class>
+        <rewrite>
+          <product>Clerk_Clerk_Model_Catalog_Product</product>
+        </rewrite>
+      </clerk>
+    </models>
     <helpers>
       <clerk>
         <class>Clerk_Clerk_Helper</class>
       </clerk>
     </helpers>
-    <models>
+    <blocks>
       <clerk>
-        <class>Clerk_Clerk_Model</class>
+        <class>Clerk_Clerk_Block</class>
       </clerk>
-    </models>
+    </blocks>
     <events>
-      <clean_catalog_images_cache_after>
-        <observers>
-          <clerk_clean_catalog_images_cache_after>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>cleanImagecache</method>
-          </clerk_clean_catalog_images_cache_after>
-        </observers>
-      </clean_catalog_images_cache_after>
-      <catalog_product_save_commit_after>
-        <observers>
-          <clerk_catalog_product_save_after>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateProduct</method>
-          </clerk_catalog_product_save_after>
-        </observers>
-      </catalog_product_save_commit_after>
-      <catalog_product_delete_after>
-        <observers>
-          <clerk_catalog_product_delete_after>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateProduct</method>
-          </clerk_catalog_product_delete_after>
-        </observers>
-      </catalog_product_delete_after>
-      <catalog_product_website_update>
-        <observers>
-          <clerk_catalog_product_website_update>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateProductIds</method>
-          </clerk_catalog_product_website_update>
-        </observers>
-      </catalog_product_website_update>
-      <catalog_product_status_update>
-        <observers>
-          <clerk_catalog_product_status_update>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateProductIds</method>
-          </clerk_catalog_product_status_update>
-        </observers>
-      </catalog_product_status_update>
-      <catalog_product_attribute_update_after>
-        <observers>
-          <clerk_catalog_product_attribute_update_after>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateProductIds</method>
-          </clerk_catalog_product_attribute_update_after>
-        </observers>
-      </catalog_product_attribute_update_after>
-      <cataloginventory_stock_item_save_commit_after>
-        <observers>
-          <clerk_cataloginventory_stock_item_save_commit_after>
-            <type>singleton</type>
-            <class>Clerk_Clerk_Model_Observer</class>
-            <method>updateStockProductIds</method>
-          </clerk_cataloginventory_stock_item_save_commit_after>
-        </observers>
-      </cataloginventory_stock_item_save_commit_after>
       <checkout_cart_add_product_complete>
         <observers>
           <clerk_checkout_cart_add_product_complete>
@@ -97,7 +47,7 @@
       </checkout_cart_add_product_complete>
     </events>
   </global>
-  <frontend>
+    <frontend>
     <layout>
       <updates>
         <clerk module="clerk">
@@ -105,7 +55,7 @@
         </clerk>
       </updates>
     </layout>
-    <translate>
+		<translate>
       <modules>
         <Clerk_Clerk>
           <files>
@@ -114,7 +64,7 @@
         </Clerk_Clerk>
       </modules>
     </translate>
-    <routers>
+		<routers>
       <catalogsearch>
         <use>standard</use>
         <args>
@@ -123,7 +73,7 @@
           </modules>
         </args>
       </catalogsearch>
-      <checkout>
+        <checkout>
         <use>standard</use>
         <args>
           <modules>
@@ -133,54 +83,22 @@
       </checkout>
     </routers>
   </frontend>
-  <admin>
-    <routers>
-      <adminhtml>
-        <args>
-          <modules>
-            <clerk before="Mage_Adminhtml">Clerk_Clerk_Adminhtml</clerk>
-          </modules>
-        </args>
-      </adminhtml>
-    </routers>
-</admin>
-  <crontab>
-    <jobs>
-      <clerk_build_feeds>
-        <schedule>
-          <cron_expr>* 4 * * *</cron_expr>
-        </schedule>
-        <run>
-          <model>clerk/feed::buildFeeds</model>
-        </run>
-      </clerk_build_feeds>
-    </jobs>
-  </crontab>
   <default>
     <clerk>
       <settings>
         <active>0</active>
       </settings>
-      <datasync>
-        <include_emails>1</include_emails>
-        <include_historical_salesdata>-1</include_historical_salesdata>
-        <custom_imagesize>0</custom_imagesize>
-        <image_height>210</image_height>
-        <image_width>210</image_width>
-        <sync_immediately>1</sync_immediately>
-        <magentocron>1</magentocron>
-      </datasync>
-      <features>
-        <powerstep_active>0</powerstep_active>
-        <livesearch_active>0</livesearch_active>
-        <search_active>0</search_active>
-        <powerstep_template>powerstep</powerstep_template>
-        <livesearch_template>livesearch</livesearch_template>
-        <livesearch_categories>livesearch</livesearch_categories>
-        <search_template>search</search_template>
-        <search_load_more_text>Load More Results</search_load_more_text>
-        <search_no_results_text>There are no products matching your search. Check spelling and try again.</search_no_results_text>
-      </features>
+      <search>
+        <active>0</active>
+        <template>search</template>
+        <load_more_text>Load more results</load_more_text>
+        <no_results_text>No results found</no_results_text>
+      </search>
+      <livesearch>
+        <active>0</active>
+        <show_categories>0</show_categories>
+        <template>livesearch</template>
+      </livesearch>
     </clerk>
   </default>
 </config>

@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
   libxml2-dev \
   vim \
   git-core \
-  wget
+  wget \
+  phpunit
 RUN systemctl unmask mysql
 RUN docker-php-ext-install soap
 RUN docker-php-ext-install mysqli
@@ -40,7 +41,7 @@ RUN chown -R www-data:www-data /var/www/htdocs
 
 ## database setup
 RUN service mysql start && (echo "CREATE DATABASE magento" | mysql -u root --password=P4ssw0rd) && mysql -u root --password=P4ssw0rd magento < /tmp/magento-sample-data-1.9.1.0/magento_sample_data_for_1.9.1.0.sql && service mysql stop
-RUN service mysql start && MYSQL_HOST=127.0.0.1 MYSQL_USER=root MYSQL_PASSWORD=P4ssw0rd MYSQL_DATABASE=magento MAGENTO_LOCALE=en_GB MAGENTO_TIMEZONE=Europe/Paris MAGENTO_DEFAULT_CURRENCY=USD MAGENTO_URL=http://mymagentostore.com MAGENTO_ADMIN_FIRSTNAME=Admin MAGENTO_ADMIN_LASTNAME=MyStore MAGENTO_ADMIN_EMAIL=amdin@mymagentostore.com MAGENTO_ADMIN_USERNAME=admin MAGENTO_ADMIN_PASSWORD=magentorocks1 /usr/local/bin/install-magento && service mysql stop
+RUN service mysql start && MYSQL_HOST=127.0.0.1 MYSQL_USER=root MYSQL_PASSWORD=P4ssw0rd MYSQL_DATABASE=magento MAGENTO_LOCALE=en_GB MAGENTO_TIMEZONE=Europe/Paris MAGENTO_DEFAULT_CURRENCY=USD MAGENTO_URL=http://clerk.io MAGENTO_ADMIN_FIRSTNAME=Admin MAGENTO_ADMIN_LASTNAME=MyStore MAGENTO_ADMIN_EMAIL=amdin@mymagentostore.com MAGENTO_ADMIN_USERNAME=admin MAGENTO_ADMIN_PASSWORD=magentorocks1 /usr/local/bin/install-magento && service mysql stop
 ## disable cache
 RUN service mysql start && n98-magerun --root-dir=/var/www/htdocs cache:flush && n98-magerun --root-dir=/var/www/htdocs cache:disable && service mysql stop
 ## allow symlinks
@@ -57,6 +58,10 @@ RUN cd /var/www/htdocs && /root/bin/modman init && /root/bin/modman clone https:
 # Setup startup script
 COPY ./bin/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
+
+# Testing script
+COPY ./bin/runtests.sh /usr/local/bin/runtests.sh
+RUN chmod +x /usr/local/bin/runtests.sh
 
 #path admin template to have credentials filled && auto login
 RUN sed -i 's/name="login\[username\]" value=""/name="login[username]" value="admin"/g' /var/www/htdocs/app/design/adminhtml/default/default/template/login.phtml && \

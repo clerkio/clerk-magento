@@ -2,17 +2,15 @@
 <config>
   <acl>
     <resources>
-      <all>
-        <title>Allow Everything</title>
-      </all>
       <admin>
         <children>
           <system>
             <children>
               <config>
                 <children>
-                  <clerk module="clerk">
-                    <title>Clerk - Search And Recommendations</title>
+                  <clerk translate="title" module="clerk">
+                    <title>Configuration Section</title>
+                    <sort_order>100</sort_order>
                   </clerk>
                 </children>
               </config>

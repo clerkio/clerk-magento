@@ -1,29 +1,15 @@
 <?php
-    $baseCurrencyCode = (string)Mage::app()->getBaseCurrencyCode();
-    $allowedCurrencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies();
-    $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, array_values($allowedCurrencies));
-    $currentCurrencyCode = (string)Mage::app()->getStore()->getCurrentCurrencyCode();
-    $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
-    // TODO: <?php echo $rates[$currentCurrencyCode];
+    $publicapikey = Mage::helper('clerk')->getSetting('clerk/settings/publicapikey');
+    $formkey = Mage::getSingleton('core/session')->getFormKey();
 ?>
 
 <script type="text/javascript">
-
     window.clerkAsyncInit = function() {
         Clerk.config({
-            key: '<?php echo Mage::helper('clerk')->getApiKey(); ?>',
+            key: '<?php echo $publicapikey; ?>',
             templateFormatters: {
                 form_key: function () {
-                    return '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-                },
-                currency_converter: function (price_in_base_currency) {
-                    return price_in_base_currency * 1
-                },
-                currency_code: function () {
-                    return '<?php echo $currentCurrencyCode; ?>'
-                },
-                currency_symbol: function () {
-                    return '<?php echo $currentCurrencySymbol; ?>'
+                    return '<?php echo $formkey; ?>';
                 }
             }
         });
@@ -33,5 +19,4 @@
         e.src = document.location.protocol + '//api.clerk.io/static/clerk.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
     })();
-
 </script>

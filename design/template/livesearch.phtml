@@ -1,8 +1,7 @@
-<?php if(Mage::getStoreConfig('clerk/features/livesearch_active')) : ?>
 <span
     class="clerk"
-    data-template="@<?php echo ltrim(Mage::getStoreConfig('clerk/features/livesearch_template'),"@"); ?>"
-    data-live-search-categories="<?php echo Mage::getStoreConfig('clerk/features/livesearch_categories')?>"
+    data-template="@<?php echo ltrim(Mage::helper('clerk')->getSetting('clerk/livesearch/template'),"@") ?>"
+    data-live-search-categories="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/show_categories') ?>"
     data-live-search-categories-title="<?php echo $this->__('Categories') ?>"
     data-live-search-products-title="<?php echo $this->__('Products') ?>"
     data-bind-live-search="#search">
@@ -10,4 +9,3 @@
 <style type="text/css">
 	#search_autocomplete { display: none !important; }
 </style>
-<?php endif; ?>
