@@ -190,7 +190,7 @@
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
 
-            <template translate="label">
+            <templates translate="label">
               <label>Templates: </label>
               <depends>
                 <active>1</active>
@@ -201,7 +201,7 @@
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
-            </template>
+            </templates>
           </fields>
         </powerstep>
 

@@ -86,7 +86,7 @@ ADD SUCCESS
 }
 
 .padding10-top {
-    padding: 0px 10px 10px 10px;
+    padding: 10px 0 0 0;
 }
 /*
 CART OVERVIEW
@@ -113,7 +113,7 @@ CART OVERVIEW
 }
 
 #clerk-power-popup .clerk-top-wrapper .clerk-to-cart {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
 }
 
