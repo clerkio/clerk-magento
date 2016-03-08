@@ -7,8 +7,8 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
     /* Returns the age of the product in days */
     public function getAge()
     {
-        $your_date = strtotime($this->getCreatedAt());
-        $datediff = time() - $your_date;
+        $createdTime = strtotime($this->getCreatedAt());
+        $datediff = time() - $createdTime;
 
         return (int) floor($datediff / (60 * 60 * 24));
     }
@@ -173,9 +173,15 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
 
     public function getClerkImageUrl()
     {
-        return (string) Mage::helper('catalog/image')
-            ->init($this, 'small_image')
-            ->resize($this->imageHeight, $this->imageWidth);
+        try {
+            return (string) Mage::helper('catalog/image')
+                ->init($this, 'small_image')
+                ->resize($this->imageHeight, $this->imageWidth);
+        } catch (Exception $e) {
+            return (string) Mage::getDesign()
+                ->getSkinUrl('images/catalog/product/placeholder/image.jpg',
+                    array('_area' => 'frontend'));
+        }
     }
 
     public function getManufacturer()

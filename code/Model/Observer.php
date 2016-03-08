@@ -7,10 +7,25 @@ class Clerk_Clerk_Model_Observer
      */
     public function itemAddedToCard($observer)
     {
-        Mage::getSingleton('core/session')->setFirePowerPopup(true);
         $request = $observer->getEvent()->getRequest();
-        //$referer = $request->getHeader('referer');
-        //$request->setParam('return_url', $referer);
-        $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
+        if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
+            $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
+        } else {
+            $referer = $request->getHeader('referer');
+            $request->setParam('return_url', $referer);
+            Mage::getSingleton('core/session')->setFirePowerPopup(true);
+        }
+    }
+
+    public function deleteProduct($observer)
+    {
+        $productId = $observer->getEvent()->getProduct()->getId();
+        Mage::getModel('clerk/communicator')->deleteProductId($productId);
+    }
+
+    public function saveProduct($observer)
+    {
+        $productId = $observer->getEvent()->getProduct()->getId();
+        Mage::getModel('clerk/communicator')->saveProductId($productId);
     }
 }

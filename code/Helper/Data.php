@@ -66,7 +66,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
     /* Returns the setting if extension is active otherwise null */
     public function getSetting($path, $store = null)
     {
-        if (!Mage::getStoreConfig('clerk/settings/active')) {
+        if (!Mage::getStoreConfig('clerk/settings/active', $store)) {
             return;
         }
 

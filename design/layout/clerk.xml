@@ -2,11 +2,11 @@
 <layout version="0.1.0">
   <default>
     <reference name="head">
-      <action method="addItem" ifconfig="clerk/settings/active">
+      <action method="addItem" ifconfig="clerk/generel/active">
         <type>skin_css</type>
         <name>clerk/style.css</name>
       </action>
-      <action method="addJs" ifconfig="clerk/settings/active">
+      <action method="addJs" ifconfig="clerk/generel/active">
         <script>clerk/helper.js</script>
       </action>
     </reference>
@@ -17,22 +17,32 @@
         </action>
       </block>
       <block type="core/template" name="clerk_tracking_script" after="-">
-        <action method="setTemplate" ifconfig="clerk/settings/active">
+        <action method="setTemplate" ifconfig="clerk/generel/active">
           <template>clerk/tracking.phtml</template>
         </action>
       </block>
 
       <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_tracking_script">
-        <action method="setTemplate">
+        <action method="setTemplate" ifconfig="clerk/generel/active">
           <template>clerk/powerpopup.phtml</template>
         </action>
       </block>
     </reference>
   </default>
 
+  <checkout_onepage_success>
+    <reference name="content">
+      <block type="core/template" name="clerk_sales_tracking_script">
+        <action method="setTemplate" ifconfig="clerk/generel/active">
+          <template>clerk/salestracking.phtml</template>
+        </action>
+      </block>
+    </reference>
+  </checkout_onepage_success>
+
 	<checkout_cart_clerk>
     <reference name="root">
-      <action method="setTemplate">
+      <action method="setTemplate" ifconfig="clerk/generel/active">
         <template>page/1column.phtml</template>
       </action>
       <remove name="clerk_powerstep" />

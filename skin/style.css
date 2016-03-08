@@ -2,7 +2,7 @@
 GENERAL
 --------------------------------------------------------- */
 #clerk-power-popup {
-    max-width: 785px;
+    max-width: 1000px;
     width: 100%;
     margin: 30px auto;
 }
@@ -22,6 +22,7 @@ GENERAL
 #clerk-power-popup .clerk-clearer {
     clear: both;
 }
+
 
 /*
 ADD SUCCESS

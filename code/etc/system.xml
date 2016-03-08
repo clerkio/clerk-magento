@@ -11,28 +11,14 @@
       <label>Settings</label>
       <tab>clerk</tab>
       <sort_order>1000</sort_order>
-      <show_in_default>1</show_in_default>
-      <show_in_website>1</show_in_website>
       <show_in_store>1</show_in_store>
       <groups>
         <generel translate="label" module="clerk">
           <label>Clerk Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1000</sort_order>
-          <show_in_default>1</show_in_default>
-          <show_in_website>1</show_in_website>
           <show_in_store>1</show_in_store>
           <fields>
-            <active translate="label">
-              <label>Enable: </label>
-              <comment>Enable clerk extension</comment>
-              <frontend_type>select</frontend_type>
-              <sort_order>90</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
-              <show_in_store>1</show_in_store>
-              <source_model>adminhtml/system_config_source_yesno</source_model>
-            </active>
             <publicapikey translate="label">
               <label>Public API key</label>
               <depends>
@@ -41,9 +27,7 @@
               <comment><![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
-              <sort_order>10</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
+              <sort_order>11</sort_order>
               <show_in_store>1</show_in_store>
             </publicapikey>
             <privateapikey translate="label">
@@ -55,18 +39,37 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>20</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </privateapikey>
+            <active translate="label">
+              <label>Enable: </label>
+              <comment>Enable clerk extension</comment>
+              <frontend_type>select</frontend_type>
+              <sort_order>90</sort_order>
+              <show_in_store>1</show_in_store>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+            </active>
+						<url translate="label">
+							<label>Import url</label>
+              <frontend_type>select</frontend_type>
+              <frontend_model>clerk/adminhtml_url</frontend_model>
+              <sort_order>10</sort_order>
+              <show_in_store>1</show_in_store>
+              <comment>Use this url to configure an importer from my.clerk.io</comment>
+            </url>
+						<version translate="label">
+							<label>Extension version</label>
+              <frontend_type>select</frontend_type>
+              <frontend_model>clerk/adminhtml_version</frontend_model>
+              <sort_order>110</sort_order>
+              <show_in_store>1</show_in_store>
+            </version>
           </fields>
         </generel>
         <search translate="label" module="clerk">
           <label>Search Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1100</sort_order>
-          <show_in_default>1</show_in_default>
-          <show_in_website>1</show_in_website>
           <show_in_store>1</show_in_store>
           <fields>
 
@@ -74,8 +77,6 @@
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
@@ -88,8 +89,6 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>20</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </template>
 
@@ -101,8 +100,6 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>30</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </load_more_text>
 
@@ -115,8 +112,6 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>40</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </no_results_text>
 
@@ -127,8 +122,6 @@
           <label>Live Search Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1200</sort_order>
-          <show_in_default>1</show_in_default>
-          <show_in_website>1</show_in_website>
           <show_in_store>1</show_in_store>
           <fields>
 
@@ -136,8 +129,6 @@
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
@@ -149,8 +140,6 @@
               </depends>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </show_categories>
@@ -164,8 +153,6 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>20</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </template>
           </fields>
@@ -175,8 +162,6 @@
           <label>Power Step Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1300</sort_order>
-          <show_in_default>1</show_in_default>
-          <show_in_website>1</show_in_website>
           <show_in_store>1</show_in_store>
           <fields>
 
@@ -184,11 +169,21 @@
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
+
+						<type>
+              <label>Type</label>
+              <depends>
+                <active>1</active>
+              </depends>
+              <sort_order>15</sort_order>
+              <frontend_type>select</frontend_type>
+              <source_model>clerk/adminhtml_powertype</source_model>
+              <show_in_store>1</show_in_store>
+            </type>
+
 
             <templates translate="label">
               <label>Templates: </label>
@@ -198,8 +193,6 @@
               <frontend_type>text</frontend_type>
               <validate>required-entry</validate>
               <sort_order>20</sort_order>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
             </templates>
           </fields>

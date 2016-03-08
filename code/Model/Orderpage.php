@@ -27,34 +27,39 @@ class Clerk_Clerk_Model_Orderpage
         return $this;
     }
 
+    public function orderFormatter($order)
+    {
+        $items = array();
+        foreach ($order->getItemsCollection() as $_item) {
+            if ($_item->getParentItem()) {
+                continue;
+            }
+            $item = array();
+            $total_before_discount = $_item->getRowTotalInclTax();
+            $total_with_discount =
+                (float) ($total_before_discount - $_item->getDiscountAmount());
+            $actual_product_price =
+                (float) ($total_with_discount / (int) $_item->getQtyOrdered());
+            $item['id'] = (int) $_item->getProductId();
+            $item['quantity'] = (int) $_item->getQtyOrdered();
+            $item['price'] = $actual_product_price;
+            $items[] = $item;
+        }
+
+        $data = array();
+        $data['id'] = (int) $order->getIncrementId();
+        $data['customer'] = (int) $order->getCustomerId();
+        $data['products'] = $items;
+        $data['email'] = (string) $order->getCustomerEmail();
+        $data['time'] = (int) strtotime($order->getCreatedAt());
+
+        return $data;
+    }
+
     private function fetch()
     {
         foreach ($this->collection as $order) {
-            $items = array();
-
-            foreach ($order->getItemsCollection() as $_item) {
-                if ($_item->getParentItem()) {
-                    continue;
-                }
-                $item = array();
-                $total_before_discount = $_item->getRowTotalInclTax();
-                $total_with_discount =
-                    (float) ($total_before_discount - $_item->getDiscountAmount());
-                $actual_product_price =
-                    (float) ($total_with_discount / (int) $_item->getQtyOrdered());
-                $item['id'] = (int) $_item->getProductId();
-                $item['quantity'] = (int) $_item->getQtyOrdered();
-                $item['price'] = $actual_product_price;
-                $items[] = $item;
-            }
-
-            $data = array();
-            $data['id'] = (int) $order->getIncrementId();
-            $data['customer'] = (int) $order->getCustomerId();
-            $data['products'] = $items;
-            $data['email'] = (string) $order->getCustomerEmail();
-            $data['time'] = (int) strtotime($order->getCreatedAt());
-            $this->array[] = $data;
+            $this->array[] = $this->orderFormatter($order);
         }
     }
 }
