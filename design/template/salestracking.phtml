@@ -7,7 +7,7 @@ $items_json = isset($data['products']) ? json_encode($data['products'], JSON_NUM
 <span
     class="clerk"
     data-api="log/sale"
-    data-key="<?php echo Mage::helper('clerk')->getSetting('clerk/generel/publicapikey'); ?>"
+    data-key="<?php echo Mage::helper('clerk')->getSetting('clerk/general/publicapikey'); ?>"
     data-sale="<?php echo isset($data['id']) ? $data['id'] : ""; ?>"
     data-customer="<?php echo isset($data['customer']) ? $data['customer'] : ""; ?>"
     data-products='<?php echo ($items_json) ? $items_json : ""; ?>'

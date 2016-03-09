@@ -7,37 +7,36 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
     public function saveProductId($productId)
     {
+        $appEmulation = Mage::getSingleton('core/app_emulation');
         foreach (Mage::app()->getStores() as $store) {
-            Mage::app()->setCurrentStore($store->getStoreId());
-            if (!Mage::getStoreConfig('clerk/generel/active', $store->getId())) {
+            if (!Mage::helper('clerk')->getSetting('clerk/general/active', $store->getStoreId()) ||
+                isset($product->excludeReason)) {
                 continue;
             }
-
+            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getStoreId());
             $product = Mage::getModel('clerk/product')->load($productId);
             $product->setExcludeReason();
-            if (isset($product->excludeReason)) {
-                continue;
-            }
             $data = $product->getClerkExportData();
-            $data['key'] = Mage::helper('clerk')->getSetting('clerk/generel/publicapikey');
-            $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/generel/privateapikey');
-
+            $data['key'] = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+            $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
             $this->sendData($data, $this->_addEndpoint);
+            $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         }
     }
 
     public function deleteProductId($productId)
     {
         foreach (Mage::app()->getStores() as $store) {
-            Mage::app()->setCurrentStore($store->getStoreId());
-            if (!Mage::getStoreConfig('clerk/generel/active', $store->getId())) {
+            if (!Mage::helper('clerk')->getSetting('clerk/general/active', $store->getStoreId())) {
                 continue;
             }
+            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getStoreId());
             $data = array();
             $data['id'] = $productId;
-            $data['key'] = Mage::helper('clerk')->getSetting('clerk/generel/publicapikey');
-            $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/generel/privateapikey');
+            $data['key'] = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+            $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
             $this->sendData($data, $this->_removeEndpoint);
+            $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         }
     }
 
