@@ -6,8 +6,9 @@
         <type>skin_css</type>
         <name>clerk/style.css</name>
       </action>
-      <action method="addJs" ifconfig="clerk/generel/active">
-        <script>clerk/helper.js</script>
+      <action method="addItem" ifconfig="clerk/generel/active">
+        <type>skin_js</type>
+        <name>clerk/helper.js</name>
       </action>
     </reference>
     <reference name="before_body_end">

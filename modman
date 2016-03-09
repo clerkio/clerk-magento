@@ -5,5 +5,3 @@ design/template                 app/design/frontend/base/default/template/clerk
 design/layout/clerk.xml         app/design/frontend/base/default/layout/clerk.xml
 tests                           tests
 locale/da_DK/Clerk_Clerk.csv    app/locale/da_DK/Clerk_Clerk.csv
-locale/de_DE/Clerk_Clerk.csv    app/locale/de_DE/Clerk_Clerk.csv
-js                              js/clerk
