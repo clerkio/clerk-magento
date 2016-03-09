@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Clerk_Clerk>
-      <version>2.0.0</version>
+      <version>2.0.1</version>
     </Clerk_Clerk>
   </modules>
   <frontend>
@@ -124,7 +124,7 @@
       <powerstep>
         <active>0</active>
         <type>popup</type>
-        <template>powerstep</template>
+        <templates>powerstep</templates>
       </powerstep>
     </clerk>
   </default>

@@ -34,7 +34,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $data[] = array(
                 'id' => $store->getId(),
                 'name' => $store->getName(),
-                'active' => Mage::getStoreConfig('clerk/settings/active', $store),
+                'active' => Mage::getStoreConfig('clerk/generel/active', $store),
             );
         }
         $this->getResponse()->setBody(json_encode($data));
@@ -96,7 +96,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->setStore();
         $this->getResponse()->setBody(json_encode(array('Error' => 'Not Authorized')));
         $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
-        $secret = Mage::helper('clerk')->getSetting('clerk/settings/privateapikey');
+        $secret = Mage::helper('clerk')->getSetting('clerk/generel/privateapikey');
         if (empty($secret) or $input != trim($secret)) {
             $this->getResponse()->setHeader('HTTP/1.0', '401', true);
             die($this->getResponse());
