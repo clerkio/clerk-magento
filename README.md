@@ -3,19 +3,17 @@ clerk.io for Magento
 
 [clerk.io](http://www.clerk.io) is a international tech-startup based in
 Copenhagen targeting the eCommerce industry. We help webshops sell more
-through an intelligent search function and product recommendations.
+through an intelligent search function and targeted product recommendations.
 
 This extension replaces the default search functionality in Magento with
-a typo-tolerant, fast & relevant search experience backed by clerk.io and
-enables product recommendations.
+a typo-tolerant, fast & relevant search experience and enables product
+recommendations.
 
 See features and benefits of [clerk.io for
 Magento](https://help.clerk.io/getting-started/magento).
 
 ![Latest version](https://img.shields.io/badge/latest-1.2.3-green.svg)
-![Magento 1.7.1](https://img.shields.io/badge/magento-1.7.1-blue.svg)
-![Magento 1.8.1](https://img.shields.io/badge/magento-1.8.1-blue.svg)
-![Magento 1.9.2](https://img.shields.io/badge/magento-1.9-blue.svg)
+![Magento 1.9.x.x](https://img.shields.io/badge/magento-1.9-blue.svg)
 ![PHP >= 5.3](https://img.shields.io/badge/php-%3E=5.3-green.svg)
 
 
