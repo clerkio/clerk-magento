@@ -2,7 +2,7 @@
 <config>
   <tabs>
     <clerk module="clerk">
-      <label>Clerk Recommendations</label>
+      <label>Clerk recommendations</label>
       <sort_order>100</sort_order>
     </clerk>
   </tabs>
@@ -13,15 +13,14 @@
       <sort_order>1000</sort_order>
       <show_in_store>1</show_in_store>
       <groups>
-
         <general module="clerk">
-          <label>Clerk Settings</label>
+          <label>Clerk settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1000</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
             <active>
-              <label>Enable: </label>
+              <label>Enable</label>
               <comment>Enable clerk extension</comment>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
@@ -67,22 +66,21 @@
             </version>
           </fields>
         </general>
-
         <search module="clerk">
-          <label>Search Settings</label>
+          <label>Search settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1100</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
             <active>
-              <label>Enable: </label>
+              <label>Enable</label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
             <template>
-              <label>Template: </label>
+              <label>Template</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -92,7 +90,7 @@
               <show_in_store>1</show_in_store>
             </template>
             <load_more_text>
-              <label>Load More Text: </label>
+              <label>Load more text</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -102,7 +100,7 @@
               <show_in_store>1</show_in_store>
             </load_more_text>
             <no_results_text>
-              <label>No Restults Text: </label>
+              <label>No restults text</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -114,20 +112,20 @@
           </fields>
         </search>
         <livesearch module="clerk">
-          <label>Live Search Settings</label>
+          <label>Live search settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1200</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
             <active>
-              <label>Enable: </label>
+              <label>Enable</label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
             <show_categories>
-              <label>Show Categories: </label>
+              <label>Show categories</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -137,7 +135,7 @@
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </show_categories>
             <template>
-              <label>Template: </label>
+              <label>Template</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -149,13 +147,13 @@
           </fields>
         </livesearch>
         <powerstep module="clerk">
-          <label>Power Step Settings</label>
+          <label>Power step settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1300</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
             <active>
-              <label>Enable: </label>
+              <label>Enable</label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
@@ -172,7 +170,7 @@
               <show_in_store>1</show_in_store>
             </type>
             <templates>
-              <label>Templates: </label>
+              <label>Templates</label>
               <depends>
                 <active>1</active>
               </depends>

@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Clerk_Clerk>
-      <version>2.0.3</version>
+      <version>2.0.4</version>
     </Clerk_Clerk>
   </modules>
   <frontend>
@@ -124,4 +124,15 @@
       </powerstep>
     </clerk>
   </default>
+  <adminhtml>
+    <translate>
+      <modules>
+        <Clerk_Clerk>
+          <files>
+            <default>Clerk_Clerk.csv</default>
+          </files>
+        </Clerk_Clerk>
+      </modules>
+    </translate>
+  </adminhtml>
 </config>
