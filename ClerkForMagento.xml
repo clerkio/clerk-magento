@@ -1,5 +1,5 @@
 <_>
-   <form_key>EjpMB9BwPZY83Cr6</form_key>
+   <form_key>zynr9WIv6Wo9RR5D</form_key>
    <name>ClerkForMagento</name>
    <channel>community</channel>
    <version_ids>
@@ -11,9 +11,9 @@
 Clerk for Magento makes it easier for your customers to find what they seek by personalising every step of their shopping experience.</description>
    <license>MIT</license>
    <license_uri>http://choosealicense.com/licenses/mit</license_uri>
-   <version>2.0.2</version>
+   <version>2.0.3</version>
    <stability>beta</stability>
-   <notes>Bug fixes</notes>
+   <notes>Better support for custom product types.</notes>
    <authors>
       <name>
          <name>Jonas Brunsgaard</name>
@@ -42,7 +42,7 @@ Clerk for Magento makes it easier for your customers to find what they seek by p
             <max/>
          </max>
          <files>
-            <files>                                              </files>
+            <files>                                                </files>
          </files>
       </package>
       <extension>

@@ -76,12 +76,6 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         // calculation
         switch ($this->getTypeId()) {
 
-            case Mage_Catalog_Model_Product_Type::TYPE_SIMPLE:
-                break;
-
-            case Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE:
-                break;
-
             case Mage_Catalog_Model_Product_Type::TYPE_GROUPED:
 
                 // Find product with min price and getClerkPrice from that product.
@@ -91,6 +85,7 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
 
                     return $_product->getClerkPrice($includeDiscounts, $includeTax);
                 }
+                break;
 
             case Mage_Catalog_Model_Product_Type::TYPE_BUNDLE:
 
@@ -120,8 +115,6 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
                         ->load($idents[0])->getTaxClassId();
                 }
                 break;
-            default:
-                return;
         }
 
         // Use price, tax param and magento tax settings to add tax if needed.
@@ -140,7 +133,7 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
             $price = ($price / 100 * $taxRate) + $price;
         }
 
-        return (float) $price;
+        return floatval($price);
     }
 
     public function isOnSale()

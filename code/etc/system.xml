@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <tabs>
-    <clerk translate="label" module="clerk">
+    <clerk module="clerk">
       <label>Clerk Recommendations</label>
       <sort_order>100</sort_order>
     </clerk>
   </tabs>
   <sections>
-    <clerk translate="label" module="clerk">
+    <clerk module="clerk">
       <label>Settings</label>
       <tab>clerk</tab>
       <sort_order>1000</sort_order>
       <show_in_store>1</show_in_store>
       <groups>
-        <general translate="label" module="clerk">
+
+        <general module="clerk">
           <label>Clerk Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1000</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
-            <publicapikey translate="label">
-              <label>Public API key</label>
-              <depends>
-                <active>1</active>
-              </depends>
-              <comment><![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
-              <frontend_type>text</frontend_type>
-              <validate>required-entry</validate>
-              <sort_order>11</sort_order>
+            <active>
+              <label>Enable: </label>
+              <comment>Enable clerk extension</comment>
+              <frontend_type>select</frontend_type>
+              <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
-            </publicapikey>
-            <privateapikey translate="label">
-              <label>Private API key</label>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+            </active>
+            <publicapikey>
+              <label>Public API key</label>
               <depends>
                 <active>1</active>
               </depends>
@@ -40,46 +38,50 @@
               <validate>required-entry</validate>
               <sort_order>20</sort_order>
               <show_in_store>1</show_in_store>
-            </privateapikey>
-            <active translate="label">
-              <label>Enable: </label>
-              <comment>Enable clerk extension</comment>
-              <frontend_type>select</frontend_type>
-              <sort_order>90</sort_order>
+            </publicapikey>
+            <privateapikey>
+              <label>Private API key</label>
+              <depends>
+                <active>1</active>
+              </depends>
+              <comment><![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
+              <frontend_type>text</frontend_type>
+              <validate>required-entry</validate>
+              <sort_order>30</sort_order>
               <show_in_store>1</show_in_store>
-              <source_model>adminhtml/system_config_source_yesno</source_model>
-            </active>
-            <url translate="label">
+            </privateapikey>
+            <url>
               <label>Import url</label>
               <frontend_type>select</frontend_type>
               <frontend_model>clerk/adminhtml_url</frontend_model>
-              <sort_order>10</sort_order>
+              <sort_order>40</sort_order>
               <show_in_store>1</show_in_store>
               <comment>Use this url to configure an importer from my.clerk.io</comment>
             </url>
-            <version translate="label">
+            <version>
               <label>Extension version</label>
               <frontend_type>select</frontend_type>
               <frontend_model>clerk/adminhtml_version</frontend_model>
-              <sort_order>110</sort_order>
+              <sort_order>50</sort_order>
               <show_in_store>1</show_in_store>
             </version>
           </fields>
         </general>
-        <search translate="label" module="clerk">
+
+        <search module="clerk">
           <label>Search Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1100</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
-            <active translate="label">
+            <active>
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
-            <template translate="label">
+            <template>
               <label>Template: </label>
               <depends>
                 <active>1</active>
@@ -89,7 +91,7 @@
               <sort_order>20</sort_order>
               <show_in_store>1</show_in_store>
             </template>
-            <load_more_text translate="label">
+            <load_more_text>
               <label>Load More Text: </label>
               <depends>
                 <active>1</active>
@@ -99,7 +101,7 @@
               <sort_order>30</sort_order>
               <show_in_store>1</show_in_store>
             </load_more_text>
-            <no_results_text translate="label">
+            <no_results_text>
               <label>No Restults Text: </label>
               <depends>
                 <active>1</active>
@@ -111,20 +113,20 @@
             </no_results_text>
           </fields>
         </search>
-        <livesearch translate="label" module="clerk">
+        <livesearch module="clerk">
           <label>Live Search Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1200</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
-            <active translate="label">
+            <active>
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </active>
-            <show_categories translate="label">
+            <show_categories>
               <label>Show Categories: </label>
               <depends>
                 <active>1</active>
@@ -134,7 +136,7 @@
               <show_in_store>1</show_in_store>
               <source_model>adminhtml/system_config_source_yesno</source_model>
             </show_categories>
-            <template translate="label">
+            <template>
               <label>Template: </label>
               <depends>
                 <active>1</active>
@@ -146,13 +148,13 @@
             </template>
           </fields>
         </livesearch>
-        <powerstep translate="label" module="clerk">
+        <powerstep module="clerk">
           <label>Power Step Settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1300</sort_order>
           <show_in_store>1</show_in_store>
           <fields>
-            <active translate="label">
+            <active>
               <label>Enable: </label>
               <frontend_type>select</frontend_type>
               <sort_order>10</sort_order>
@@ -169,7 +171,7 @@
               <source_model>clerk/adminhtml_powertype</source_model>
               <show_in_store>1</show_in_store>
             </type>
-            <templates translate="label">
+            <templates>
               <label>Templates: </label>
               <depends>
                 <active>1</active>
