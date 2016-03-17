@@ -148,7 +148,7 @@
     <jobs>
       <clerk_build_feeds>
         <schedule>
-          <cron_expr>* 4 * * *</cron_expr>
+          <cron_expr>0 4 * * *</cron_expr>
         </schedule>
         <run>
           <model>clerk/feed::buildFeeds</model>
