@@ -70,6 +70,6 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             return;
         }
 
-        return Mage::getStoreConfig($path, $store);
+        return trim((string) Mage::getStoreConfig($path, $store));
     }
 }

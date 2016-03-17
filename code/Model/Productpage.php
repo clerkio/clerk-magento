@@ -25,8 +25,7 @@ class Clerk_Clerk_Model_Productpage
         foreach ($this->collection as $_product) {
             $productId = $_product->getId();
             $product = Mage::getModel('clerk/product')->load($productId);
-            $product->setExcludeReason();
-            if (!isset($product->excludeReason)) {
+            if (!$product->isExcluded()) {
                 $this->array[] = $product->getClerkExportData();
             }
         }

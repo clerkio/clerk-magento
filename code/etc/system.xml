@@ -2,7 +2,7 @@
 <config>
   <tabs>
     <clerk module="clerk">
-      <label>Clerk recommendations</label>
+      <label>Clerk</label>
       <sort_order>100</sort_order>
     </clerk>
   </tabs>
@@ -12,13 +12,24 @@
       <tab>clerk</tab>
       <sort_order>1000</sort_order>
       <show_in_store>1</show_in_store>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
       <groups>
         <general module="clerk">
           <label>Clerk settings</label>
           <frontend_type>text</frontend_type>
           <sort_order>1000</sort_order>
           <show_in_store>1</show_in_store>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
           <fields>
+            <info>
+              <frontend_model>clerk/adminhtml_info</frontend_model>
+              <sort_order>0</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+            </info>
             <active>
               <label>Enable</label>
               <comment>Enable clerk extension</comment>

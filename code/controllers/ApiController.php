@@ -29,12 +29,13 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      * */
     public function storeAction()
     {
+        $this->authenticate();
         $data = array();
         foreach (Mage::helper('clerk')->getAllStores() as $store) {
             $data[] = array(
                 'id' => $store->getId(),
                 'name' => $store->getName(),
-                'active' => Mage::getStoreConfig('clerk/general/active', $store),
+                'active' => (bool) Mage::getStoreConfig('clerk/general/active', $store),
             );
         }
         $this->getResponse()->setBody(json_encode($data));

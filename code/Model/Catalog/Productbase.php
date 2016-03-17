@@ -13,6 +13,14 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         return (int) floor($datediff / (60 * 60 * 24));
     }
 
+    public function load($id, $field = null)
+    {
+        $product = parent::load($id, $field);
+        $this->setExcludeReason();
+
+        return $product;
+    }
+
     public function setExcludeReason()
     {
         // subclass this method
@@ -20,8 +28,6 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
 
     public function isExcluded()
     {
-        $this->setExcludeReason();
-
         return isset($this->excludeReason);
     }
 

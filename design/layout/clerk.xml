@@ -24,7 +24,7 @@
       </block>
 
       <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_tracking_script">
-        <action method="setTemplate" ifconfig="clerk/general/active">
+        <action method="setTemplate" ifconfig="clerk/powerstep/active">
           <template>clerk/powerpopup.phtml</template>
         </action>
       </block>

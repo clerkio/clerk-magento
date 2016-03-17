@@ -7,6 +7,9 @@ class Clerk_Clerk_Model_Observer
      */
     public function itemAddedToCard($observer)
     {
+        if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
+            return;
+        }
         $request = $observer->getEvent()->getRequest();
         if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
             $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
@@ -17,15 +20,9 @@ class Clerk_Clerk_Model_Observer
         }
     }
 
-    public function deleteProduct($observer)
+    public function syncProduct($observer)
     {
         $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->deleteProductId($productId);
-    }
-
-    public function saveProduct($observer)
-    {
-        $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->saveProductId($productId);
+        Mage::getModel('clerk/communicator')->syncProduct($productId,  $observer->getEvent()->getName());
     }
 }
