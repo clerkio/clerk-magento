@@ -123,7 +123,6 @@ CART OVERVIEW
 }
 
 #clerk-power-popup .clerk-top-wrapper .clerk-continue-shopping, #clerk-power-popup .clerk-top-wrapper .clerk-to-checkout {
-    width: 90%;
     margin: 0 auto;
     font-size: 13px;
 }
@@ -144,6 +143,14 @@ RESULTS
 @media (max-width: 767px) {
     .col6 {
         width: 100% !important;
-        display: inline-block;
     }
+}
+
+#clerk-power-popup .products-grid .actions {
+    position: static;
+}
+
+#clerk-power-popup .products-grid > li {
+    width: 30.8642%;
+    margin-right: 3.7037%;
 }

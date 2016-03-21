@@ -45,12 +45,12 @@
                 </table>
             </div>
             <div class="col12">
-                <div class="col6 left">
+                <div class="left">
                     <button type="button" onclick="window.history.back()" class="button form-button clerk-continue-shopping">
                         <?php echo Mage::helper('clerk')->__('Continue Shopping'); ?>
                     </button>
                 </div>
-                <div class="col6 right">
+                <div class="right">
                     <button type="button" onclick="setLocation('<?php echo Mage::helper('checkout/url')->getCheckoutUrl() ?>')"
                             class="button form-button right"><?php echo Mage::helper('clerk')->__('Checkout'); ?>
                     </button>
