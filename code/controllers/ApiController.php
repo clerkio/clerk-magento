@@ -98,7 +98,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode(array('Error' => 'Not Authorized')));
         $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
         $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
-        if (empty($secret) or $input != trim($secret)) {
+        if (!$secret or $input != trim($secret)) {
             $this->getResponse()->setHeader('HTTP/1.0', '401', true);
             die($this->getResponse());
         }

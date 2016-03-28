@@ -42,8 +42,8 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         $specialPriceTo = $this->getSpecialToDate();
 
         return isset($specialPrice) && (
-                (empty($specialPriceFrom) || strtotime($specialPriceFrom) <= $currentDate) &&
-                (empty($specialPriceTo) || strtotime($specialPriceTo) >= $currentDate)
+                (!$specialPriceFrom || strtotime($specialPriceFrom) <= $currentDate) &&
+                (!$specialPriceTo || strtotime($specialPriceTo) >= $currentDate)
             );
     }
 

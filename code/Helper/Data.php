@@ -44,7 +44,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $product = Mage::getModel('catalog/product')->load($productId);
 
-        return !empty($product->getName());
+        return (bool) $product->getName();
     }
 
     /* Returns an array of store objects */
