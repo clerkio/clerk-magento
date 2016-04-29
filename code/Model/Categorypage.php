@@ -16,6 +16,7 @@ class Clerk_Clerk_Model_Categorypage
             ->getCollection()
             ->addIsActiveFilter()
             ->addFieldToFilter('path', array('like' => "1/$rootId/%"))
+            ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
         $this->totalPages = $this->collection->getLastPageNumber();

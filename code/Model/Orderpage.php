@@ -19,6 +19,7 @@ class Clerk_Clerk_Model_Orderpage
             ->addFieldToFilter('created_at', array(
                     'from' => strtotime("-{$delta} day", time()),
                     'datetime' => true, ))
+            ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
         $this->totalPages = $this->collection->getLastPageNumber();

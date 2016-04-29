@@ -12,6 +12,7 @@ class Clerk_Clerk_Model_Productpage
         $this->limit = $limit;
         $this->page = $page;
         $this->collection = Mage::getResourceModel('catalog/product_collection')
+            ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
         $this->totalPages = $this->collection->getLastPageNumber();
