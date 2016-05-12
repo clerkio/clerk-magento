@@ -192,4 +192,15 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
     {
         return count($this->getTierPrice()) > 0;
     }
+
+    //If product is on sale, calculate the percentage.
+    public function getDiscountPercent()
+    {
+      if($this->isOnSale()) {
+      return round(1-(($this->getClerkPrice(true, false) / $this->getClerkPrice(false, false)) * 100));
+      }
+      else {
+        return 0;
+      }
+    }
 }
