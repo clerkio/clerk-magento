@@ -45,6 +45,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         $data->setSku($this->getSku());
         $data->setUrl($this->getProductUrl());
         $data->setVisibility($this->getVisibility());
+        $data->setDiscountPercent($this->getDiscountPercent());
 
         Mage::dispatchEvent('clerk_get_export_data', array('product' => $this, 'data' => $data));
 
