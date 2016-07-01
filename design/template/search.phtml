@@ -9,9 +9,9 @@
     data-offset="0"
     data-target="#clerk-search-results"
     data-after-render="_clerk_after_load_event"
-    data-query="<?php echo htmlentities($_GET['q']); ?>"> 
+    data-query="<?php echo htmlentities($_GET['q']); ?>">
 </span>
- 
+
 <div class="category-products">
     <ul id="clerk-search-results" class="products-grid"></ul>
 </div>
@@ -19,29 +19,30 @@
 <div id="clerk-search-no-results" style="display: none;">
     <p class="note-msg"><?php echo $this->noResultsText ?></p>
 </div>
- 
+
 <div id="clerk-search-load-more-button" style="text-align:center; display: none;">
     <button class="button"><?php echo $this->loadMoreText ?></button>
 </div>
- 
+
 <script type="text/javascript">
     var total_loaded = 0;
     function _clerk_after_load_event(data) {
         total_loaded += data.response.result.length;
 
         // Use Clerk jQuery if needed (this is when site version is <= 1.4.3)
-        $_ = useClerkjQuery() ? Clerk.iu.$ : jQuery 
+        $_ = useClerkjQuery() ? Clerk.ui.$ : jQuery
 
         // If limit is undefined set limit to result length
         var e = $_('#clerk-search');
         if (typeof e.data('limit') === "undefined"){
-        e.data('limit', data.response.result.length) 
+        e.data('limit', data.response.result.length)
         }
 
         // Setup eventhandler for loadmore button
         $_('#clerk-search-load-more-button').on('click', function() {
             e.data('offset', e.data('offset') + e.data('limit'));
             Clerk.renderBlocks('#clerk-search');
+            $_('#clerk-search-load-more-button').off();
         });
 
         // If total is 0, show no results

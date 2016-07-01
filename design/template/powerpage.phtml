@@ -64,4 +64,18 @@
             <span class="clerk" data-template="@<?php echo $template ?>" data-products="[<?php echo $this->product->getId(); ?>]"></span>
         <?php endforeach; ?>
     </div>
+    <div class="clerk-clearer"></div>
+    <hr><br />
+    <div class="col12">
+        <div class="left">
+            <button type="button" onclick="window.history.back()" class="button form-button clerk-continue-shopping">
+                <?php echo Mage::helper('clerk')->__('Continue Shopping'); ?>
+            </button>
+        </div>
+        <div class="right">
+            <button type="button" onclick="setLocation('<?php echo Mage::helper('checkout/url')->getCheckoutUrl() ?>')"
+                    class="button form-button right"><?php echo Mage::helper('clerk')->__('Checkout'); ?>
+            </button>
+        </div>
+    </div>
 </span>
