@@ -1,4 +1,6 @@
-<?php if ($this->firePopUp) : ?>
+<?php
+
+if ($this->getFirePopUp()) : ?>
 
 <span id="clerk-power-popup" style="display:none">
 
@@ -6,18 +8,18 @@
         <div class="col6 left padding10">
             <div class="col12 ">
                 <div class="alert alert-success">
-                    <?php echo $this->__('%s was successfully added to your shopping cart.', $this->product->getName()); ?>
+                    <?php echo $this->__('%s was successfully added to your shopping cart.', $this->getProduct()->getName()); ?>
                 </div>
             </div>
 
             <div class="col12">
                 <div class="col4 left clerk-product-image">
-                    <img src="<?php echo $this->helper('catalog/image')->init($this->product, 'small_image')->resize(100); ?>"
-                         alt="<?php echo $this->stripTags($this->getImageLabel($this->product, 'small_image'), null, true) ?>" />
+                    <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize(100); ?>"
+                         alt="<?php echo $this->stripTags($this->getImageLabel($this->getProduct(), 'small_image'), null, true) ?>" />
                 </div>
                 <div class="col8 left">
-                    <span class="clerk-name"><?php echo $this->product->getName() ?></span>
-                    <?php echo $this->getLayout()->createBlock('catalog/product_price')->getPriceHtml($this->product); ?>
+                    <span class="clerk-name"><?php echo $this->getProduct()->getName() ?></span>
+                    <?php echo $this->getLayout()->createBlock('catalog/product_price')->getPriceHtml($this->getProduct()); ?>
                 </div>
             </div>
             <div class="clerk-clearer"></div>
@@ -34,13 +36,13 @@
                 <table class="table">
                     <tr>
                         <td class="clerk-text padding10-top" >
-                          <?php echo $this->__('You have %s products in your shopping cart', count($this->quote->getAllVisibleItems())); ?>
+                          <?php echo $this->__('You have %s products in your shopping cart', count($this->getQuote()->getAllVisibleItems())); ?>
                        </td>
                         <td></td>
                     </tr>
                     <tr class="clerk-total">
                         <td class="clerk-text"><?php echo Mage::helper('clerk')->__('Total'); ?></td>
-                        <td class="clerk-price"><?php echo Mage::helper('core')->currency($this->quote->getGrandTotal(), true, false); ?></td>
+                        <td class="clerk-price"><?php echo Mage::helper('core')->currency($this->getQuote()->getGrandTotal(), true, false); ?></td>
                     </tr>
                 </table>
             </div>
@@ -64,8 +66,8 @@
 
 
     <div class="clerk-results">
-        <?php foreach ($this->templates as $template) : ?>
-            <span class="clerk" data-after-render="clerk_fire_power_popup" data-template="@<?php echo $template ?>" data-products="[<?php echo $this->product->getId(); ?>]"></span>
+        <?php foreach ($this->getTemplates() as $template) : ?>
+            <span class="clerk" data-after-render="clerk_fire_power_popup" data-template="@<?php echo $template ?>" data-products="[<?php echo $this->getProduct()->getId(); ?>]"></span>
         <?php endforeach; ?>
     </div>
 </span>
