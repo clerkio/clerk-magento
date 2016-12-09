@@ -12,7 +12,7 @@
       </action>
     </reference>
     <reference name="before_body_end">
-			<block type="core/template" name="clerk_livesearch_script" after="-">
+      <block type="core/template" name="clerk_livesearch_script" after="-">
         <action method="setTemplate" ifconfig="clerk/livesearch/active">
           <template>clerk/livesearch.phtml</template>
         </action>
@@ -41,7 +41,7 @@
     </reference>
   </checkout_onepage_success>
 
-	<checkout_cart_clerk>
+  <checkout_cart_clerk>
     <reference name="root">
       <action method="setTemplate" ifconfig="clerk/general/active">
         <template>page/1column.phtml</template>
