@@ -5,7 +5,7 @@ class Clerk_Clerk_Model_Observer
     /**
      * The function is run by the observer when a new product is added to the cart.
      */
-    public function itemAddedToCard($observer)
+    public function itemAddedToCart($observer)
     {
         if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
             return;
