@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 PROG="$0"
-BASE_URL=http://`docker-machine ip`/
+BASE_URL=http://127.0.0.1/
 
 cd `dirname "$0"`
 docker build -t clerk/clerk-magento . || exit 1

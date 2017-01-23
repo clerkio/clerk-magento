@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN systemctl unmask mysql
 RUN docker-php-ext-install soap
 RUN docker-php-ext-install mysqli
+RUN sed -i -e 's/\/var\/www\/html/\/var\/www\/htdocs/' /etc/apache2/sites-enabled/000-default.conf
 COPY bin/php.ini /usr/local/etc/php/php.ini
 
 
