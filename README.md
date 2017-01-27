@@ -38,7 +38,7 @@ Everybody is welcome to contribute to this extension. Just send a pull request w
 There is a docker dev environment available, 
 https://clerkpublic.s3.amazonaws.com/magento-devenv.mov
 
-### 1. Docker (recommended)
+#### Docker
 
 The easiest way to setup your development environment is to use [Docker](https://www.docker.com/). If you're a Mac user, use [Docker for Mac](https://docs.docker.com/engine/installation/mac/) to run Docker containers.
 
