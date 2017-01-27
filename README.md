@@ -64,5 +64,5 @@ A phpMyAdmin instance is available from `http://[docker ip]/phpmyadmin`
 You can execute a shell inside the container with the following command:
 
 ```sh
-$ docker exec -i -t algoliasearch-magento /bin/bash
+$ docker exec -i -t clerk-magento /bin/bash
 ```
