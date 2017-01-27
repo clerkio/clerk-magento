@@ -35,5 +35,37 @@ Contribute to the Extension
 ---------------------------
 Everybody is welcome to contribute to this extension. Just send a pull request with your changes ;)
 
+There is a docker dev environment available, 
+https://clerkpublic.s3.amazonaws.com/magento-devenv.mov
 
+Contribute to the Extension
+---------------------------
 
+### 1. Docker (recommended)
+
+The easiest way to setup your development environment is to use [Docker](https://www.docker.com/). If you're a Mac user, use [Docker for Mac](https://docs.docker.com/engine/installation/mac/) to run Docker containers.
+
+#### Setup the Docker instance
+
+Just run the following script to setup a running Magento 1.9.2 instance with some sample data & the Clerk extension installed:
+
+```sh
+$ ./dev/restart.sh -b http://`docker ip`/
+$ # The default value for -b is 127.0.0.1.
+```
+
+#### Administration panel
+
+Administration login is `admin` with password `magentorocks1` and you can access it from `http://[docker ip]/admin`.
+
+#### phpMyAdmin
+
+A phpMyAdmin instance is available from `http://[docker ip]/phpmyadmin`
+
+#### Shell
+
+You can execute a shell inside the container with the following command:
+
+```sh
+$ docker exec -i -t algoliasearch-magento /bin/bash
+```
