@@ -9,6 +9,40 @@ class Clerk_Clerk_CatalogSearch_ResultController extends Mage_CatalogSearch_Resu
         if (!Mage::helper('clerk')->getSetting('clerk/search/active')) {
             return parent::indexAction();
         }
+
+        /* @var $query Mage_CatalogSearch_Model_Query */
+        $query = Mage::helper('catalogsearch')->getQuery();
+        $query->setStoreId(Mage::app()->getStore()->getId());
+
+        //Save query
+        if ($query->getQueryText() != '') {
+            if (Mage::helper('catalogsearch')->isMinQueryLength()) {
+                $query->setId(0)
+                    ->setIsActive(1)
+                    ->setIsProcessed(1);
+            } else {
+                if ($query->getId()) {
+                    $query->setPopularity($query->getPopularity()+1);
+                } else {
+                    $query->setPopularity(1);
+                }
+
+                if ($query->getRedirect()) {
+                    $query->save();
+                    $this->getResponse()->setRedirect($query->getRedirect());
+                    return;
+                } else {
+                    $query->prepare();
+                }
+            }
+
+            Mage::helper('catalogsearch')->checkNotes();
+
+            if (!Mage::helper('catalogsearch')->isMinQueryLength()) {
+                $query->save();
+            }
+        }
+
         $this->getLayout()->getUpdate()->addUpdate('<remove name="search.result"/>');
         $this->getLayout()->getUpdate()->addUpdate('<remove name="catalogsearch.leftnav"/>');
         $this->getLayout()->getUpdate()->addUpdate('<remove name="enterprisesearch.leftnav"/>');

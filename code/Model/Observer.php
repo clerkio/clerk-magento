@@ -4,8 +4,10 @@ class Clerk_Clerk_Model_Observer
 {
     /**
      * The function is run by the observer when a new product is added to the cart.
+     *
+     * @param Varien_Event_Observer $observer
      */
-    public function itemAddedToCart($observer)
+    public function itemAddedToCart(Varien_Event_Observer $observer)
     {
         if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
             return;
@@ -20,9 +22,28 @@ class Clerk_Clerk_Model_Observer
         }
     }
 
-    public function syncProduct($observer)
+    /**
+     * Sync single product
+     *
+     * @param $observer
+     */
+    public function syncProduct(Varien_Event_Observer $observer)
     {
         $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->syncProduct($productId,  $observer->getEvent()->getName());
+        Mage::getModel('clerk/communicator')->syncProduct($productId, $observer->getEvent()->getName());
+    }
+
+    /**
+     * Mass sync products
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function syncProducts(Varien_Event_Observer $observer)
+    {
+        $productIds = $observer->getEvent()->getProductIds();
+
+        foreach ($productIds as $productId) {
+            Mage::getModel('clerk/communicator')->syncProduct($productId, $observer->getEvent()->getName());
+        }
     }
 }
