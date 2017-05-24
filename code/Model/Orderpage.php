@@ -48,7 +48,7 @@ class Clerk_Clerk_Model_Orderpage
         }
 
         $data = array();
-        $data['id'] = (int) $order->getIncrementId();
+        $data['id'] = $order->getIncrementId();
         $data['customer'] = (int) $order->getCustomerId();
         $data['products'] = $items;
         $data['email'] = (string) $order->getCustomerEmail();

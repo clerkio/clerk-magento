@@ -2,7 +2,13 @@
 
 class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    /* Returns product attribute if present, otherwise return null */
+    /**
+     * Returns product attribute if present
+     *
+     * @param $product
+     * @param $attribute
+     * @return null|string
+     */
     public function getAttributeSafe($product, $attribute)
     {
         $eavConfig = Mage::getModel('eav/config');
@@ -19,7 +25,12 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
-    /* Returns product with min price from grouped product */
+    /**
+     * Returns product with min price from grouped product
+     *
+     * @param $product
+     * @return null
+     */
     public function getMinPricedProductFromGroup($product)
     {
         $choosen = null;
@@ -35,6 +46,13 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return $choosen;
     }
 
+    /**
+     * Determine if floats are equal
+     *
+     * @param $f1
+     * @param $f2
+     * @return bool
+     */
     public function floatEq($f1, $f2)
     {
         return abs($f1 - $f2) < 0.01;
@@ -47,7 +65,11 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return (bool) $product->getName();
     }
 
-    /* Returns an array of store objects */
+    /**
+     * Get an array of store objects
+     *
+     * @return array
+     */
     public function getAllStores()
     {
         $data = array();
@@ -63,7 +85,13 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return $data;
     }
 
-    /* Returns the setting if extension is active otherwise null */
+    /**
+     * Returns the config value if extension is active
+     *
+     * @param $path
+     * @param null $store
+     * @return string|void
+     */
     public function getSetting($path, $store = null)
     {
         if (!Mage::getStoreConfig('clerk/general/active', $store)) {

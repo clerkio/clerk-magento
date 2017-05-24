@@ -2,10 +2,16 @@
 
 class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 {
-    protected function _construct()
+    /**
+     * Set content-type header
+     *
+     * @return Mage_Core_Controller_Front_Action
+     */
+    public function preDispatch()
     {
-        // Always reply in json
         $this->getResponse()->setHeader('Content-type', 'application/json');
+
+        return parent::preDispatch();
     }
 
     /*
@@ -41,7 +47,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($data));
     }
 
-    /* Endpoint for prodcuts, can be used either for pagination or to fetch a
+    /* Endpoint for products, can be used either for pagination or to fetch a
      * single product. */
     public function productAction()
     {
@@ -61,10 +67,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         } else {
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
-            $page = Mage::getModel('clerk/productpage')->load(intval($page), $limit);
+            $page = Mage::getModel('clerk/productpage')->load((int)$page, $limit);
             $data = $page->array;
             $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
         }
+
         $this->getResponse()->setBody(json_encode($data));
     }
 
@@ -91,7 +98,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($page->array));
     }
 
-    /* Authentication intercepter, will die() is something is wrong */
+    /* Authentication interceptor, will die() is something is wrong */
     private function authenticate()
     {
         $this->setStore();

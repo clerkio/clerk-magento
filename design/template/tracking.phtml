@@ -1,15 +1,13 @@
 <?php
-    $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
-    $formkey = Mage::getSingleton('core/session')->getFormKey();
+/** @var Clerk_Clerk_Block_Tracking $this */
 ?>
-
 <script type="text/javascript">
     window.clerkAsyncInit = function() {
         Clerk.config({
-            key: '<?php echo $publicapikey; ?>',
+            key: '<?php echo $this->getPublicKey(); ?>',
             templateFormatters: {
                 form_key: function () {
-                    return '<?php echo $formkey; ?>';
+                    return '<?php echo $this->getFormKey(); ?>';
                 }
             }
         });

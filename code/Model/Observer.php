@@ -46,4 +46,29 @@ class Clerk_Clerk_Model_Observer
             Mage::getModel('clerk/communicator')->syncProduct($productId, $observer->getEvent()->getName());
         }
     }
+
+    /**
+     * Sync products on catalogrule save
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function syncOnCatalogRuleSave(Varien_Event_Observer $observer)
+    {
+        /** @var Mage_CatalogRule_Model_Rule $catalogRule */
+        $catalogRule = $observer->getEvent()->getRule();
+        if ($catalogRule->getIsActive()) {
+            //Request a resync of everything
+            Mage::getModel('clerk/communicator')->syncAll();
+        }
+    }
+
+    /**
+     * Sync everything when image cache is cleared
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function syncOnCleanCatalogImagesCacheAfter(Varien_Event_Observer $observer)
+    {
+        Mage::getModel('clerk/communicator')->syncAll();
+    }
 }

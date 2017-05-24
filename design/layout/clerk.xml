@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
-  <default>
-    <reference name="head">
-      <action method="addItem" ifconfig="clerk/general/active">
-        <type>skin_css</type>
-        <name>clerk/style.css</name>
-      </action>
-      <action method="addItem" ifconfig="clerk/general/active">
-        <type>skin_js</type>
-        <name>clerk/helper.js</name>
-      </action>
-    </reference>
-    <reference name="before_body_end">
-      <block type="core/template" name="clerk_livesearch_script" after="-">
-        <action method="setTemplate" ifconfig="clerk/livesearch/active">
-          <template>clerk/livesearch.phtml</template>
-        </action>
-      </block>
-      <block type="core/template" name="clerk_tracking_script" after="-">
-        <action method="setTemplate" ifconfig="clerk/general/active">
-          <template>clerk/tracking.phtml</template>
-        </action>
-      </block>
+    <default>
+        <reference name="head">
+            <action method="addItem" ifconfig="clerk/general/active">
+                <type>skin_css</type>
+                <name>clerk/style.css</name>
+            </action>
+            <action method="addItem" ifconfig="clerk/general/active">
+                <type>skin_js</type>
+                <name>clerk/helper.js</name>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="clerk_livesearch_script" after="-">
+                <action method="setTemplate" ifconfig="clerk/livesearch/active">
+                    <template>clerk/livesearch.phtml</template>
+                </action>
+            </block>
+            <block type="clerk/tracking" name="clerk_tracking_script" after="-">
+                <action method="setTemplate" ifconfig="clerk/general/active">
+                    <template>clerk/tracking.phtml</template>
+                </action>
+            </block>
 
-      <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_tracking_script">
-        <action method="setTemplate" ifconfig="clerk/powerstep/active">
-          <template>clerk/powerpopup.phtml</template>
-        </action>
-      </block>
-    </reference>
-  </default>
+            <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_tracking_script">
+                <action method="setTemplate" ifconfig="clerk/powerstep/active">
+                    <template>clerk/powerpopup.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </default>
 
-  <checkout_onepage_success>
-    <reference name="content">
-      <block type="core/template" name="clerk_sales_tracking_script">
-        <action method="setTemplate" ifconfig="clerk/general/active">
-          <template>clerk/salestracking.phtml</template>
-        </action>
-      </block>
-    </reference>
-  </checkout_onepage_success>
+    <checkout_onepage_success>
+        <reference name="content">
+            <block type="core/template" name="clerk_sales_tracking_script">
+                <action method="setTemplate" ifconfig="clerk/general/active">
+                    <template>clerk/salestracking.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </checkout_onepage_success>
 
-  <checkout_cart_clerk>
-    <reference name="root">
-      <action method="setTemplate" ifconfig="clerk/general/active">
-        <template>page/1column.phtml</template>
-      </action>
-      <remove name="clerk_powerstep" />
-    </reference>
-    <reference name="content">
-      <block type="clerk/powerstep" template="clerk/powerpage.phtml"/>
-    </reference>
-  </checkout_cart_clerk>
+    <checkout_cart_clerk>
+        <reference name="root">
+            <action method="setTemplate" ifconfig="clerk/general/active">
+                <template>page/1column.phtml</template>
+            </action>
+            <remove name="clerk_powerstep"/>
+        </reference>
+        <reference name="content">
+            <block type="clerk/powerstep" template="clerk/powerpage.phtml"/>
+        </reference>
+    </checkout_cart_clerk>
 
 </layout>

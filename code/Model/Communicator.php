@@ -2,8 +2,16 @@
 
 class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 {
+    /**
+     * @var string
+     */
+    protected $baseUrl = 'https://api.clerk.io/v2/';
+
     protected $_addEndpoint = 'https://api.clerk.io/v2/product/add';
     protected $_removeEndpoint = 'https://api.clerk.io/v2/product/remove';
+
+    const XML_PATH_PUBLIC_KEY = 'clerk/general/publicapikey';
+    const XML_PATH_PRIVATE_KEY = 'clerk/general/privateapikey';
 
     /*
      * This call will connect to the clerk api call either either add a
@@ -29,19 +37,42 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
             if ($isDeleteEvent || $product->isExcluded()) {
                 $data = array();
                 $data['id'] = $productId;
-                $data['key'] = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
-                $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+                $data['key'] = $this->getPublicKey($storeId);
+                $data['private_key'] = $this->getPrivateKey($storeId);
                 $this->sendData($data, $this->_removeEndpoint);
             } else {
                 $data = $product->getClerkExportData();
-                $data['key'] = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
-                $data['private_key'] = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+                $data['key'] = $this->getPublicKey($storeId);
+                $data['private_key'] = $this->getPrivateKey($storeId);
                 $this->sendData($data, $this->_addEndpoint);
             }
             $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         }
     }
 
+    /**
+     * Make Clerk synchronize everything
+     */
+    public function syncAll()
+    {
+        $endpoint = 'client/account/importer/start';
+
+        foreach (Mage::app()->getStores() as $store) {
+            $data = array(
+                'key' => $this->getPublicKey($store->getId()),
+                'private_key' => $this->getPrivateKey($store->getId()),
+            );
+
+            $this->get($endpoint, $data);
+        }
+    }
+
+    /**
+     * Send POST request to clerk API
+     *
+     * @param $data
+     * @param $endpoint
+     */
     public function sendData($data, $endpoint)
     {
         try {
@@ -58,5 +89,45 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
         } catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
+    }
+
+    /**
+     * Perform a GET request to the Clerk API
+     *
+     * @param $endpoint
+     * @param array $data
+     *
+     * @return Zend_Http_Response
+     */
+    private function get($endpoint, $data = array())
+    {
+        $url = $this->baseUrl . $endpoint;
+
+        $client = new Varien_Http_Client();
+        $response = $client->setUri($url)
+            ->setParameterGet($data)
+            ->request('GET');
+
+        return $response;
+    }
+
+    /**
+     * Get public key
+     *
+     * @return mixed
+     */
+    private function getPublicKey($storeId = null)
+    {
+        return Mage::getStoreConfig(self::XML_PATH_PUBLIC_KEY, $storeId);
+    }
+
+    /**
+     * Get private key
+     *
+     * @return mixed
+     */
+    private function getPrivateKey($storeId = null)
+    {
+        return Mage::getStoreConfig(self::XML_PATH_PRIVATE_KEY, $storeId);
     }
 }
