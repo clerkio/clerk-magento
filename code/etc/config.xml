@@ -112,19 +112,19 @@
             </settings>
             <search>
                 <active>0</active>
-                <template>search</template>
+                <template>search-page</template>
                 <load_more_text>Load more results</load_more_text>
                 <no_results_text>No results found</no_results_text>
             </search>
             <livesearch>
                 <active>0</active>
                 <show_categories>0</show_categories>
-                <template>livesearch</template>
+                <template>live-search</template>
             </livesearch>
             <powerstep>
                 <active>0</active>
                 <type>popup</type>
-                <templates>powerstep</templates>
+                <templates>power-step-others-also-bought</templates>
             </powerstep>
         </clerk>
     </default>
