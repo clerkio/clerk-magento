@@ -1,0 +1,12 @@
+{
+  "name": "clerk/magento",
+  "type": "magento-module",
+  "license":"MIT",
+  "description":"Clerk.io Turns More Browsers Into Buyers",
+  "authors":[
+    {
+      "name":"Rasmus Bech",
+      "email":"rbe@clerk.io"
+    }
+  ]
+}
