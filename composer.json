@@ -3,6 +3,10 @@
   "type": "magento-module",
   "license":"MIT",
   "description":"Clerk.io Turns More Browsers Into Buyers",
+  "require": {
+    "php": ">=5.3",
+    "magento-hackathon/magento-composer-installer": "*"
+  },
   "authors":[
     {
       "name":"Rasmus Bech",
