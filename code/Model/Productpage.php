@@ -13,8 +13,13 @@ class Clerk_Clerk_Model_Productpage
         $this->page = $page;
         $this->collection = Mage::getResourceModel('catalog/product_collection')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
+            ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH) //only include visible products
             ->setPageSize($limit)
             ->setCurPage($page);
+
+        //Only grab products in stock
+        Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($this->collection);
+
         $this->totalPages = $this->collection->getLastPageNumber();
         $this->fetch();
 

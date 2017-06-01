@@ -74,11 +74,5 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         if ($this->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_DISABLED) {
             $this->excludeReason = 'Product status says "disabled"';
         }
-
-        if ($this->getTypeId() == 'downloadable' || $this->getTypeId() == 'virtual') {
-            $this->excludeReason =
-                "Clerk module does not support product type '".
-                $this->getTypeId()."'";
-        }
     }
 }
