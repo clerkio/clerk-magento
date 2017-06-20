@@ -60,6 +60,14 @@
                     </clerk_catalog_product_attribute_update_after>
                 </observers>
             </catalog_product_attribute_update_after>
+            <clerkio_orderpage_format_item>
+                <observers>
+                    <clerk>
+                        <class>clerk/observer</class>
+                        <method>formatScpOrderItem</method>
+                    </clerk>
+                </observers>
+            </clerkio_orderpage_format_item>
         </events>
     </global>
     <frontend>

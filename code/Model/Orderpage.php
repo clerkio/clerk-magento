@@ -35,7 +35,7 @@ class Clerk_Clerk_Model_Orderpage
             if ($_item->getParentItem()) {
                 continue;
             }
-            $item = array();
+            $item = new Varien_Object();
             $total_before_discount = $_item->getRowTotalInclTax();
             $total_with_discount =
                 (float) ($total_before_discount - $_item->getDiscountAmount());
@@ -44,17 +44,30 @@ class Clerk_Clerk_Model_Orderpage
             $item['id'] = (int) $_item->getProductId();
             $item['quantity'] = (int) $_item->getQtyOrdered();
             $item['price'] = $actual_product_price;
-            $items[] = $item;
+
+            Mage::dispatchEvent('clerkio_orderpage_format_item', array(
+                    'output' => $item,
+                    'item' => $_item,
+                )
+            );
+
+            $items[] = $item->getData();
         }
 
-        $data = array();
+        $data = new Varien_Object();
         $data['id'] = $order->getIncrementId();
         $data['customer'] = (int) $order->getCustomerId();
         $data['products'] = $items;
         $data['email'] = (string) $order->getCustomerEmail();
         $data['time'] = (int) strtotime($order->getCreatedAt());
 
-        return $data;
+        Mage::dispatchEvent('clerkio_orderpage_format_order', array(
+                'output' => $data,
+                'order' => $order,
+            )
+        );
+
+        return $data->getData();
     }
 
     private function fetch()
