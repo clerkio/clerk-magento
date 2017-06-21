@@ -71,4 +71,33 @@ class Clerk_Clerk_Model_Observer
     {
         Mage::getModel('clerk/communicator')->syncAll();
     }
+
+    /**
+     * Allow the SCP ext configurable product id (cpid) to override
+     * the product id sent to clerk. By default, Magento will store
+     * two rows in sale_flat_order_item table; one for the simple +
+     * one for the associated configurable. SCP doesn't work like this
+     * so determine the configurable id from the product options instead.
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function formatScpOrderItem(Varien_Event_Observer $observer)
+    {
+        if (!Mage::helper('core')->isModuleEnabled('OrganicInternet_SimpleConfigurableProducts')) {
+            return;
+        }
+
+        /** @var array $output */
+        $output = $observer->getEvent()->getOutput();
+
+        /** @var Mage_Sales_Model_Order_Item $_item */
+        $_item = $observer->getEvent()->getItem();
+
+        /** @var array $buyRequest */
+        $buyRequest = $_item->getProductOptionByCode('info_buyRequest');
+
+        if ($buyRequest && isset($buyRequest['cpid'])) {
+            $output['id'] = (int) $buyRequest['cpid'];
+        }
+    }
 }
