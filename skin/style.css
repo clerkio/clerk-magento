@@ -154,3 +154,10 @@ RESULTS
     width: 30.8642%;
     margin-right: 3.7037%;
 }
+
+.checkout-cart-clerk .col4,
+.checkout-cart-clerk .col6,
+.checkout-cart-clerk .col8,
+.checkout-cart-clerk .col12 {
+    box-sizing: border-box;
+}

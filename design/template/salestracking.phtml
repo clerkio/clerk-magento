@@ -1,15 +1,12 @@
 <?php
-$increment_id = Mage::getSingleton('checkout/session')->getLastRealOrderId();
-$order = Mage::getModel('sales/order')->loadByIncrementId($increment_id);
-$data = Mage::getModel('clerk/orderpage')->orderFormatter($order);
-$items_json = isset($data['products']) ? json_encode($data['products'], JSON_NUMERIC_CHECK) : "";
+/** @var Clerk_Clerk_Block_SalesTracking $this */
 ?>
 <span
     class="clerk"
     data-api="log/sale"
-    data-key="<?php echo Mage::helper('clerk')->getSetting('clerk/general/publicapikey'); ?>"
-    data-sale="<?php echo isset($data['id']) ? $data['id'] : ""; ?>"
-    data-customer="<?php echo isset($data['customer']) ? $data['customer'] : ""; ?>"
-    data-products='<?php echo ($items_json) ? $items_json : ""; ?>'
-    data-email="<?php echo isset($data['email']) ? $data['email'] : ""; ?>">
+    data-key="<?php echo $this->getPublicKey(); ?>"
+    data-sale="<?php echo $this->getIncrementId(); ?>"
+    data-customer="<?php echo $this->getCustomerId(); ?>"
+    data-products='<?php echo $this->getProducts(); ?>'
+    data-email="<?php echo $this->getCustomerEmail(); ?>">
 </span>

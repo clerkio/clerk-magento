@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>2.2.0</version>
+            <version>3.0.0</version>
         </Clerk_Clerk>
     </modules>
     <global>
@@ -34,15 +34,6 @@
                     </clerk_catalog_product_save_commit_after>
                 </observers>
             </catalog_product_save_commit_after>
-            <catalog_product_delete_before>
-                <observers>
-                    <clerk_catalog_product_delete_before>
-                        <type>singleton</type>
-                        <class>clerk/observer</class>
-                        <method>syncProduct</method>
-                    </clerk_catalog_product_delete_before>
-                </observers>
-            </catalog_product_delete_before>
             <checkout_cart_add_product_complete>
                 <observers>
                     <clerk_checkout_cart_add_product_complete>
@@ -115,9 +106,10 @@
     </frontend>
     <default>
         <clerk>
-            <settings>
+            <general>
                 <active>0</active>
-            </settings>
+                <collect_emails>1</collect_emails>
+            </general>
             <search>
                 <active>0</active>
                 <template>search-page</template>
@@ -138,6 +130,14 @@
     </default>
     <adminhtml>
         <events>
+            <catalog_product_delete_before>
+                <observers>
+                    <clerk_catalog_product_delete_before>
+                        <class>clerk/observer</class>
+                        <method>deleteProduct</method>
+                    </clerk_catalog_product_delete_before>
+                </observers>
+            </catalog_product_delete_before>
             <catalogrule_rule_save_after>
                 <observers>
                     <clerk_catalogrule_rule_save_after>

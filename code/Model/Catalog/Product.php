@@ -63,7 +63,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
      */
     public function setExcludeReason()
     {
-        if ($this->getVisibility() == '1') {
+        if ($this->getVisibility() == Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE) {
             $this->excludeReason = 'Product not visible';
         }
 

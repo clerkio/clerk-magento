@@ -48,7 +48,7 @@ class Clerk_Clerk_CatalogSearch_ResultController extends Mage_CatalogSearch_Resu
         $this->getLayout()->getUpdate()->addUpdate('<remove name="enterprisesearch.leftnav"/>');
         $this->getLayout()->getUpdate()->addUpdate('<remove name="amshopby.navleft"/>');
         $this->loadLayout();
-        // $block = $this->getLayout()->createBlock('catalogsearch/result');
+
         $block = $this->getLayout()->createBlock('clerk/search');
         $block->setTemplate('clerk/search.phtml');
         $this->getLayout()->getBlock('content')->append($block);

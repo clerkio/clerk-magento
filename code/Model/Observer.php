@@ -34,6 +34,17 @@ class Clerk_Clerk_Model_Observer
     }
 
     /**
+     * Sync single product
+     *
+     * @param $observer
+     */
+    public function deleteProduct(Varien_Event_Observer $observer)
+    {
+        $productId = $observer->getEvent()->getProduct()->getId();
+        Mage::getModel('clerk/communicator')->removeProduct($productId);
+    }
+
+    /**
      * Mass sync products
      *
      * @param Varien_Event_Observer $observer

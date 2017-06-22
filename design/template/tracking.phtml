@@ -5,6 +5,7 @@
     window.clerkAsyncInit = function() {
         Clerk.config({
             key: '<?php echo $this->getPublicKey(); ?>',
+            collect_email: <?php echo $this->collectEmails() ? 'true' : 'false'; ?>,
             templateFormatters: {
                 form_key: function () {
                     return '<?php echo $this->getFormKey(); ?>';

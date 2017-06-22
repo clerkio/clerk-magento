@@ -23,7 +23,7 @@
                 </action>
             </block>
 
-            <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_tracking_script">
+            <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_powerpopup_script">
                 <action method="setTemplate" ifconfig="clerk/powerstep/active">
                     <template>clerk/powerpopup.phtml</template>
                 </action>
@@ -33,11 +33,7 @@
 
     <checkout_onepage_success>
         <reference name="content">
-            <block type="core/template" name="clerk_sales_tracking_script">
-                <action method="setTemplate" ifconfig="clerk/general/active">
-                    <template>clerk/salestracking.phtml</template>
-                </action>
-            </block>
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script" template="clerk/salestracking.phtml"/>
         </reference>
     </checkout_onepage_success>
 
@@ -52,5 +48,4 @@
             <block type="clerk/powerstep" template="clerk/powerpage.phtml"/>
         </reference>
     </checkout_cart_clerk>
-
 </layout>

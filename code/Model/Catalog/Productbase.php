@@ -142,6 +142,10 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         return floatval($price);
     }
 
+    /**
+     * Determine if product is on sale
+     * @return bool
+     */
     public function isOnSale()
     {
         return !Mage::helper('clerk')->floatEq(
@@ -150,21 +154,33 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         );
     }
 
+    /**
+     * @return float
+     */
     public function getClerkFinalPrice()
     {
         return $this->getClerkPrice(true, false);
     }
 
+    /**
+     * @return float
+     */
     public function getClerkFinalPriceInclTax()
     {
         return $this->getClerkPrice(true, true);
     }
 
+    /**
+     * @return float
+     */
     public function getClerkRetailPrice()
     {
         return $this->getClerkPrice(false, false);
     }
 
+    /**
+     * @return float
+     */
     public function getClerkRetailPriceInclTax()
     {
         return $this->getClerkPrice(false, true);
@@ -183,24 +199,37 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         }
     }
 
+    /**
+     * Get product manufacturer
+     *
+     * @return mixed
+     */
     public function getManufacturer()
     {
         return Mage::helper('clerk')->getAttributeSafe($this, 'manufacturer');
     }
 
+    /**
+     * Determine if product has tier price
+     *
+     * @return bool
+     */
     public function hasTierPrice()
     {
         return count($this->getTierPrice()) > 0;
     }
 
-    //If product is on sale, calculate the percentage.
+    /**
+     * If a product is on sale, calculate the reduction in percent
+     *
+     * @return float|int
+     */
     public function getDiscountPercent()
     {
-      if($this->isOnSale()) {
-      return round(1-(($this->getClerkPrice(true, false) / $this->getClerkPrice(false, false)) * 100));
-      }
-      else {
-        return 0;
-      }
+        if ($this->isOnSale()) {
+            return round((($this->getClerkRetailPrice() - $this->getClerkFinalPrice()) / $this->getClerkRetailPrice()) * 100);
+        } else {
+            return 0;
+        }
     }
 }

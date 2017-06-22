@@ -51,6 +51,30 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Remove product from Clerk
+     *
+     * @param $productId
+     */
+    public function removeProduct($productId)
+    {
+        $product = Mage::getModel('clerk/product')->load($productId);
+        Mage::log($productId . " deleted", null, 'clerktest.log');
+
+        foreach ($product->getStoreIds() as $storeId) {
+            $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);
+
+            if ($enabled) {
+                $data = array();
+                $data['products'] = $productId;
+                $data['key'] = $this->getPublicKey($storeId);
+                $data['private_key'] = $this->getPrivateKey($storeId);
+
+                $this->get('product/remove', $data);
+            }
+        }
+    }
+
+    /**
      * Make Clerk synchronize everything
      */
     public function syncAll()

@@ -62,6 +62,13 @@
                             <sort_order>30</sort_order>
                             <show_in_store>1</show_in_store>
                         </privateapikey>
+                        <collect_emails>
+                            <label>Collect Emails</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </collect_emails>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>

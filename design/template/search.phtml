@@ -1,5 +1,8 @@
+<?php
+/** @var Clerk_Clerk_Block_Search $this */
+?>
 <div class="page-title">
-  <h1><?php echo $this->titleText ?></h1>
+  <h1><?php echo $this->getTitleText(); ?></h1>
 </div>
 
 <span
@@ -17,11 +20,11 @@
 </div>
 
 <div id="clerk-search-no-results" style="display: none;">
-    <p class="note-msg"><?php echo $this->noResultsText ?></p>
+    <p class="note-msg"><?php echo $this->getNoResultsText(); ?></p>
 </div>
 
 <div id="clerk-search-load-more-button" style="text-align:center; display: none;">
-    <button class="button"><?php echo $this->loadMoreText ?></button>
+    <button class="button"><?php echo $this->getLoadMoreText(); ?></button>
 </div>
 
 <script type="text/javascript">
