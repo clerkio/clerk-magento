@@ -69,11 +69,7 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         // discounts.
         $price = $this->getPrice();
         if ($includeDiscounts) {
-            $price = Mage::getModel('catalogrule/rule')
-                ->calcProductPriceRule($this, $this->getFinalPrice());
-            if (!isset($price)) {
-                $price = $this->getFinalPrice();
-            }
+            $price = $this->getFinalPrice();
         }
 
         // Set price based on Magento product type. If product type is
