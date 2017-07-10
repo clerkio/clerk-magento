@@ -15,7 +15,8 @@ class Clerk_Clerk_Model_Productpage
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH) //only include visible products
             ->setPageSize($limit)
-            ->setCurPage($page);
+            ->setCurPage($page)
+            ->addStoreFilter();
 
         //Only grab products in stock
         Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($this->collection);
