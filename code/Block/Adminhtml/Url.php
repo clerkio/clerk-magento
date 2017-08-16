@@ -12,7 +12,7 @@ class Clerk_Clerk_Block_Adminhtml_Url extends Mage_Adminhtml_Block_System_Config
     {
         $code = Mage::getSingleton('adminhtml/config_data')->getStore();
         $store = Mage::getModel('core/store')->load($code);
-        $url = (string) $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'clerk/api/store/'.$store->getId();
+        $url = (string) $store->getBaseUrl().'clerk/api/store/'.$store->getId();
 
         return sprintf('<a href="%1$s" target="_blank">%1$s</a>', $url);
     }
