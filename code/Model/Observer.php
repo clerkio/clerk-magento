@@ -12,7 +12,9 @@ class Clerk_Clerk_Model_Observer
         if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
             return;
         }
+
         $request = $observer->getEvent()->getRequest();
+
         if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
             $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
         } else {
