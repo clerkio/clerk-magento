@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <menu>
+        <report>
+            <children>
+                <clerkroot translate="title" module="clerk">
+                    <title>Clerk</title>
+                    <sort_order>60</sort_order>
+                    <children>
+                        <dashboard translate="title" module="clerk">
+                            <title>Dashboard</title>
+                            <action>adminhtml/clerk/dashboard</action>
+                            <sort_order>0</sort_order>
+                        </dashboard>
+                        <search_insights translate="title" module="clerk">
+                            <title>Search Insights</title>
+                            <action>adminhtml/clerk/search</action>
+                            <sort_order>10</sort_order>
+                        </search_insights>
+                        <recommendations_insights translate="title" module="clerk">
+                            <title>Recommendations Insights</title>
+                            <action>adminhtml/clerk/recommendations</action>
+                            <sort_order>20</sort_order>
+                        </recommendations_insights>
+                        <email_insights translate="title" module="clerk">
+                            <title>Email Insights</title>
+                            <action>adminhtml/clerk/email</action>
+                            <sort_order>30</sort_order>
+                        </email_insights>
+                        <audience_insights translate="title" module="clerk">
+                            <title>Audience Insights</title>
+                            <action>adminhtml/clerk/audience</action>
+                            <sort_order>40</sort_order>
+                        </audience_insights>
+                    </children>
+                </clerkroot>
+            </children>
+        </report>
+    </menu>
     <acl>
         <resources>
             <admin>

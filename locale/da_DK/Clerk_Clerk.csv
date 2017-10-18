@@ -7,3 +7,5 @@
 "Search settings","Søge indstillinger"
 "Products","Produkter"
 "Categories","Kategorier"
+"Select a store to view dashboard","Vælg en butik for at se dashboard"
+"Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>","Clerk er ikke konfigureret for butikken. <a href=""%s"">Klik her for at konfigurere</a>"

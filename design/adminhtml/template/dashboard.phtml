@@ -1,0 +1,22 @@
+<?php
+/** @var Clerk_Clerk_Block_Adminhtml_Dashboard $this */
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->getTitle(); ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container">
+    <?php echo $this->getChildHtml('store_switcher'); ?>
+    <?php if ($this->getEmbedUrl()) : ?>
+        <iframe id="clerk-embed" src="<?php echo $this->getEmbedUrl(); ?>" frameborder="0" width="100%" height="2400"></iframe>
+    <?php else: ?>
+        <?php if (! $this->getStoreId()) : ?>
+            <p><?php echo $this->__('Select a store to view dashboard'); ?></p>
+        <?php else: ?>
+            <p><?php echo $this->__('Clerk is not configured for this store. <a href="%s">Click here to configure</a>', $this->getConfigureUrl()); ?></p>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>

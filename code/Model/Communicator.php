@@ -58,7 +58,6 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     public function removeProduct($productId)
     {
         $product = Mage::getModel('clerk/product')->load($productId);
-        Mage::log($productId . " deleted", null, 'clerktest.log');
 
         foreach ($product->getStoreIds() as $storeId) {
             $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);

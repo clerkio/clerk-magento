@@ -66,3 +66,6 @@ function clerk_fire_power_popup() {
 function clerk_close_power_popup() {
     Clerk.ui.popup('#clerk-power-popup').close();
 }
+
+//Disable built in autocomplete
+Varien.searchForm.prototype.initAutocomplete = function() { return; };

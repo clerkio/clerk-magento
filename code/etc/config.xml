@@ -104,31 +104,14 @@
             </clerk>
         </routers>
     </frontend>
-    <default>
-        <clerk>
-            <general>
-                <active>0</active>
-                <collect_emails>1</collect_emails>
-            </general>
-            <search>
-                <active>0</active>
-                <template>search-page</template>
-                <load_more_text>Load more results</load_more_text>
-                <no_results_text>No results found</no_results_text>
-            </search>
-            <livesearch>
-                <active>0</active>
-                <show_categories>0</show_categories>
-                <template>live-search</template>
-            </livesearch>
-            <powerstep>
-                <active>0</active>
-                <type>popup</type>
-                <templates>power-step-others-also-bought</templates>
-            </powerstep>
-        </clerk>
-    </default>
     <adminhtml>
+        <layout>
+            <updates>
+                <clerk>
+                    <file>clerk.xml</file>
+                </clerk>
+            </updates>
+        </layout>
         <events>
             <catalog_product_delete_before>
                 <observers>
@@ -165,4 +148,39 @@
             </modules>
         </translate>
     </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <clerk after="Mage_Adminhtml">Clerk_Clerk_Adminhtml</clerk>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <clerk>
+            <general>
+                <active>0</active>
+                <collect_emails>1</collect_emails>
+            </general>
+            <search>
+                <active>0</active>
+                <template>search-page</template>
+                <load_more_text>Load more results</load_more_text>
+                <no_results_text>No results found</no_results_text>
+            </search>
+            <livesearch>
+                <active>0</active>
+                <show_categories>0</show_categories>
+                <template>live-search</template>
+            </livesearch>
+            <powerstep>
+                <active>0</active>
+                <type>popup</type>
+                <templates>power-step-others-also-bought</templates>
+            </powerstep>
+        </clerk>
+    </default>
 </config>
