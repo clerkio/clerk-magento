@@ -37,6 +37,12 @@
         </reference>
     </checkout_onepage_success>
 
+    <checkout_klarna_success>
+        <reference name="content">
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script_klarna" template="clerk/salestracking.phtml"/>
+        </reference>
+    </checkout_klarna_success>
+
     <checkout_cart_clerk>
         <reference name="root">
             <action method="setTemplate" ifconfig="clerk/general/active">
