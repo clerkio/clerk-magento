@@ -37,11 +37,19 @@
         </reference>
     </checkout_onepage_success>
 
+    <!-- Klarna success page -->
     <checkout_klarna_success>
         <reference name="content">
             <block type="clerk/salesTracking" name="clerk_sales_tracking_script_klarna" template="clerk/salestracking.phtml"/>
         </reference>
     </checkout_klarna_success>
+
+    <!-- Trollweb klarna checkout -->
+    <trollweb_kco_index_success>
+        <reference name="content">
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script_klarna" template="clerk/salestracking.phtml"/>
+        </reference>
+    </trollweb_kco_index_success>
 
     <checkout_cart_clerk>
         <reference name="root">
