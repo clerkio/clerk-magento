@@ -10,7 +10,7 @@ a typo-tolerant, fast & relevant search experience and enables product
 recommendations.
 
 See features and benefits of [clerk.io for
-Magento](https://help.clerk.io/getting-started/magento).
+Magento](https://help.clerk.io/using-clerk-io-on-magento-1/getting-started/getting-started-on-magento-1).
 
 ![Latest version](https://img.shields.io/badge/latest-1.2.3-green.svg)
 ![Magento 1.9.x.x](https://img.shields.io/badge/magento-1.9-blue.svg)
@@ -28,7 +28,7 @@ To setup this module, you'll need an Clerk account.
   3. Install it on your Magento instance through magento connect, you have to
      relogin after install.
   4. Configure module, to your needs, find help at [help.clerk.io for
-     Magento](https://help.clerk.io/getting-started/magento).
+     Magento](https://help.clerk.io/using-clerk-io-on-magento-1/getting-started/getting-started-on-magento-1).
 
 
 Contribute to the Extension
