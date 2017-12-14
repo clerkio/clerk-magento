@@ -93,9 +93,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
         $days = $this->getIntParam('days');
-        $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
-        $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
-        $this->getResponse()->setBody(json_encode($page->array));
+
+        if (Mage::getStoreConfigFlag('clerk/general/disable_order_synchronization')) {
+            $this->getResponse()->setBody(json_encode(array()));
+        } else {
+            $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
+            $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
+            $this->getResponse()->setBody(json_encode($page->array));
+        }
     }
 
     /* Authentication interceptor, will die() is something is wrong */

@@ -22,12 +22,12 @@
                     <template>clerk/tracking.phtml</template>
                 </action>
             </block>
-
             <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_powerpopup_script">
                 <action method="setTemplate" ifconfig="clerk/powerstep/active">
                     <template>clerk/powerpopup.phtml</template>
                 </action>
             </block>
+            <block type="clerk/exitIntent" name="clerk_exit_intent_script" template="clerk/exitintent.phtml" after="-"/>
         </reference>
     </default>
 

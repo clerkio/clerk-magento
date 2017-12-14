@@ -10,7 +10,7 @@
         <clerk module="clerk">
             <label>Settings</label>
             <tab>clerk</tab>
-            <sort_order>1000</sort_order>
+            <sort_order>0</sort_order>
             <show_in_store>1</show_in_store>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
@@ -18,7 +18,7 @@
                 <general module="clerk">
                     <label>Clerk settings</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1000</sort_order>
+                    <sort_order>10</sort_order>
                     <show_in_store>1</show_in_store>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
@@ -69,6 +69,13 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_emails>
+                        <disable_order_synchronization>
+                            <label>Disable Order Synchronization</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </disable_order_synchronization>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>
@@ -89,7 +96,7 @@
                 <search module="clerk">
                     <label>Search settings</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1100</sort_order>
+                    <sort_order>20</sort_order>
                     <show_in_store>1</show_in_store>
                     <fields>
                         <active>
@@ -134,7 +141,7 @@
                 <livesearch module="clerk">
                     <label>Live search settings</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1200</sort_order>
+                    <sort_order>30</sort_order>
                     <show_in_store>1</show_in_store>
                     <fields>
                         <active>
@@ -150,7 +157,7 @@
                                 <active>1</active>
                             </depends>
                             <frontend_type>select</frontend_type>
-                            <sort_order>10</sort_order>
+                            <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </show_categories>
@@ -161,7 +168,7 @@
                             </depends>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
-                            <sort_order>20</sort_order>
+                            <sort_order>30</sort_order>
                             <show_in_store>1</show_in_store>
                         </template>
                     </fields>
@@ -169,7 +176,7 @@
                 <powerstep module="clerk">
                     <label>Power step settings</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1300</sort_order>
+                    <sort_order>40</sort_order>
                     <show_in_store>1</show_in_store>
                     <fields>
                         <active>
@@ -201,6 +208,31 @@
                         </templates>
                     </fields>
                 </powerstep>
+                <exit_intent module="clerk">
+                    <label>Exit intent settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active>
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </active>
+                        <template>
+                            <label>Template</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                    </fields>
+                </exit_intent>
             </groups>
         </clerk>
     </sections>

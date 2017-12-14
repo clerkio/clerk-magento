@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
         </Clerk_Clerk>
     </modules>
     <global>
@@ -164,6 +164,7 @@
             <general>
                 <active>0</active>
                 <collect_emails>1</collect_emails>
+                <disable_order_synchronization>0</disable_order_synchronization>
             </general>
             <search>
                 <active>0</active>
@@ -181,6 +182,10 @@
                 <type>popup</type>
                 <templates>power-step-others-also-bought</templates>
             </powerstep>
+            <exit_intent>
+                <active>0</active>
+                <template>exit-intent-visitor-recommendations</template>
+            </exit_intent>
         </clerk>
     </default>
 </config>

@@ -1,0 +1,9 @@
+<?php
+/** @var Clerk_Clerk_Block_ExitIntent $this */
+?>
+<?php if ($this->shouldShow()) : ?>
+<span class="clerk"
+      data-template="@<?php echo $this->getExitIntentTemplate(); ?>"
+      data-exit-intent="true">
+</span>
+<?php endif; ?>
