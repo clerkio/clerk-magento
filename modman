@@ -8,3 +8,4 @@ design/adminhtml/layout/clerk.xml   app/design/adminhtml/default/default/layout/
 tests                               tests
 locale/da_DK/Clerk_Clerk.csv        app/locale/da_DK/Clerk_Clerk.csv
 locale/it_IT/Clerk_Clerk.csv        app/locale/it_IT/Clerk_Clerk.csv
+locale/nl_NL/Clerk_Clerk.csv        app/locale/nl_NL/Clerk_Clerk.csv
