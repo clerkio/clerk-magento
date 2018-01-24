@@ -2,11 +2,37 @@
 
 class Clerk_Clerk_Model_Orderpage
 {
+    const XML_PATH_COLLECT_EMAILS = 'clerk/general/collect_emails';
+
+    /**
+     * @var int
+     */
     private $limit;
+
+    /**
+     * @var int
+     */
     public $totalPages;
+
+    /**
+     * @var array
+     */
     public $array = array();
+
+    /**
+     * @var Mage_Sales_Model_Entity_Order_Collection
+     */
     private $collection;
 
+    /**
+     * Load order collection
+     *
+     * @param $page
+     * @param $limit
+     * @param int $delta
+     * @return $this
+     * @throws Mage_Core_Model_Store_Exception
+     */
     public function load($page, $limit, $delta = 1500)
     {
         $this->limit = $limit;
@@ -28,6 +54,12 @@ class Clerk_Clerk_Model_Orderpage
         return $this;
     }
 
+    /**
+     * Format order for sync
+     *
+     * @param $order
+     * @return mixed
+     */
     public function orderFormatter($order)
     {
         $items = array();
@@ -41,9 +73,9 @@ class Clerk_Clerk_Model_Orderpage
                 (float) ($total_before_discount - $_item->getDiscountAmount());
             $actual_product_price =
                 (float) ($total_with_discount / (int) $_item->getQtyOrdered());
-            $item['id'] = (int) $_item->getProductId();
-            $item['quantity'] = (int) $_item->getQtyOrdered();
-            $item['price'] = $actual_product_price;
+            $item->setId((int) $_item->getProductId());
+            $item->setQuantity((int) $_item->getQtyOrdered());
+            $item->setPrice($actual_product_price);
 
             Mage::dispatchEvent('clerkio_orderpage_format_item', array(
                     'output' => $item,
@@ -55,11 +87,14 @@ class Clerk_Clerk_Model_Orderpage
         }
 
         $data = new Varien_Object();
-        $data['id'] = $order->getIncrementId();
-        $data['customer'] = (int) $order->getCustomerId();
-        $data['products'] = $items;
-        $data['email'] = (string) $order->getCustomerEmail();
-        $data['time'] = (int) strtotime($order->getCreatedAt());
+        $data->setId($order->getIncrementId());
+        $data->setCustomer((int) $order->getCustomerId());
+        $data->setProducts($items);
+        $data->setTime((int) strtotime($order->getCreatedAt()));
+
+        if (Mage::getStoreConfigFlag(self::XML_PATH_COLLECT_EMAILS)) {
+            $data->setEmail((string) $order->getCustomerEmail());
+        }
 
         Mage::dispatchEvent('clerkio_orderpage_format_order', array(
                 'output' => $data,
@@ -70,6 +105,9 @@ class Clerk_Clerk_Model_Orderpage
         return $data->getData();
     }
 
+    /**
+     * Loop order collection and format individual orders
+     */
     private function fetch()
     {
         foreach ($this->collection as $order) {
