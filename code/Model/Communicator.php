@@ -54,6 +54,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      * Remove product from Clerk
      *
      * @param $productId
+     * @throws Mage_Core_Exception
      */
     public function removeProduct($productId)
     {
@@ -70,6 +71,17 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
                 $this->get('product/remove', $data);
             }
+        }
+    }
+
+    public function getFacetAttributes($store)
+    {
+        $data = array();
+        $data['key'] = $this->getPublicKey($store);
+        $data['private_key'] = $this->getPrivateKey($store);
+
+        if ($store) {
+            return $this->get('product/facets', $data);
         }
     }
 
@@ -121,15 +133,20 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      * @param array $data
      *
      * @return Zend_Http_Response
+     * @throws Mage_Core_Exception
      */
     private function get($endpoint, $data = array())
     {
         $url = $this->baseUrl . $endpoint;
 
         $client = new Varien_Http_Client();
-        $response = $client->setUri($url)
-            ->setParameterGet($data)
-            ->request('GET');
+        try {
+            $response = $client->setUri($url)
+                ->setParameterGet($data)
+                ->request('GET');
+        } catch (Zend_Http_Client_Exception $e) {
+            Mage::throwException($e->getMessage());
+        }
 
         return $response;
     }

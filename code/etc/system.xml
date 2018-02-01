@@ -138,6 +138,54 @@
                         </no_results_text>
                     </fields>
                 </search>
+                <faceted_search module="clerk">
+                    <label>Faceted Search</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>clerk/adminhtml_system_config_form_facetedSearchFieldset</frontend_model>
+                    <sort_order>25</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active>
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </active>
+                        <attributes>
+                            <label>Attributes</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_facetAttributes</source_model>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </attributes>
+                        <multiselect_attributes>
+                            <label>Multiselect Attributes</label>
+                            <frontend_model>clerk/adminhtml_system_config_form_multiselectAttributesField</frontend_model>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_multiselectFacetAttributes</source_model>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <can_be_empty>1</can_be_empty>
+                        </multiselect_attributes>
+                        <titles>
+                            <label>Labels</label>
+                            <frontend_model>clerk/adminhtml_system_config_form_attributeLabels</frontend_model>
+                            <backend_model>clerk/system_config_backend_attributeLabels</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </titles>
+                    </fields>
+                </faceted_search>
                 <livesearch module="clerk">
                     <label>Live search settings</label>
                     <frontend_type>text</frontend_type>

@@ -52,6 +52,12 @@ class Clerk_Clerk_CatalogSearch_ResultController extends Mage_CatalogSearch_Resu
         $block = $this->getLayout()->createBlock('clerk/search');
         $block->setTemplate('clerk/search.phtml');
         $this->getLayout()->getBlock('content')->append($block);
+
+        //Append faceted search filters if enabled
+        $block = $this->getLayout()->createBlock('core/template');
+        $block->setTemplate('clerk/facets.phtml');
+        $this->getLayout()->getBlock('left')->append($block);
+
         $this->_initLayoutMessages('catalog/session');
         $this->_initLayoutMessages('checkout/session');
         $this->renderLayout();

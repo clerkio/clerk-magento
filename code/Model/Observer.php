@@ -113,4 +113,21 @@ class Clerk_Clerk_Model_Observer
             $output['id'] = (int) $buyRequest['cpid'];
         }
     }
+
+    /**
+     * Ensure that we've got a 2column layout if faceted search is enabled
+     * @param Varien_Event_Observer $observer
+     */
+    public function layoutGenerateBlocksAfter(Varien_Event_Observer $observer)
+    {
+        /** @var Mage_Core_Model_Layout $layout */
+        $layout = $observer->getEvent()->getLayout();
+        /** @var Mage_Core_Controller_Varien_Action $action */
+        $action = $observer->getEvent()->getAction();
+
+        if (Mage::getStoreConfigFlag(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ENABLED) && $action->getFullActionName() === 'catalogsearch_result_index') {
+            $root = $layout->getBlock('root');
+            $root->setTemplate('page/2columns-left.phtml');
+        }
+    }
 }

@@ -4,19 +4,10 @@
 <div class="page-title">
   <h1><?php echo $this->getTitleText(); ?></h1>
 </div>
-
-<span
-    id="clerk-search"
-    class="clerk"
-    data-template="@<?php echo $this->template ?>"
-    data-offset="0"
-    data-target="#clerk-search-results"
-    data-after-render="_clerk_after_load_event"
-    data-query="<?php echo htmlentities($_GET['q']); ?>">
-</span>
+<span <?php echo $this->getSpanAttributes(); ?>></span>
 
 <div class="category-products">
-    <ul id="clerk-search-results" class="products-grid"></ul>
+    <ul id="<?php echo $this->getTargetId(); ?>" class="products-grid"></ul>
 </div>
 
 <div id="clerk-search-no-results" style="display: none;">

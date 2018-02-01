@@ -28,7 +28,6 @@
             <catalog_product_save_commit_after>
                 <observers>
                     <clerk_catalog_product_save_commit_after>
-                        <type>singleton</type>
                         <class>clerk/observer</class>
                         <method>syncProduct</method>
                     </clerk_catalog_product_save_commit_after>
@@ -37,7 +36,6 @@
             <checkout_cart_add_product_complete>
                 <observers>
                     <clerk_checkout_cart_add_product_complete>
-                        <type>singleton</type>
                         <class>clerk/observer</class>
                         <method>itemAddedToCart</method>
                     </clerk_checkout_cart_add_product_complete>
@@ -53,10 +51,10 @@
             </catalog_product_attribute_update_after>
             <clerkio_orderpage_format_item>
                 <observers>
-                    <clerk>
+                    <clerk_orderpage_format_item>
                         <class>clerk/observer</class>
                         <method>formatScpOrderItem</method>
-                    </clerk>
+                    </clerk_orderpage_format_item>
                 </observers>
             </clerkio_orderpage_format_item>
         </events>
@@ -103,6 +101,16 @@
                 </args>
             </clerk>
         </routers>
+        <events>
+            <controller_action_layout_generate_blocks_after>
+                <observers>
+                    <clerk_controller_action_layout_generate_blocks_after>
+                        <class>clerk/observer</class>
+                        <method>layoutGenerateBlocksAfter</method>
+                    </clerk_controller_action_layout_generate_blocks_after>
+                </observers>
+            </controller_action_layout_generate_blocks_after>
+        </events>
     </frontend>
     <adminhtml>
         <layout>
