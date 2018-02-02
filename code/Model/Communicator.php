@@ -74,6 +74,13 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * Get facet attributes
+     *
+     * @param $store
+     * @return Zend_Http_Response
+     * @throws Mage_Core_Exception
+     */
     public function getFacetAttributes($store)
     {
         $data = array();
@@ -83,6 +90,24 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
         if ($store) {
             return $this->get('product/facets', $data);
         }
+    }
+
+    /**
+     * Validate public & private keys
+     *
+     * @param $publicKey
+     * @param $privateKey
+     * @return Zend_Http_Response
+     * @throws Mage_Core_Exception
+     */
+    public function keysValid($publicKey, $privateKey)
+    {
+        $data = [
+            'key' => $publicKey,
+            'private_key' => $privateKey,
+        ];
+
+        return $this->get('client/account/info', $data);
     }
 
     /**

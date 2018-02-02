@@ -14,8 +14,12 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_FacetedSearchFieldset exten
         if (! $this->isConfigured()) {
             $html .= Mage::helper('clerk')->__('Public and private key must be set in order to enable faceted search');
         } else {
-            foreach ($element->getSortedElements() as $field) {
-                $html.= $field->toHtml();
+            if (! $this->keysValid()) {
+                $html .= Mage::helper('clerk')->__('Public or private key invalid');
+            } else {
+                foreach ($element->getSortedElements() as $field) {
+                    $html.= $field->toHtml();
+                }
             }
         }
 
@@ -27,13 +31,32 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_FacetedSearchFieldset exten
     }
 
     /**
-     * Determine if public & private keys are set
+     * Determine if public & private keys are set and valid
      *
      * @return bool
      */
     protected function isConfigured()
     {
         return (bool) (Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_PUBLIC_KEY, $this->getStore()) && Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_PRIVATE_KEY, $this->getStore()));
+    }
+
+    /**
+     * Determine if supplied keys are valid
+     *
+     * @return bool
+     */
+    protected function keysValid()
+    {
+        $publicKey = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_PUBLIC_KEY, $this->getStore());
+        $privateKey = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_PRIVATE_KEY, $this->getStore());
+
+        $keysValid = json_decode(Mage::getModel('clerk/communicator')->keysValid($publicKey, $privateKey)->getBody());
+
+        if ($keysValid->status === 'error') {
+            return false;
+        }
+
+        return true;
     }
 
     /**

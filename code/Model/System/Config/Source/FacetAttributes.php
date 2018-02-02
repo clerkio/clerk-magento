@@ -10,16 +10,17 @@ class Clerk_Clerk_Model_System_Config_Source_FacetAttributes
     public function toOptionArray()
     {
         $attributes = $this->getFacetAttributes();
-
         $values = [];
 
-        foreach ($attributes->facets as $attribute => $facet) {
-            $values[] = [
-                'value' => $attribute,
-                'label' => $attribute,
-            ];
+        if ($attributes) {
+            foreach ($attributes->facets as $attribute => $facet) {
+                $values[] = [
+                    'value' => $attribute,
+                    'label' => $attribute,
+                ];
+            }
         }
-
+        
         return $values;
     }
 
