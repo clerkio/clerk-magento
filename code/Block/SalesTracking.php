@@ -57,15 +57,15 @@ class Clerk_Clerk_Block_SalesTracking extends Mage_Core_Block_Template
     public function getProducts()
     {
         $order = $this->_getOrder();
-        $products = array();
+        $products = [];
 
         foreach ($order->getAllVisibleItems() as $item) {
             /** @var Mage_Sales_Model_Order_Item $item */
-            $products[] = array(
+            $products[] = [
                 'id' => $item->getProductId(),
                 'quantity' => (int) $item->getQtyOrdered(),
                 'price' => $item->getBasePriceInclTax(),
-            );
+            ];
         }
 
         return json_encode($products);

@@ -49,4 +49,10 @@
             </block>
         </reference>
     </adminhtml_clerk_audience>
+
+    <editor>
+        <reference name="head">
+            <action method="addJs"><script>clerk/adminhtml/widget.js</script></action>
+        </reference>
+    </editor>
 </layout>

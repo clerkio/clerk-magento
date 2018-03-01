@@ -7,9 +7,6 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      */
     protected $baseUrl = 'https://api.clerk.io/v2/';
 
-    protected $_addEndpoint = 'https://api.clerk.io/v2/product/add';
-    protected $_removeEndpoint = 'https://api.clerk.io/v2/product/remove';
-
     const XML_PATH_PUBLIC_KEY = 'clerk/general/publicapikey';
     const XML_PATH_PRIVATE_KEY = 'clerk/general/privateapikey';
 
@@ -35,16 +32,16 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
             $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
             $product = Mage::getModel('clerk/product')->load($productId);
             if ($isDeleteEvent || $product->isExcluded()) {
-                $data = array();
+                $data = [];
                 $data['id'] = $productId;
                 $data['key'] = $this->getPublicKey($storeId);
                 $data['private_key'] = $this->getPrivateKey($storeId);
-                $this->sendData($data, $this->_removeEndpoint);
+                $this->post('product/remove', $data);
             } else {
                 $data = $product->getClerkExportData();
                 $data['key'] = $this->getPublicKey($storeId);
                 $data['private_key'] = $this->getPrivateKey($storeId);
-                $this->sendData($data, $this->_addEndpoint);
+                $this->post('product/add', $data);
             }
             $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         }
@@ -64,7 +61,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
             $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);
 
             if ($enabled) {
-                $data = array();
+                $data = [];
                 $data['products'] = $productId;
                 $data['key'] = $this->getPublicKey($storeId);
                 $data['private_key'] = $this->getPrivateKey($storeId);
@@ -83,7 +80,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      */
     public function getFacetAttributes($store)
     {
-        $data = array();
+        $data = [];
         $data['key'] = $this->getPublicKey($store);
         $data['private_key'] = $this->getPrivateKey($store);
 
@@ -118,34 +115,55 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
         $endpoint = 'client/account/importer/start';
 
         foreach (Mage::app()->getStores() as $store) {
-            $data = array(
+            $data = [
                 'key' => $this->getPublicKey($store->getId()),
                 'private_key' => $this->getPrivateKey($store->getId()),
-            );
+            ];
 
             $this->get($endpoint, $data);
         }
     }
 
     /**
-     * Send POST request to clerk API
+     * Get Clerk content
+     *
+     * @param $storeId
+     * @return Zend_Http_Response
+     * @throws Mage_Core_Exception
+     */
+    public function getContent($storeId)
+    {
+        $endpoint = 'client/account/content/list';
+
+        $data = [
+            'key' => $this->getPublicKey($storeId),
+            'private_key' => $this->getPrivateKey($storeId),
+        ];
+
+        return $this->get($endpoint, $data);
+    }
+
+    /**
+     * Perform a POST request to Clerk API
      *
      * @param $data
      * @param $endpoint
      */
-    public function sendData($data, $endpoint)
+    public function post($endpoint, $data = [])
     {
+        $url = $this->baseUrl . $endpoint;
+
         try {
-            $ch = curl_init($endpoint);
+            $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
             curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
-            curl_exec($ch);
+            $response = curl_exec($ch);
         } catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
@@ -160,11 +178,11 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      * @return Zend_Http_Response
      * @throws Mage_Core_Exception
      */
-    private function get($endpoint, $data = array())
+    private function get($endpoint, $data = [])
     {
         $url = $this->baseUrl . $endpoint;
-
         $client = new Varien_Http_Client();
+
         try {
             $response = $client->setUri($url)
                 ->setParameterGet($data)

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<widgets>
+    <clerk_widget_content type="clerk/widget_content" translate="name description" module="clerk">
+        <name>Clerk Content</name>
+        <description>Orders and Returns Search Form</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <store>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Store</label>
+                <type>select</type>
+                <source_model>clerk/system_config_source_store</source_model>
+                <helper_block>
+                    <type>clerk/adminhtml_widget_store</type>
+                </helper_block>
+            </store>
+        </parameters>
+        <supported_blocks>
+            <left_column>
+                <block_name>left</block_name>
+                <template>
+                    <default>default_template</default>
+                </template>
+            </left_column>
+            <right_column>
+                <block_name>right</block_name>
+                <template>
+                    <default>default_template</default>
+                </template>
+            </right_column>
+        </supported_blocks>
+    </clerk_widget_content>
+</widgets>

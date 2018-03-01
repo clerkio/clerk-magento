@@ -58,11 +58,35 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return abs($f1 - $f2) < 0.01;
     }
 
+    public function getEndpointForContent($storeId, $contentId)
+    {
+        $contentResponse = Mage::getModel('clerk/communicator')->getContent($storeId);
+        $contentResult = json_decode($contentResponse->getBody());
+
+        if ($contentResult) {
+            foreach ($contentResult->contents as $content) {
+                if ($content->type !== 'html') {
+                    continue;
+                }
+
+                if ($content->id === $contentId) {
+                    return $content->api;
+                }
+            }
+        }
+    }
+
+    /**
+     * Deteremine if a product id is valid
+     *
+     * @param $productId
+     * @return bool
+     */
     public function isProductIdValid($productId)
     {
         $product = Mage::getModel('catalog/product')->load($productId);
 
-        return (bool) $product->getName();
+        return (bool) $product->getId();
     }
 
     /**
@@ -72,7 +96,8 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getAllStores()
     {
-        $data = array();
+        $data = [];
+
         foreach (Mage::app()->getWebsites() as $website) {
             foreach ($website->getGroups() as $group) {
                 $stores = $group->getStores();
@@ -99,5 +124,90 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         return trim((string) Mage::getStoreConfig($path, $store));
+    }
+
+    public function getParametersForEndpoint($endpoint)
+    {
+        $endpointMap = [
+            'search/search' => [
+                'query',
+                'limit'
+            ],
+            'search/predictive' => [
+                'query',
+                'limit'
+            ],
+            'search/categories' => [
+                'query',
+                'limit'
+            ],
+            'search/suggestions' => [
+                'query',
+                'limit'
+            ],
+            'search/popular' => [
+                'query',
+                'limit'
+            ],
+            'recommendations/popular' => [
+                'limit'
+            ],
+            'recommendations/trending' => [
+                'limit'
+            ],
+            'recommendations/currently_watched' => [
+                'limit'
+            ],
+            'recommendations/popular' => [
+                'limit'
+            ],
+            'recommendations/keywords' => [
+                'limit',
+                'keywords'
+            ],
+            'recommendations/complementary' => [
+                'limit',
+                'products'
+            ],
+            'recommendations/substituting' => [
+                'limit',
+                'products'
+            ],
+            'recommendations/category/popular' => [
+                'limit',
+                'category'
+            ],
+            'recommendations/category/trending' => [
+                'limit',
+                'category'
+            ],
+            'recommendations/visitor/history' => [
+                'limit',
+            ],
+            'recommendations/visitor/complementary' => [
+                'limit',
+            ],
+            'recommendations/visitor/substituting' => [
+                'limit',
+            ],
+            'recommendations/customer/history' => [
+                'limit',
+                'email'
+            ],
+            'recommendations/customer/complementary' => [
+                'limit',
+                'email'
+            ],
+            'recommendations/customer/substituting' => [
+                'limit',
+                'email'
+            ],
+        ];
+
+        if (array_key_exists($endpoint, $endpointMap)) {
+            return $endpointMap[$endpoint];
+        }
+
+        return false;
     }
 }
