@@ -2,7 +2,7 @@
 <widgets>
     <clerk_widget_content type="clerk/widget_content" translate="name description" module="clerk">
         <name>Clerk Content</name>
-        <description>Orders and Returns Search Form</description>
+        <description>Insert Clerk Content</description>
         <is_email_compatible>1</is_email_compatible>
         <parameters>
             <store>

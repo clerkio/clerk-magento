@@ -16,7 +16,7 @@
             <show_in_website>1</show_in_website>
             <groups>
                 <general module="clerk">
-                    <label>Clerk settings</label>
+                    <label>Clerk Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
                     <show_in_store>1</show_in_store>
@@ -76,6 +76,13 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
+                        <sync_cms_pages>
+                            <label>Send CMS pages</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </sync_cms_pages>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>
@@ -94,7 +101,7 @@
                     </fields>
                 </general>
                 <search module="clerk">
-                    <label>Search settings</label>
+                    <label>Search Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>20</sort_order>
                     <show_in_store>1</show_in_store>
@@ -107,7 +114,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </active>
                         <template>
-                            <label>Template</label>
+                            <label>Content</label>
                             <depends>
                                 <active>1</active>
                             </depends>
@@ -187,7 +194,7 @@
                     </fields>
                 </faceted_search>
                 <livesearch module="clerk">
-                    <label>Live search settings</label>
+                    <label>Live Search Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>30</sort_order>
                     <show_in_store>1</show_in_store>
@@ -210,7 +217,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </show_categories>
                         <template>
-                            <label>Template</label>
+                            <label>Content</label>
                             <depends>
                                 <active>1</active>
                             </depends>
@@ -222,7 +229,7 @@
                     </fields>
                 </livesearch>
                 <powerstep module="clerk">
-                    <label>Power step settings</label>
+                    <label>Powerstep Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>40</sort_order>
                     <show_in_store>1</show_in_store>
@@ -245,7 +252,7 @@
                             <show_in_store>1</show_in_store>
                         </type>
                         <templates>
-                            <label>Templates</label>
+                            <label>Contents</label>
                             <depends>
                                 <active>1</active>
                             </depends>
@@ -257,7 +264,7 @@
                     </fields>
                 </powerstep>
                 <exit_intent module="clerk">
-                    <label>Exit intent settings</label>
+                    <label>Exit Intent Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>50</sort_order>
                     <show_in_store>1</show_in_store>
@@ -270,7 +277,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </active>
                         <template>
-                            <label>Template</label>
+                            <label>Content</label>
                             <depends>
                                 <active>1</active>
                             </depends>
@@ -281,6 +288,84 @@
                         </template>
                     </fields>
                 </exit_intent>
+                <category module="clerk">
+                    <label>Category Page Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enable</label>
+                            <comment>Enable Clerk.io Category Slider</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <content>
+                            <label>Content</label>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </content>
+                    </fields>
+                </category>
+                <product module="clerk">
+                    <label>Product Page Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>70</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enable</label>
+                            <comment>Enable Clerk.io Product Page Slider</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <content>
+                            <label>Content</label>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </content>
+                    </fields>
+                </product>
+                <cart module="clerk">
+                    <label>Cart Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>80</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enable</label>
+                            <comment>Enable Clerk.io Cart Slider</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <content>
+                            <label>Content</label>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </content>
+                    </fields>
+                </cart>
             </groups>
         </clerk>
     </sections>

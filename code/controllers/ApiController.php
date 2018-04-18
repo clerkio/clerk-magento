@@ -75,21 +75,29 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($data));
     }
 
-    /* Endpoint for category pagination */
+    /**
+     * Endpoint for category import
+     */
     public function categoryAction()
     {
         $this->authenticate();
+
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
-        $page = Mage::getModel('clerk/categorypage')->load($page, $limit);
-        $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
-        $this->getResponse()->setBody(json_encode($page->array));
+
+        $categories = Mage::getModel('clerk/categorypage')->load($page, $limit);
+
+        $this->getResponse()->setHeader('Total-Page-Count', $categories->totalPages);
+        $this->getResponse()->setBody(json_encode($categories->array));
     }
 
-    /* Endpoint for order pagination */
+    /**
+     * Endpoint for order import
+     */
     public function orderAction()
     {
         $this->authenticate();
+
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
         $days = $this->getIntParam('days');
@@ -103,13 +111,18 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
-    /* Authentication interceptor, will die() is something is wrong */
+    /**
+     * Validate request
+     *
+     * @throws Zend_Controller_Request_Exception
+     */
     private function authenticate()
     {
         $this->setStore();
         $this->getResponse()->setBody(json_encode(array('Error' => 'Not Authorized')));
         $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
         $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+
         if (!$secret or $input != trim($secret)) {
             $this->getResponse()->setHeader('HTTP/1.0', '401', true);
             die($this->getResponse());

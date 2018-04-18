@@ -62,4 +62,24 @@
             <block type="clerk/powerstep" template="clerk/powerpage.phtml"/>
         </reference>
     </checkout_cart_clerk>
+
+    <checkout_cart_index>
+        <reference name="content">
+            <block type="clerk/widget_content" name="clerk_cart_after">
+                <action method="setBlockLocation">
+                    <value>cart</value>
+                </action>
+            </block>
+        </reference>
+    </checkout_cart_index>
+
+    <catalog_product_view>
+        <reference name="content">
+            <block type="clerk/widget_content" name="clerk_product_after">
+                <action method="setBlockLocation">
+                    <value>product</value>
+                </action>
+            </block>
+        </reference>
+    </catalog_product_view>
 </layout>

@@ -2,6 +2,9 @@
 
 class Clerk_Clerk_Model_Observer
 {
+    const XML_PATH_CATEGORY_ENABLED = 'clerk/category/enabled';
+    const XML_PATH_CATEGORY_CONTENT = 'clerk/category/content';
+
     /**
      * The function is run by the observer when a new product is added to the cart.
      *
@@ -117,6 +120,7 @@ class Clerk_Clerk_Model_Observer
     /**
      * Ensure that we've got a 2column layout if faceted search is enabled
      * @param Varien_Event_Observer $observer
+     * @throws Varien_Exception
      */
     public function layoutGenerateBlocksAfter(Varien_Event_Observer $observer)
     {
@@ -128,6 +132,28 @@ class Clerk_Clerk_Model_Observer
         if (Mage::getStoreConfigFlag(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ENABLED) && $action->getFullActionName() === 'catalogsearch_result_index') {
             $root = $layout->getBlock('root');
             $root->setTemplate('page/2columns-left.phtml');
+        }
+    }
+
+    /**
+     * @param Varien_Event_Observer $observer
+     */
+    public function coreBlockAbstractToHtmlBefore(Varien_Event_Observer $observer)
+    {
+        if (Mage::getStoreConfigFlag(self::XML_PATH_CATEGORY_ENABLED)) {
+            /** @var Mage_Core_Block_Abstract $block */
+            $block = $observer->getEvent()->getBlock();
+            $layout = $block->getLayout();
+
+            if (in_array('catalog_category_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'product_list') {
+                $category = Mage::registry('current_category');
+                $categoryId = sprintf('category/%s', $category->getId());
+
+                $content = $layout->createBlock('clerk/widget_content');
+                $content->setContent(Mage::getStoreConfig(self::XML_PATH_CATEGORY_CONTENT));
+                $content->setCategoryId($categoryId);
+                echo $content->toHtml();
+            }
         }
     }
 }
