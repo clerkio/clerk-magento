@@ -82,13 +82,75 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     {
         $this->authenticate();
 
-        $page = $this->getIntParam('page');
+        $pageparam = $this->getIntParam('page') ;
         $limit = $this->getIntParam('limit');
 
-        $categories = Mage::getModel('clerk/categorypage')->load($page, $limit);
+        $collection = new Varien_Data_Collection();
+        $paginator = new Clerk_Clerk_Model_Paginator($collection);
 
-        $this->getResponse()->setHeader('Total-Page-Count', $categories->totalPages);
-        $this->getResponse()->setBody(json_encode($categories->array));
+        $categories = Mage::getModel('catalog/category')
+            ->getCollection()
+            ->addIsActiveFilter()
+            ->addFieldToFilter('level', 2)
+            ->addAttributeToSelect('name')
+            ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
+            ->setPageSize($limit)
+            ->setCurPage($pageparam);
+
+        foreach ($categories as $category) {
+            //Get children categories
+            $children = $category->getChildrenCategories()
+                ->addIsActiveFilter()
+                ->getAllIds();
+
+            $data = array(
+                'id' => (int) $category->getId(),
+                'name' => $category->getName(),
+                'url' => $category->getUrl(),
+                'subcategories' => array_map('intval', $children),
+            );
+
+            $item = new Varien_Object();
+            $item->setData($data);
+
+            $collection->addItem($item);
+        }
+
+        if (Mage::getStoreConfigFlag('clerk/general/sync_cms_pages')) {
+            $pages = Mage::getModel('cms/page')->getCollection();
+
+            foreach ($pages as $page) {
+                $data = array(
+                    'id' => (int) $page->getId() + 10000,
+                    'name' => $page->getTitle(),
+                    'url' => Mage::helper('cms/page')->getPageUrl($page->getId()),
+                    'subcategories' => [],
+                );
+
+                $item = new Varien_Object();
+                $item->setData($data);
+
+                $collection->addItem($item);
+            }
+        }
+
+        $collection->setPageSize($limit);
+        $collection->setCurPage($pageparam);
+
+        $this->getResponse()->setHeader('Total-Page-Count', $collection->getLastPageNumber());
+
+        if ($pageparam > $collection->getLastPageNumber()) {
+            $this->getResponse()->setBody(json_encode([]));
+        } else {
+            $iterator = $paginator->getIterator();
+
+            $items = [];
+            foreach ($iterator as $item) {
+                $items[] = $item->toArray();
+            }
+
+            $this->getResponse()->setBody(json_encode($items));
+        }
     }
 
     /**
@@ -153,6 +215,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     private function setStore()
     {
         $storeid = $this->getRequest()->getParam('store');
+        
         if (isset($storeid) && is_numeric($storeid)) {
             try {
                 Mage::app()->getStore(intval($storeid));

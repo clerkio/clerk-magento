@@ -3,8 +3,11 @@
 class Clerk_Clerk_Model_Categorypage
 {
     private $limit;
+
     public $totalPages;
+
     public $array = array();
+
     private $collection;
 
     public function load($page, $limit)
@@ -16,9 +19,11 @@ class Clerk_Clerk_Model_Categorypage
             ->getCollection()
             ->addIsActiveFilter()
             ->addFieldToFilter('path', array('like' => "1/$rootId/%"))
+            ->addAttributeToSelect('name')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
+
         $this->totalPages = $this->collection->getLastPageNumber();
         $this->fetch();
 
@@ -27,24 +32,19 @@ class Clerk_Clerk_Model_Categorypage
 
     private function fetch()
     {
-        $rootId = Mage::app()->getStore()->getRootCategoryId();
-
         foreach ($this->collection as $category) {
-            $category = Mage::getModel('catalog/category')->load($category->getId());
-            $children = Mage::getModel('catalog/category')
-                ->getCollection()
-                ->addIsActiveFilter()
+            /** @var Mage_Catalog_Model_Category $category */
 
-                ->addFieldToFilter('parent_id', array('eq' => $category->getId()));
-            $childrenArray = array();
-            foreach ($children as $child) {
-                $childrenArray[] = $child->getId();
-            }
+            //Get children categories
+            $children = $category->getChildrenCategories()
+                ->addIsActiveFilter()
+                ->getAllIds();
+
             $data = array(
                 'id' => (int) $category->getId(),
                 'name' => $category->getName(),
                 'url' => $category->getUrl(),
-                'subcategories' => array_map('intval', $childrenArray),
+                'subcategories' => array_map('intval', $children),
             );
 
             $this->array[] = $data;
