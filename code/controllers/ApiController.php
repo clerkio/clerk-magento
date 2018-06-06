@@ -117,7 +117,10 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
 
         if (Mage::getStoreConfigFlag('clerk/general/sync_cms_pages')) {
-            $pages = Mage::getModel('cms/page')->getCollection();
+            $pages = Mage::getModel('cms/page')
+                ->getCollection()
+                ->addFieldToFilter('is_active', '1')
+                ->addStoreFilter(Mage::app()->getStore()->getId());
 
             foreach ($pages as $page) {
                 $data = array(
