@@ -26,7 +26,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
         $data->setAge((int) $this->getAge());
         $data->setCategories(array_map('intval', $this->getCategoryIds()));
-        $data->setDescription($this->getDescription());
+        $data->setDescription($this->getDescription() ? $this->getDescription() : '');
         $data->setHasTierprice($this->hasTierPrice());
         $data->setId((int) $this->getId());
         $data->setImage($this->getClerkImageUrl());
