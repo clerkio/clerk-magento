@@ -84,6 +84,10 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         $pageparam = $this->getIntParam('page') ;
         $limit = $this->getIntParam('limit');
+        
+        $storeId = Mage::app()->getStore()->getId();
+        $rootCategoryId = Mage::app()->getStore($storeId)->getRootCategoryId();
+
 
         $collection = new Varien_Data_Collection();
         $paginator = new Clerk_Clerk_Model_Paginator($collection);
@@ -91,6 +95,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $categories = Mage::getModel('catalog/category')
             ->getCollection()
             ->addIsActiveFilter()
+            ->addFieldToFilter('path', array('like'=> "1/$rootCategoryId/%"))
             ->addFieldToFilter('level', 2)
             ->addAttributeToSelect('name')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
@@ -119,7 +124,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         if (Mage::getStoreConfigFlag('clerk/general/sync_cms_pages')) {
             $pages = Mage::getModel('cms/page')
                 ->addFieldToFilter('is_active', '1')
-                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->addStoreFilter($storeId)
                 ->getCollection();
 
             foreach ($pages as $page) {
