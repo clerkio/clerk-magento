@@ -63,7 +63,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         $contentResponse = Mage::getModel('clerk/communicator')->getContent($storeId);
         $contentResult = json_decode($contentResponse->getBody());
 
-        if ($contentResult) {
+        if ($contentResult && $contentResult->status === 'ok') {
             foreach ($contentResult->contents as $content) {
                 if ($content->type !== 'html') {
                     continue;
@@ -74,6 +74,8 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
         }
+
+        return '';
     }
 
     /**
@@ -126,6 +128,12 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return trim((string) Mage::getStoreConfig($path, $store));
     }
 
+    /**
+     * Get parameters for endpoint
+     *
+     * @param $endpoint
+     * @return array
+     */
     public function getParametersForEndpoint($endpoint)
     {
         $endpointMap = [
@@ -208,6 +216,6 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
             return $endpointMap[$endpoint];
         }
 
-        return false;
+        return [];
     }
 }

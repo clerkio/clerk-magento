@@ -15,7 +15,7 @@ class Clerk_Clerk_Adminhtml_Clerk_WidgetController extends Mage_Adminhtml_Contro
 
         $response = [];
 
-        if ($contentResult) {
+        if ($contentResult && $contentResult->status === 'ok') {
             $response['success'] = false;
             $response['message'] = $contentResult->message;
 

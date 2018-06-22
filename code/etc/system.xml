@@ -260,6 +260,7 @@
                             <validate>required-entry</validate>
                             <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
+                            <comment>Use comma-separated list to use multiple contents</comment>
                         </templates>
                     </fields>
                 </powerstep>

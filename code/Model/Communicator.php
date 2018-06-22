@@ -181,7 +181,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     private function get($endpoint, $data = [])
     {
         $url = $this->baseUrl . $endpoint;
-        $client = new Varien_Http_Client();
+        $client = new Zend_Http_Client();
 
         try {
             $response = $client->setUri($url)
