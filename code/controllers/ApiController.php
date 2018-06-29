@@ -93,7 +93,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $categories = Mage::getModel('catalog/category')
             ->getCollection()
             ->addIsActiveFilter()
-            ->addFieldToFilter('level', 2)
             ->addAttributeToSelect('name')
             ->addAttributeToFilter('path', array('like' => "1/{$rootCategoryId}/%"))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
