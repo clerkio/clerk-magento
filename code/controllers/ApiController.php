@@ -14,25 +14,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         return parent::preDispatch();
     }
 
-    /*
-     * This endpoint will list stores and are used to tell clerk
-     * which which data to import. E.g.
+    /**
+     * This endpoint will list stores
      *
-     *     [{
-     *         "active": "1",
-     *         "id": "1",
-     *         "name": "English"
-     *     }, {
-     *         "active": "1",
-     *         "id": "2",
-     *         "name": "French"
-     *     }, {
-     *         "active": "1",
-     *         "id": "3",
-     *         "name": "German"
-     *     }]
-     *
-     * */
+     * @throws Zend_Controller_Request_Exception
+     */
     public function storeAction()
     {
         $this->authenticate();
@@ -47,17 +33,20 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($data));
     }
 
-    /* Endpoint for products, can be used either for pagination or to fetch a
-     * single product. */
+    /**
+     * Product endpoint for collection and single products
+     *
+     * @throws Zend_Controller_Request_Exception
+     */
     public function productAction()
     {
-        // Will set the store from param, e.g. ?store=2.
         $this->authenticate();
 
         // Handler for product endpoint. E.g.
         // http://store.com/clerk/api/product/id/24
-        $id = $this->getRequest()->getParam('id');
-        if (isset($id)) {
+        $id = $this->getRequest()->getParam('id', false);
+
+        if ($id) {
             $id = $this->getIntParam('id');
             if (Mage::helper('clerk')->isProductIdValid($id)) {
                 $data = Mage::getModel('clerk/product')->load($id)->getInfo();
@@ -77,12 +66,15 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
     /**
      * Endpoint for category import
+     *
+     * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Controller_Request_Exception
      */
     public function categoryAction()
     {
         $this->authenticate();
 
-        $pageparam = $this->getIntParam('page') ;
+        $pageparam = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
 
         $collection = new Varien_Data_Collection();
@@ -101,9 +93,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         foreach ($categories as $category) {
             //Get children categories
-            $children = $category->getChildrenCategories()
-                ->addIsActiveFilter()
-                ->getAllIds();
+            $children = $category->getResource()->getChildren($category);
 
             $data = array(
                 'id' => (int) $category->getId(),
@@ -140,11 +130,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
 
         $collection->setPageSize($limit);
-        $collection->setCurPage($pageparam);
+        $collection->setCurPage($pageparam + 1);
 
-        $this->getResponse()->setHeader('Total-Page-Count', $collection->getLastPageNumber());
+        $this->getResponse()->setHeader('Total-Page-Count', $collection->getLastPageNumber() - 1);
 
-        if ($pageparam > $collection->getLastPageNumber()) {
+        if ($pageparam > $collection->getLastPageNumber() - 1) {
             $this->getResponse()->setBody(json_encode([]));
         } else {
             $iterator = $paginator->getIterator();
@@ -160,6 +150,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
     /**
      * Endpoint for order import
+     *
+     * @throws Zend_Controller_Request_Exception
      */
     public function orderAction()
     {
@@ -187,10 +179,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     {
         $this->setStore();
         $this->getResponse()->setBody(json_encode(array('Error' => 'Not Authorized')));
+
         $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
         $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
 
-        if (!$secret or $input != trim($secret)) {
+        if (!$secret || $input != trim($secret)) {
             $this->getResponse()->setHeader('HTTP/1.0', '401', true);
             die($this->getResponse());
         }
@@ -212,19 +205,20 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             die($this->getResponse());
         }
 
-        return intval($value);
+        return (int) $value;
     }
 
-    /* Sets store for App object, will die with error if store param is not
-     * present or if store is found */
+    /**
+     * Set current store
+     */
     private function setStore()
     {
         $storeid = $this->getRequest()->getParam('store');
         
         if (isset($storeid) && is_numeric($storeid)) {
             try {
-                Mage::app()->getStore(intval($storeid));
-                Mage::app()->setCurrentStore(intval($storeid));
+                Mage::app()->getStore((int) $storeid);
+                Mage::app()->setCurrentStore((int) $storeid);
 
                 return;
             } catch (Exception $e) {
@@ -233,6 +227,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         } else {
             $data = array('Error' => "Query string param 'store' is required");
         }
+
         $this->getResponse()->setBody(json_encode($data));
         die($this->getResponse());
     }
