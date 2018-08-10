@@ -4,6 +4,8 @@ class Clerk_Clerk_Model_Observer
 {
     const XML_PATH_CATEGORY_ENABLED = 'clerk/category/enabled';
     const XML_PATH_CATEGORY_CONTENT = 'clerk/category/content';
+    const XML_PATH_PRODUCT_ENABLED = 'clerk/product/enabled';
+    const XML_PATH_PRODUCT_CONTENT = 'clerk/product/content';
 
     /**
      * The function is run by the observer when a new product is added to the cart.
@@ -17,6 +19,10 @@ class Clerk_Clerk_Model_Observer
         }
 
         $request = $observer->getEvent()->getRequest();
+
+        if ($request->getParam('skip_powerstep', false)) {
+            return;
+        }
 
         if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
             $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
@@ -146,14 +152,52 @@ class Clerk_Clerk_Model_Observer
             $layout = $block->getLayout();
 
             if (in_array('catalog_category_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'product_list') {
-                $category = Mage::registry('current_category');
-                $categoryId = sprintf('category/%s', $category->getId());
-
                 $content = $layout->createBlock('clerk/widget_content');
                 $content->setContent(Mage::getStoreConfig(self::XML_PATH_CATEGORY_CONTENT));
-                $content->setCategoryId($categoryId);
+                $content->setCategoryId($this->getCategoryId());
+
                 echo $content->toHtml();
             }
         }
+
+        if (Mage::getStoreConfigFlag(self::XML_PATH_PRODUCT_ENABLED)) {
+            /** @var Mage_Core_Block_Abstract $block */
+            $block = $observer->getEvent()->getBlock();
+            $layout = $block->getLayout();
+
+            if (in_array('catalog_product_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'content') {
+                $contents = array_map('trim', explode(',', Mage::getStoreConfig(self::XML_PATH_PRODUCT_CONTENT)));
+
+                //Loop contents and append blocks
+                foreach ($contents as $content) {
+                    $contentBlock = $layout->createBlock('clerk/widget_content');
+                    $contentBlock->setContent($content);
+                    $contentBlock->setProductId($this->getProductId());
+
+                    $block->append($contentBlock);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get current product id
+     *
+     * @return string
+     */
+    public function getProductId()
+    {
+        $product = Mage::registry('current_product');
+        $productId = sprintf('product/%s', $product->getId());
+
+        return $productId;
+    }
+
+    public function getCategoryId()
+    {
+        $category = Mage::registry('current_category');
+        $categoryId = sprintf('category/%s', $category->getId());
+
+        return $categoryId;
     }
 }

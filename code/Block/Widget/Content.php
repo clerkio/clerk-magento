@@ -4,8 +4,6 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
 {
     const XML_PATH_CART_ENABLED = 'clerk/cart/enabled';
     const XML_PATH_CART_CONTENT = 'clerk/cart/content';
-    const XML_PATH_PRODUCT_ENABLED = 'clerk/product/enabled';
-    const XML_PATH_PRODUCT_CONTENT = 'clerk/product/content';
 
     /**
      * Set template
@@ -24,12 +22,6 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
     {
         if ($this->getBlockLocation() === 'cart') {
             if (! Mage::getStoreConfigFlag(self::XML_PATH_CART_ENABLED)) {
-                return;
-            }
-        }
-
-        if ($this->getBlockLocation() === 'product') {
-            if (! Mage::getStoreConfigFlag(self::XML_PATH_PRODUCT_ENABLED)) {
                 return;
             }
         }
@@ -82,11 +74,6 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
             $spanAttributes['data-products'] = $this->getCartProducts();
         }
 
-        if ($this->getBlockLocation() === 'product') {
-            $spanAttributes['data-template'] = '@' . $this->getProductContent();
-            $spanAttributes['data-products'] = $this->getCurrentProduct();
-        }
-
         foreach ($spanAttributes as $attribute => $value) {
             $output .= ' ' . $attribute . '=\'' . $value . '\'';
         }
@@ -105,16 +92,6 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
     }
 
     /**
-     * Get content for product page
-     *
-     * @return mixed
-     */
-    public function getProductContent()
-    {
-        return Mage::getStoreConfig(self::XML_PATH_PRODUCT_CONTENT);
-    }
-
-    /**
      * Get product IDs from cart
      *
      * @return string
@@ -125,15 +102,5 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
         $ids = Mage::getSingleton('checkout/cart')->getProductIds();
 
         return json_encode($ids);
-    }
-
-    /**
-     * Get current product id
-     *
-     * @return string
-     */
-    public function getCurrentProduct()
-    {
-        return json_encode((array) Mage::registry('current_product')->getId());
     }
 }

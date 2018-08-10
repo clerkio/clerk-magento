@@ -73,13 +73,13 @@
         </reference>
     </checkout_cart_index>
 
-    <catalog_product_view>
-        <reference name="content">
-            <block type="clerk/widget_content" name="clerk_product_after">
-                <action method="setBlockLocation">
-                    <value>product</value>
-                </action>
-            </block>
-        </reference>
-    </catalog_product_view>
+    <!--<catalog_product_view>-->
+        <!--<reference name="content">-->
+            <!--<block type="clerk/widget_content" name="clerk_product_after">-->
+                <!--<action method="setBlockLocation">-->
+                    <!--<value>product</value>-->
+                <!--</action>-->
+            <!--</block>-->
+        <!--</reference>-->
+    <!--</catalog_product_view>-->
 </layout>
