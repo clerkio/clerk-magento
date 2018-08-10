@@ -200,7 +200,7 @@
             </powerstep>
             <exit_intent>
                 <active>0</active>
-                <template>exit-intent-visitor-recommendations</template>
+                <template>exit-intent</template>
             </exit_intent>
             <category>
                 <enabled>0</enabled>
