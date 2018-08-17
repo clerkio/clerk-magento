@@ -76,13 +76,6 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
-                        <sync_cms_pages>
-                            <label>Send CMS pages</label>
-                            <frontend_type>select</frontend_type>
-                            <sort_order>50</sort_order>
-                            <show_in_store>1</show_in_store>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                        </sync_cms_pages>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>

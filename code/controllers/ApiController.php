@@ -74,11 +74,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     {
         $this->authenticate();
 
-        $pageparam = $this->getIntParam('page');
+        $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
-
-        $collection = new Varien_Data_Collection();
-        $paginator = new Clerk_Clerk_Model_Paginator($collection);
 
         $rootCategoryId = Mage::app()->getStore()->getRootCategoryId();
 
@@ -89,7 +86,9 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             ->addAttributeToFilter('path', array('like' => "1/{$rootCategoryId}/%"))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
-            ->setCurPage($pageparam);
+            ->setCurPage($page + 1);
+
+        $items = [];
 
         foreach ($categories as $category) {
             //Get children categories
@@ -102,48 +101,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'subcategories' => array_map('intval', $children),
             );
 
-            $item = new Varien_Object();
-            $item->setData($data);
-
-            $collection->addItem($item);
+            $items[] = $data;
         }
 
-        if (Mage::getStoreConfigFlag('clerk/general/sync_cms_pages')) {
-            $pages = Mage::getModel('cms/page')
-                ->getCollection()
-                ->addFieldToFilter('is_active', '1')
-                ->addStoreFilter(Mage::app()->getStore()->getId());
+        $this->getResponse()->setHeader('Total-Page-Count', $categories->getLastPageNumber() - 1);
 
-            foreach ($pages as $page) {
-                $data = array(
-                    'id' => (int) $page->getId() + 10000,
-                    'name' => $page->getTitle(),
-                    'url' => Mage::helper('cms/page')->getPageUrl($page->getId()),
-                    'subcategories' => [],
-                );
-
-                $item = new Varien_Object();
-                $item->setData($data);
-
-                $collection->addItem($item);
-            }
-        }
-
-        $collection->setPageSize($limit);
-        $collection->setCurPage($pageparam + 1);
-
-        $this->getResponse()->setHeader('Total-Page-Count', $collection->getLastPageNumber() - 1);
-
-        if ($pageparam > $collection->getLastPageNumber() - 1) {
+        if ($page > $categories->getLastPageNumber() - 1) {
             $this->getResponse()->setBody(json_encode([]));
         } else {
-            $iterator = $paginator->getIterator();
-
-            $items = [];
-            foreach ($iterator as $item) {
-                $items[] = $item->toArray();
-            }
-
             $this->getResponse()->setBody(json_encode($items));
         }
     }
