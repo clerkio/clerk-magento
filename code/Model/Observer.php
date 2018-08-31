@@ -151,7 +151,7 @@ class Clerk_Clerk_Model_Observer
             $block = $observer->getEvent()->getBlock();
             $layout = $block->getLayout();
 
-            if (in_array('catalog_category_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'product_list') {
+            if ($layout && in_array('catalog_category_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'product_list') {
                 $content = $layout->createBlock('clerk/widget_content');
                 $content->setContent(Mage::getStoreConfig(self::XML_PATH_CATEGORY_CONTENT));
                 $content->setCategoryId($this->getCategoryId());
@@ -165,7 +165,7 @@ class Clerk_Clerk_Model_Observer
             $block = $observer->getEvent()->getBlock();
             $layout = $block->getLayout();
 
-            if (in_array('catalog_product_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'content') {
+            if ($layout && in_array('catalog_product_view', $layout->getUpdate()->getHandles()) && $block->getNameInLayout() === 'content') {
                 $contents = array_map('trim', explode(',', Mage::getStoreConfig(self::XML_PATH_PRODUCT_CONTENT)));
 
                 //Loop contents and append blocks
