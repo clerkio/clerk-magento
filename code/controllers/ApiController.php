@@ -3,15 +3,47 @@
 class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * Set content-type header
+     * Set content-type header and validate keys
      *
      * @return Mage_Core_Controller_Front_Action
+     * @throws Zend_Controller_Request_Exception
      */
     public function preDispatch()
     {
         $this->getResponse()->setHeader('Content-type', 'application/json');
 
+        $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
+        $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+
+        if (!$secret || $input !== trim($secret)) {
+            $response = [
+                'error' => [
+                    'code' => 403,
+                    'message' => 'Invalid public or private key supplied'
+                ]
+            ];
+
+            $this->getResponse()
+                ->setHeader('HTTP/1.1', '403', true)
+                ->setBody(json_encode($response))
+                ->sendResponse();
+            exit;
+        }
+
         return parent::preDispatch();
+    }
+
+    /**
+     * Return Clerk module version
+     */
+    public function versionAction()
+    {
+        $response = [
+            'platform' => 'Magento',
+            'version' => (string) Mage::getConfig()->getNode()->modules->Clerk_Clerk->version,
+        ];
+
+        $this->getResponse()->setBody(json_encode($response));
     }
 
     /**
@@ -21,8 +53,9 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function storeAction()
     {
-        $this->authenticate();
+        $this->setStore();
         $data = array();
+
         foreach (Mage::helper('clerk')->getAllStores() as $store) {
             $data[] = array(
                 'id' => $store->getId(),
@@ -30,6 +63,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'active' => (bool) Mage::getStoreConfig('clerk/general/active', $store),
             );
         }
+
         $this->getResponse()->setBody(json_encode($data));
     }
 
@@ -40,7 +74,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function productAction()
     {
-        $this->authenticate();
+        $this->setStore();
 
         // Handler for product endpoint. E.g.
         // http://store.com/clerk/api/product/id/24
@@ -51,17 +85,23 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             if (Mage::helper('clerk')->isProductIdValid($id)) {
                 $data = Mage::getModel('clerk/product')->load($id)->getInfo();
             } else {
-                $data = array('Error' => 'Product not found');
+                $response = [
+                    'error' => [
+                        'code' => 404,
+                        'message' => 'Product not found',
+                        'product_id' => $id
+                    ]
+                ];
             }
         } else {
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
             $page = Mage::getModel('clerk/productpage')->load((int)$page, $limit);
-            $data = $page->array;
+            $response = $page->array;
             $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
         }
 
-        $this->getResponse()->setBody(json_encode($data));
+        $this->getResponse()->setBody(json_encode($response));
     }
 
     /**
@@ -72,7 +112,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function categoryAction()
     {
-        $this->authenticate();
+        $this->setStore();
 
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
@@ -120,7 +160,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function orderAction()
     {
-        $this->authenticate();
+        $this->setStore();
 
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
@@ -136,38 +176,38 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Validate request
+     * Get int parameter, show error message if supplied param is not a number
      *
-     * @throws Zend_Controller_Request_Exception
+     * @param $key
+     * @param null $errmsg
+     * @return int
      */
-    private function authenticate()
-    {
-        $this->setStore();
-        $this->getResponse()->setBody(json_encode(array('Error' => 'Not Authorized')));
-
-        $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
-        $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
-
-        if (!$secret || $input != trim($secret)) {
-            $this->getResponse()->setHeader('HTTP/1.0', '401', true);
-            die($this->getResponse());
-        }
-    }
-
-    /* Helper function extracting params, this function also does the
-     * errorhandling is param is missing */
     private function getIntParam($key, $errmsg = null)
     {
         $value = $this->getRequest()->getParam($key);
+
         if (!is_numeric($value)) {
-            $this->getResponse()->setHeader('HTTP/1.0', '404', true);
+            $this->getResponse()->setHeader('HTTP/1.0', '400', true);
+
             if (isset($errmsg)) {
-                $data = array('Error' => $errmsg);
+                $response = [
+                    'error' => [
+                        'code' => 400,
+                        'message' => $errmsg,
+                        'value' => $value
+                    ]
+                ];
             } else {
-                $data = array('Error' => "Query string '".$key."' is required and must be integer");
+                $response = [
+                    'error' => [
+                        'code' => 400,
+                        'message' => "Query string '".$key."' is required and must be integer",
+                        'value' => $value
+                    ]
+                ];
             }
-            $this->getResponse()->setBody(json_encode($data));
-            die($this->getResponse());
+            $this->getResponse()->setBody(json_encode($response))->sendResponse();
+            exit;
         }
 
         return (int) $value;
@@ -187,13 +227,24 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
                 return;
             } catch (Exception $e) {
-                $data = array('Error' => 'Store not found');
+                $response = [
+                    'error' => [
+                        'code' => 400,
+                        'message' => 'Store not found',
+                        'store_id' => $storeid
+                    ]
+                ];
             }
         } else {
-            $data = array('Error' => "Query string param 'store' is required");
+            $response = [
+                'error' => [
+                    'code' => 400,
+                    'message' => 'Query string param "store" is required'
+                ]
+            ];
         }
 
-        $this->getResponse()->setBody(json_encode($data));
-        die($this->getResponse());
+        $this->getResponse()->setBody(json_encode($response))->sendResponse();
+        exit;
     }
 }

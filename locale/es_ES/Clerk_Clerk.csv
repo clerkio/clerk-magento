@@ -1,0 +1,37 @@
+"Clerk.io Dashboard","Clerk.io - Panel de Herramientas"
+Clerk.io - Audience Insights,Clerk.io - Información sobre el Público
+Clerk.io - Email Insights,Clerk.io - Información sobre Correo Electronicos
+Clerk.io - Recommendations Insights,Clerk.io - Información sobre Recomendaciones
+Clerk.io - Search Insights,Clerk.io - Información sobre Busqueda / Estadísticas de búsqueda
+"Public and private key must be set in order to enable faceted searchsearch""",La clave pública y privada deben configurarse para permitir la búsqueda facetada
+Public or private key invalid,Clave pública o privada inválida
+Search results for '%s',Resultados de busqueda de '%s'
+Page,Página
+Popup,Ventanas Emergentes
+-- Please Select --,Por favor seleccione
+Content,Contenido
+Clerk Content Options,Opciones de contenido de Clerk
+Product,Producto
+Select Product...,Seleccione el Producto
+Category,Categoría
+Select Category...,Seleccione la Categoría
+Select a store to view dashboard,Seleccione una tienda para ver el panel de herramientas
+"Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>href=""""%s"""">Click here to configure</a>""","Clerk no está configurado para esta tienda <a href=""%s"">Haga clic aquí para configurar</a>href=""""%s"""">Haga clic aquí para configurar</a>"""
+Filters,Filtros
+Categories,Categorías
+Products,Productos
+%s was successfully added to your shopping cart.,%s se ha agragado a su canasta de compras.
+View Shopping Cart,Ver canasta de compras
+You have %s products in your shopping cart,Tiene %s productos en su canasta de compras
+Total,Total
+Continue Shopping,Seguir comprando
+Checkout,Caja de pago / Preceder a la caja de pago / Prosiga a la caja de pago
+Clerk,Vendedor
+Dashboard,Panel de herramientas
+Search Insights,Información sobre búsquedas / Estadísticas de búsqueda
+Recommendations Insights,Información sobre recomendaciones
+Email Insights,Información sobre correos electronicos /
+Audience Insights,Información sobre el público
+Configuration Section,Sección de configuración
+Clerk Content,Contenido de Clerk
+Insert Clerk Content,Insertar contenido de clerk

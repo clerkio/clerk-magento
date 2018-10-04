@@ -1,7 +1,37 @@
-"%s was successfully added to your shopping cart.","%s è stato aggiunto con successo al tuo carrello"
-"View Shopping Cart","Vedi carrello"
-"You have %s products in your shopping cart","Tu hai %s prodotti nel tuo corrello"
-"Total","Totale"
-"Continue Shopping","Continua l'acquisto"
-"Checkout","Vai alla cassa"
-"Search settings","impostazioni ricerca"
+Clerk.io Dashboard,Pannello di Controllo di Clerk.io
+Clerk.io - Audience Insights,Clerk.io - Analisi dell'Audience
+Clerk.io - Email Insights,Clerk.io - Analisi delle Email
+Clerk.io - Recommendations Insights,Clerk.io - Analisi delle Recommendation
+Clerk.io - Search Insights,Clerk.io - Analisi delle Ricerche
+Public and private key must be set in order to enable faceted searchsearch,La public e private key devono essere inserite nel sistema per attivare la ricerca con filtri
+Public or private key invalid,La public o private key non e' valida
+Search results for '%s',"Risultati di ricerca per ""%s"""
+Page,Pagina
+Popup,Popup
+-- Please Select --,-- Per favore seleziona --
+Content,Contenuto
+Clerk Content Options,Opzioni del Contenuto di Clerk
+Product,Prodotto
+Select Product...,Seleziona un Prodotto...
+Category,Categoria
+Select Category...,Sleeziona Categoria...
+Select a store to view dashboard,Seleziona una negozio per accedere al suo pannellodi controllo
+"Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>","Clerk non e' selezionato in questo negozio. <a href=""%s"">Clicca qui per configurare</a>"
+Filters,Filtri
+Categories,Categorie
+Products,Prodotti
+%s was successfully added to your shopping cart.,%s e' stato aggiunto con successo al tuo carrello.
+View Shopping Cart,Il tuo Carrello
+You have %s products in your shopping cart,Hai %s prodotti nel tuo carrello
+Total,Totale
+Continue Shopping,Continua gli Acquisti
+Checkout,Cassa
+Clerk,Clerk
+Dashboard,Pannello di Controllo
+Search Insights,Analisi delle Ricerche
+Recommendations Insights,Analisi delle Raccomandazioni
+Email Insights,Analisi delle Email
+Audience Insights,Analisi dell'Audience
+Configuration Section,Sezione della Configurazione
+Clerk Content,Contenuto di Clerk
+Insert Clerk Content,Inserisci il Contenuto di Clerk

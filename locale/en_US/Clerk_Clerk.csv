@@ -1,9 +1,37 @@
+"Clerk.io Dashboard","Clerk.io Dashboard"
+"Clerk.io - Audience Insights","Clerk.io - Audience Insights"
+"Clerk.io - Email Insights","Clerk.io - Email Insights"
+"Clerk.io - Recommendations Insights","Clerk.io - Recommendations Insights"
+"Clerk.io - Search Insights","Clerk.io - Search Insights"
+"Public and private key must be set in order to enable faceted search","Public and private key must be set in order to enable faceted search"
+"Public or private key invalid","Public or private key invalid"
+"Search results for '%s'","Search results for '%s'"
+Page,Page
+Popup,Popup
+"-- Please Select --","-- Please Select --"
+Content,Content
+"Clerk Content Options","Clerk Content Options"
+Product,Product
+"Select Product...","Select Product..."
+Category,Category
+"Select Category...","Select Category..."
+"Select a store to view dashboard","Select a store to view dashboard"
+"Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>","Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>"
+Filters,Filters
+Categories,Categories
+Products,Products
 "%s was successfully added to your shopping cart.","%s was successfully added to your shopping cart."
 "View Shopping Cart","View Shopping Cart"
 "You have %s products in your shopping cart","You have %s products in your shopping cart"
-"Total","Total"
+Total,Total
 "Continue Shopping","Continue Shopping"
-"Checkout","Checkout"
-"Search settings","Search settings"
-"Categories","Categories"
-"Products","Products"
+Checkout,Checkout
+Clerk,Clerk
+Dashboard,Dashboard
+"Search Insights","Search Insights"
+"Recommendations Insights","Recommendations Insights"
+"Email Insights","Email Insights"
+"Audience Insights","Audience Insights"
+"Configuration Section","Configuration Section"
+"Clerk Content","Clerk Content"
+"Insert Clerk Content","Insert Clerk Content"

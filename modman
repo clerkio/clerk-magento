@@ -6,6 +6,8 @@ design/frontend/layout/clerk.xml    app/design/frontend/base/default/layout/cler
 design/adminhtml/template           app/design/adminhtml/default/default/template/clerk
 design/adminhtml/layout/clerk.xml   app/design/adminhtml/default/default/layout/clerk.xml
 tests                               tests
+locale/en_US/Clerk_Clerk.csv        app/locale/en_US/Clerk_Clerk.csv
 locale/da_DK/Clerk_Clerk.csv        app/locale/da_DK/Clerk_Clerk.csv
+locale/es_ES/Clerk_Clerk.csv        app/locale/es_ES/Clerk_Clerk.csv
 locale/it_IT/Clerk_Clerk.csv        app/locale/it_IT/Clerk_Clerk.csv
 locale/nl_NL/Clerk_Clerk.csv        app/locale/nl_NL/Clerk_Clerk.csv
