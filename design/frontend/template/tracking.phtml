@@ -15,7 +15,7 @@ $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCod
                 form_key: function () {
                     return '<?php echo $this->getFormKey(); ?>';
                 },
-                <?php if ($rates && isset($rates[$currentCurrencySymbol])) : ?>
+                <?php if ($rates && isset($rates[$currentCurrencyCode])) : ?>
                 price_in_currency: function(price) {
                     price =  Math.round(price * 100) / 100;
                     var price_converted = Math.round((price * <?php echo (float)$rates[$currentCurrencyCode]; ?>) * 100) / 100;
