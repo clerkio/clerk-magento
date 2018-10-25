@@ -19,30 +19,30 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
      *
      * In the future we should find a better solution to this problem.
      */
-    public function syncProduct($productId, $eventname)
+    public function syncProduct($productId)
     {
-        $isDeleteEvent = $eventname == 'catalog_product_delete_before';
         $product = Mage::getModel('clerk/product')->load($productId);
         $appEmulation = Mage::getSingleton('core/app_emulation');
+
         foreach ($product->getStoreIds() as $storeId) {
             $store_enabled = Mage::helper('clerk')->getSetting('clerk/general/active', $storeId);
-            if (!$store_enabled) {
+
+            if (! $store_enabled) {
                 continue;
             }
+
             $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
             $product = Mage::getModel('clerk/product')->load($productId);
-            if ($isDeleteEvent || $product->isExcluded()) {
-                $data = [];
-                $data['id'] = $productId;
-                $data['key'] = $this->getPublicKey($storeId);
-                $data['private_key'] = $this->getPrivateKey($storeId);
-                $this->post('product/remove', $data);
+
+            if ($product->isExcluded()) {
+                $this->removeProduct($productId);
             } else {
                 $data = $product->getClerkExportData();
                 $data['key'] = $this->getPublicKey($storeId);
                 $data['private_key'] = $this->getPrivateKey($storeId);
                 $this->post('product/add', $data);
             }
+
             $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         }
     }

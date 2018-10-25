@@ -54,14 +54,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     public function storeAction()
     {
         $this->setStore();
-        $data = array();
+        $data = [];
 
         foreach (Mage::helper('clerk')->getAllStores() as $store) {
-            $data[] = array(
+            $data[] = [
                 'id' => $store->getId(),
                 'name' => $store->getName(),
                 'active' => (bool) Mage::getStoreConfig('clerk/general/active', $store),
-            );
+            ];
         }
 
         $this->getResponse()->setBody(json_encode($data));
@@ -123,7 +123,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             ->getCollection()
             ->addIsActiveFilter()
             ->addAttributeToSelect('name')
-            ->addAttributeToFilter('path', array('like' => "1/{$rootCategoryId}/%"))
+            ->addAttributeToFilter('path', ['like' => "1/{$rootCategoryId}/%"])
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
@@ -134,12 +134,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             //Get children categories
             $children = $category->getResource()->getChildren($category);
 
-            $data = array(
+            $data = [
                 'id' => (int) $category->getId(),
                 'name' => $category->getName(),
                 'url' => $category->getUrl(),
                 'subcategories' => array_map('intval', $children),
-            );
+            ];
 
             $items[] = $data;
         }
@@ -167,7 +167,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $days = $this->getIntParam('days');
 
         if (Mage::getStoreConfigFlag('clerk/general/disable_order_synchronization')) {
-            $this->getResponse()->setBody(json_encode(array()));
+            $this->getResponse()->setBody(json_encode([]));
         } else {
             $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
             $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);

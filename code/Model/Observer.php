@@ -41,7 +41,7 @@ class Clerk_Clerk_Model_Observer
     public function syncProduct(Varien_Event_Observer $observer)
     {
         $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->syncProduct($productId, $observer->getEvent()->getName());
+        Mage::getModel('clerk/communicator')->syncProduct($productId);
     }
 
     /**
