@@ -126,7 +126,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             ->addAttributeToFilter('path', array('like' => "1/{$rootCategoryId}/%"))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
-            ->setCurPage($page + 1);
+            ->setCurPage($page);
 
         $items = [];
 
@@ -144,9 +144,9 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $items[] = $data;
         }
 
-        $this->getResponse()->setHeader('Total-Page-Count', $categories->getLastPageNumber() - 1);
+        $this->getResponse()->setHeader('Total-Page-Count', $categories->getLastPageNumber());
 
-        if ($page > $categories->getLastPageNumber() - 1) {
+        if ($page > $categories->getLastPageNumber()) {
             $this->getResponse()->setBody(json_encode([]));
         } else {
             $this->getResponse()->setBody(json_encode($items));
@@ -219,7 +219,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     private function setStore()
     {
         $storeid = $this->getRequest()->getParam('store');
-        
+
         if (isset($storeid) && is_numeric($storeid)) {
             try {
                 Mage::app()->getStore((int) $storeid);
