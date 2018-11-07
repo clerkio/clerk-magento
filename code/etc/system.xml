@@ -76,6 +76,13 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
+                        <include_out_of_stock_products>
+                            <label>Include Out Of Stock Products</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </include_out_of_stock_products>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>

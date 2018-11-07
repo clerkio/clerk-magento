@@ -181,6 +181,7 @@
                 <active>0</active>
                 <collect_emails>1</collect_emails>
                 <disable_order_synchronization>0</disable_order_synchronization>
+                <include_out_of_stock_products>0</include_out_of_stock_products>
             </general>
             <search>
                 <active>0</active>
