@@ -83,7 +83,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         if ($id) {
             $id = $this->getIntParam('id');
             if (Mage::helper('clerk')->isProductIdValid($id)) {
-                $data = Mage::getModel('clerk/product')->load($id)->getInfo();
+                $response = Mage::getModel('clerk/product')->load($id)->getInfo();
             } else {
                 $response = [
                     'error' => [
