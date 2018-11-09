@@ -19,7 +19,9 @@ class Clerk_Clerk_Model_Productpage
             ->addStoreFilter();
 
         //Only grab products in stock
-        Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($this->collection);
+        if(!Mage::getStoreConfigFlag('clerk/general/include_out_of_stock_products')) {
+            Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($this->collection);
+        }
 
         $this->totalPages = $this->collection->getLastPageNumber();
         $this->fetch();

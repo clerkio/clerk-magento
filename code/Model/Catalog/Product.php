@@ -24,11 +24,11 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
     {
         $data = new Varien_Object();
 
-        $data->setAge((int) $this->getAge());
+        $data->setAge((int)$this->getAge());
         $data->setCategories(array_map('intval', $this->getCategoryIds()));
         $data->setDescription($this->getDescription() ? $this->getDescription() : '');
         $data->setHasTierprice($this->hasTierPrice());
-        $data->setId((int) $this->getId());
+        $data->setId((int)$this->getId());
         $data->setImage($this->getClerkImageUrl());
         $data->setIsOnSale($this->isOnSale());
         $data->setManufacturer($this->getManufacturer());
@@ -67,8 +67,10 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
             $this->excludeReason = 'Product not visible';
         }
 
-        if (!$this->isSalable()) {
-            $this->excludeReason = 'Product is not saleable';
+        if (!Mage::getStoreConfigFlag('clerk/general/include_out_of_stock_products')) {
+            if (!$this->isSalable()) {
+                $this->excludeReason = 'Product is not saleable';
+            }
         }
 
         if ($this->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_DISABLED) {
