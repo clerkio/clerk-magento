@@ -39,18 +39,35 @@ class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
         ];
 
         if (Mage::getStoreConfigFlag(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ENABLED)) {
-            if ($attributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ATTRIBUTES)) {
-                $spanAttributes['data-facets-target'] = "#clerk-search-filters";
-                $spanAttributes['data-facets-attributes'] = '["' . str_replace(',', '","', $attributes) . '"]';
+            $spanAttributes['data-facets-target'] = "#clerk-search-filters";
+
+            if ($titles = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_TITLES)) {
+                $titles = json_decode($titles, true);
+
+                // sort by sort_order
+                uasort($titles, function($a, $b) {
+                    return $a['sort_order'] > $b['sort_order'];
+                });
+
+                $spanAttributes['data-facets-titles'] = json_encode(array_filter(array_combine(array_keys($titles), array_column($titles, 'label'))));
+                $spanAttributes['data-facets-attributes'] = json_encode(array_keys($titles));
 
                 if ($multiselectAttributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_MULTISELECT_ATTRIBUTES)) {
                     $spanAttributes['data-facets-multiselect-attributes'] = '["' . str_replace(',', '","', $multiselectAttributes) . '"]';
                 }
-
-                if ($titles = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_TITLES)) {
-                    $spanAttributes['data-facets-titles'] = $titles;
-                }
             }
+
+//            if ($attributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ATTRIBUTES)) {
+//                $spanAttributes['data-facets-attributes'] = '["' . str_replace(',', '","', $attributes) . '"]';
+//
+//                if ($multiselectAttributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_MULTISELECT_ATTRIBUTES)) {
+//                    $spanAttributes['data-facets-multiselect-attributes'] = '["' . str_replace(',', '","', $multiselectAttributes) . '"]';
+//                }
+//
+//                if ($titles = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_TITLES)) {
+//                    $spanAttributes['data-facets-titles'] = $titles;
+//                }
+//            }
         }
 
 

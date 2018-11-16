@@ -132,7 +132,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         foreach ($categories as $category) {
             //Get children categories
-            $children = $category->getResource()->getChildren($category);
+            $children = $category->getResource()->getChildren($category, false);
 
             $data = [
                 'id' => (int) $category->getId(),

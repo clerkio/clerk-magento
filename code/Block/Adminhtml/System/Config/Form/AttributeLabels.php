@@ -7,8 +7,9 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
         $html = '<div class="hor-scroll"><table class="dynamic-grid" id="attribute-labels-table" cellspacing="0"><tbody>';
 
         $html .= '<tr>';
-        $html .= '<th>Default</th>';
+        $html .= '<th>' . $this->__('Default') .'</th>';
         $html .= '<th>' . $this->getStore()->getName() . '</th>';
+        $html .= '<th>' . $this->__('Sort Order') . '</th>';
         $html .= '</tr>';
 
         //Loop over specified facet attributes
@@ -21,7 +22,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
 
             $html .= '<tr>';
             $html .= '<td><input id="' . $element->getHtmlId() . '_orig" class="input-text disabled" value="' . $attribute . '" type="text" readonly></td>';
-            $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . ']" value="' . $value . '' . '" type="text"></td>';
+            $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][label]" value="' . $value['label'] . '' . '" type="text"></td>';
+            $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][sort_order]" value="' . $value['sort_order'] . '' . '" type="text"></td>';
             $html .= '</tr>';
         }
 
