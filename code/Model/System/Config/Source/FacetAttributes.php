@@ -12,7 +12,7 @@ class Clerk_Clerk_Model_System_Config_Source_FacetAttributes
         $attributes = $this->getFacetAttributes();
         $values = [];
 
-        if ($attributes) {
+        if ($attributes && isset($attributes->facets)) {
             foreach ($attributes->facets as $attribute => $facet) {
                 $values[] = [
                     'value' => $attribute,
@@ -20,7 +20,7 @@ class Clerk_Clerk_Model_System_Config_Source_FacetAttributes
                 ];
             }
         }
-        
+
         return $values;
     }
 
