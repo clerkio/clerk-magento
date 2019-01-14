@@ -1,23 +1,26 @@
 <?php
 /** @var Clerk_Clerk_Block_Search $this */
 ?>
-<div class="page-title">
-  <h1><?php echo $this->getTitleText(); ?></h1>
-</div>
-<span <?php echo $this->getSpanAttributes(); ?>></span>
+<div id="clerk_search_block">
 
-<div class="category-products">
-    <ul id="<?php echo $this->getTargetId(); ?>" class="products-grid"></ul>
-</div>
+  <div class="page-title">
+    <h1><?php echo $this->getTitleText(); ?></h1>
+  </div>
+  <span <?php echo $this->getSpanAttributes(); ?>></span>
 
-<div id="clerk-search-no-results" style="display: none;">
-    <p class="note-msg"><?php echo $this->getNoResultsText(); ?></p>
-</div>
+  <div class="category-products">
+      <ul id="<?php echo $this->getTargetId(); ?>" class="products-grid"></ul>
+  </div>
 
-<div id="clerk-search-load-more-button" style="text-align:center; display: none;">
-    <button class="button"><?php echo $this->getLoadMoreText(); ?></button>
-</div>
+  <div id="clerk-search-no-results" style="display: none;">
+      <p class="note-msg"><?php echo $this->getNoResultsText(); ?></p>
+  </div>
 
+  <div id="clerk-search-load-more-button" style="text-align:center; display: none;">
+      <button class="button"><?php echo $this->getLoadMoreText(); ?></button>
+  </div>
+
+</div>
 <script type="text/javascript">
     var total_loaded = 0;
     function _clerk_after_load_event(data) {
