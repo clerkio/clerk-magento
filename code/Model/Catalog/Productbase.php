@@ -31,6 +31,22 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         return isset($this->excludeReason);
     }
 
+    /* Returns array of sizes data - and flexible to use in Product.php because of param */
+    public function getSizeArray($size_attribute)
+    {
+        $sizes = array();
+        if($this->isConfigurable()){
+            $all = $this->getTypeInstance(true)->getUsedProducts(null, $this);
+            foreach ($all as $child) {
+                if ($child->isSaleable()) { $sizes[] = $child->getAttributeText($size_attribute); }
+            }
+        } else {
+            $sizes[] = $this->getAttributeText($size_attribute);
+        }
+
+        return $sizes;
+    }    
+    
     /* Return True if Specialprice is set and we are in the Specialprice period */
     public function isSpecialPriceActive()
     {
