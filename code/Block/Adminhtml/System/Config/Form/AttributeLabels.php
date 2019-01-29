@@ -17,7 +17,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
 
         $values = json_decode($element->getValue(), true);
 
-        foreach (explode(',', $attributes) as $attribute) {
+        foreach ($attributes as $attribute) {
             $value = isset($values[$attribute]) ? $values[$attribute] : $attribute;
 
             $html .= '<tr>';
@@ -37,12 +37,19 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
     /**
      * Get configured facet attributes
      *
-     * @return mixed
+     * @return array
      * @throws Mage_Core_Model_Store_Exception
      */
     protected function getConfiguredAttributes()
     {
-        return Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ATTRIBUTES, $this->getStore());
+        $rawConfiguredAttributes = Mage::getStoreConfig(
+            Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ATTRIBUTES,
+            $this->getStore()
+        );
+        if (empty($rawConfiguredAttributes)) {
+            return [];
+        }
+        return array_map('trim', explode(',', $rawConfiguredAttributes));
     }
 
     /**
