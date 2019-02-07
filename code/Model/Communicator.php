@@ -10,40 +10,46 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     const XML_PATH_PUBLIC_KEY = 'clerk/general/publicapikey';
     const XML_PATH_PRIVATE_KEY = 'clerk/general/privateapikey';
 
-    /*
-     * This call will connect to the clerk api call either either add a
-     * product or delete it. Because the module at this time does not store data
-     * in the magento database we have no way of knowing if the product after
-     * a given event have changed state (include/exclude), thus we have to sync
-     * products even though they are already synced.
+    /**
+     * Sync product(s) with Clerk, removing it if it is excluded
      *
-     * In the future we should find a better solution to this problem.
+     * @param $productIds
+     * @throws Mage_Core_Exception
      */
-    public function syncProduct($productId)
+    public function syncProduct($productIds)
     {
-        $product = Mage::getModel('clerk/product')->load($productId);
+        if (!is_array($productIds)) {
+            $productIds = array($productIds);
+        }
+
         $appEmulation = Mage::getSingleton('core/app_emulation');
 
-        foreach ($product->getStoreIds() as $storeId) {
-            $store_enabled = Mage::helper('clerk')->getSetting('clerk/general/active', $storeId);
-
-            if (! $store_enabled) {
+        foreach (Mage::app()->getStores() as $store) {
+            if (!Mage::helper('clerk')->getSetting('clerk/general/active', $store->getId())) {
                 continue;
             }
 
-            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
-            $product = Mage::getModel('clerk/product')->load($productId);
+            $productData = [];
 
-            if ($product->isExcluded()) {
-                $this->removeProduct($productId);
-            } else {
-                $data = $product->getClerkExportData();
-                $data['key'] = $this->getPublicKey($storeId);
-                $data['private_key'] = $this->getPrivateKey($storeId);
-                $this->post('product/add', $data);
+            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
+
+            foreach ($productIds as $productId) {
+                $product = Mage::getModel('clerk/product')->load($productId);
+
+                if ($product->isExcluded()) {
+                    $this->removeProduct($productId);
+                } else {
+                    $productData[] = $product->getClerkExportData();
+                }
             }
 
             $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
+            $data['key'] = $this->getPublicKey($store->getId());
+            $data['private_key'] = $this->getPrivateKey($store->getId());
+            $data['products'] = $productData;
+
+            $this->post('product/add', $data);
         }
     }
 

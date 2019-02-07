@@ -1,9 +1,9 @@
 Clerk.xml                           app/etc/modules/Clerk_Clerk.xml
 code                                app/code/community/Clerk/Clerk
 skin                                skin/frontend/base/default/clerk
-design/frontend/template            app/design/frontend/base/default/template/clerk
+design/frontend/template/            app/design/frontend/base/default/template/clerk/
 design/frontend/layout/clerk.xml    app/design/frontend/base/default/layout/clerk.xml
-design/adminhtml/template           app/design/adminhtml/default/default/template/clerk
+design/adminhtml/template/           app/design/adminhtml/default/default/template/clerk/
 design/adminhtml/layout/clerk.xml   app/design/adminhtml/default/default/layout/clerk.xml
 tests                               tests
 locale/en_US/Clerk_Clerk.csv        app/locale/en_US/Clerk_Clerk.csv

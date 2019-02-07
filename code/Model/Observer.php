@@ -64,9 +64,11 @@ class Clerk_Clerk_Model_Observer
     {
         $productIds = $observer->getEvent()->getProductIds();
 
-        foreach ($productIds as $productId) {
-            Mage::getModel('clerk/communicator')->syncProduct($productId, $observer->getEvent()->getName());
+        if (!is_array($productIds)) {
+            $productIds = [$productIds];
         }
+
+        Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
     }
 
     /**
