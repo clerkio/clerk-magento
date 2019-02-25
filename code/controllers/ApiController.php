@@ -10,6 +10,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function preDispatch()
     {
+        $this->setStore();
         $this->getResponse()->setHeader('Content-type', 'application/json');
 
         $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
@@ -53,7 +54,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function storeAction()
     {
-        $this->setStore();
         $data = [];
 
         foreach (Mage::helper('clerk')->getAllStores() as $store) {
@@ -74,8 +74,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function productAction()
     {
-        $this->setStore();
-
         // Handler for product endpoint. E.g.
         // http://store.com/clerk/api/product/id/24
         $id = $this->getRequest()->getParam('id', false);
@@ -112,8 +110,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function categoryAction()
     {
-        $this->setStore();
-
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
 
@@ -160,8 +156,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function orderAction()
     {
-        $this->setStore();
-
         $page = $this->getIntParam('page');
         $limit = $this->getIntParam('limit');
         $days = $this->getIntParam('days');
