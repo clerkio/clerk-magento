@@ -72,9 +72,9 @@ class Clerk_Clerk_Model_Orderpage
             $total_with_discount =
                 (float) ($total_before_discount - $_item->getDiscountAmount());
             $actual_product_price =
-                (float) ($total_with_discount / (int) $_item->getQtyOrdered());
+                (float) ($total_with_discount / (float) $_item->getQtyOrdered());
             $item->setId((int) $_item->getProductId());
-            $item->setQuantity((int) $_item->getQtyOrdered());
+            $item->setQuantity((float) $_item->getQtyOrdered());
             $item->setPrice($actual_product_price);
 
             Mage::dispatchEvent('clerkio_orderpage_format_item', array(
