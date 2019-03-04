@@ -56,23 +56,11 @@ class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
                     $spanAttributes['data-facets-multiselect-attributes'] = '["' . str_replace(',', '","', $multiselectAttributes) . '"]';
                 }
             }
-
-//            if ($attributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ATTRIBUTES)) {
-//                $spanAttributes['data-facets-attributes'] = '["' . str_replace(',', '","', $attributes) . '"]';
-//
-//                if ($multiselectAttributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_MULTISELECT_ATTRIBUTES)) {
-//                    $spanAttributes['data-facets-multiselect-attributes'] = '["' . str_replace(',', '","', $multiselectAttributes) . '"]';
-//                }
-//
-//                if ($titles = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_TITLES)) {
-//                    $spanAttributes['data-facets-titles'] = $titles;
-//                }
-//            }
         }
 
 
         foreach ($spanAttributes as $attribute => $value) {
-            $output .= ' ' . $attribute . '=\'' . $value . '\'';
+            $output .= ' ' . $attribute . '=\'' . htmlspecialchars($value, ENT_QUOTES) . '\'';
         }
 
         return trim($output);
