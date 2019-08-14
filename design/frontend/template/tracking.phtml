@@ -5,6 +5,14 @@ $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
 $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
 $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
 $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, $currentCurrencyCode);
+$currentLocale = Mage::app()->getLocale()->getLocaleCode();
+$currentLocaleInStandardFormat = str_replace('_', '-', $currentLocale);
+$toLocaleStringOptions = array(
+    'minimumFractionDigits' => 2,
+    'maximumFractionDigits' => 2,
+    'style' => 'currency',
+    'currency' => $currentCurrencyCode
+);
 ?>
 <script type="text/javascript">
     window.clerkAsyncInit = function() {
@@ -19,9 +27,11 @@ $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCod
                 price_in_currency: function(price) {
                     price =  Math.round(price * 100) / 100;
                     var price_converted = Math.round((price * <?php echo (float)$rates[$currentCurrencyCode]; ?>) * 100) / 100;
-                    var retVal = <?php echo json_encode($currentCurrencySymbol); ?> + ' ' + price_converted.toFixed(2).toString();
 
-                    return retVal;
+                    return price_converted.toLocaleString(
+                        <?php echo json_encode($currentLocaleInStandardFormat) ?>,
+                        <?php echo json_encode($toLocaleStringOptions) ?>
+                    );
                 }
                 <?php endif; ?>
             }
