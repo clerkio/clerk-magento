@@ -367,6 +367,30 @@
                         </content>
                     </fields>
                 </cart>
+                <log module="clerk">
+                    <label>Logging Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>90</sort_order>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <level>
+                            <label>Logging Level</label>
+                            <comment>Select logging level</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_loggerLevel</source_model>
+                        </level>
+                        <to>
+                            <label>Logging To</label>
+                            <comment>Select if you want logging to a file or direct to clerk</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_loggerTo</source_model>
+                        </to>
+                    </fields>
+                </log>
             </groups>
         </clerk>
     </sections>
