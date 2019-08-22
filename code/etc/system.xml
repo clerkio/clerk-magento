@@ -373,11 +373,19 @@
                     <sort_order>90</sort_order>
                     <show_in_store>1</show_in_store>
                     <fields>
+                        <enabled>
+                            <label>Enable</label>
+                            <comment>Enable Clerk Logger</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
                         <level>
                             <label>Logging Level</label>
                             <comment>Select logging level</comment>
                             <frontend_type>select</frontend_type>
-                            <sort_order>10</sort_order>
+                            <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>clerk/system_config_source_loggerLevel</source_model>
                         </level>
@@ -385,10 +393,20 @@
                             <label>Logging To</label>
                             <comment>Select if you want logging to a file or direct to clerk</comment>
                             <frontend_type>select</frontend_type>
-                            <sort_order>20</sort_order>
+                            <sort_order>30</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>clerk/system_config_source_loggerTo</source_model>
                         </to>
+                        <file>
+                            <label>Log file</label>
+                            <depends>
+                                <to>file</to>
+                            </depends>
+                            <frontend_type>hidden</frontend_type>
+                            <comment>/var/log/clerk_log.log</comment>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </file>
                     </fields>
                 </log>
             </groups>

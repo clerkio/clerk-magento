@@ -62,4 +62,5 @@ class Clerk_Clerk_CatalogSearch_ResultController extends Mage_CatalogSearch_Resu
         $this->_initLayoutMessages('checkout/session');
         $this->renderLayout();
     }
+
 }

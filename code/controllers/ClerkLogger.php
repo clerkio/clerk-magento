@@ -26,13 +26,29 @@
 
 class ClerkLogger
 {
+    /**
+     * @var string
+     */
     private $Platform;
+    /**
+     * @var
+     */
     private $Key;
+    /**
+     * @var DateTime
+     */
     private $Date;
+    /**
+     * @var int
+     */
     private $Time;
 
-
-    function __construct() {
+    /**
+     * ClerkLogger constructor.
+     * @throws Exception
+     */
+    function __construct()
+    {
 
         $this->Platform = 'Magento';
         $this->Key = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
@@ -41,99 +57,77 @@ class ClerkLogger
 
     }
 
-    public function log ($Message, $Metadata) {
+    /**
+     * @param $Message
+     * @param $Metadata
+     */
+    public function log($Message, $Metadata)
+    {
 
         //Customize $Platform and the function for getting the public key.
         $JSON_Metadata_Encode = json_encode($Metadata);
         $Type = 'log';
 
-        if (Mage::helper('clerk')->getSetting('clerk/log/level') !== 'all') {
+        if (Mage::helper('clerk')->getSetting('clerk/log/enabled') !== '1') {
 
 
-        }else {
+        } else {
 
-            if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
+            if (Mage::helper('clerk')->getSetting('clerk/log/level') !== 'all') {
 
-                if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'all') {
 
-                    $Endpoint = 'api.clerk.io/v2/log/debug?debug=1&key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+            } else {
 
-                } else {
+                if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
 
-                    $Endpoint = 'api.clerk.io/v2/log/debug?key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+                    if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'all') {
+
+                        $Endpoint = 'api.clerk.io/v2/log/debug?&key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+
+                    } else {
+
+                        $Endpoint = 'api.clerk.io/v2/log/debug?key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+
+                    }
+
+                    $curl = curl_init();
+
+                    curl_setopt($curl, CURLOPT_URL, $Endpoint);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_exec($curl);
+                    curl_close($curl);
+
+                } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'file') {
+
+                    $log = $this->Date->format('Y-m-d H:i:s') . ' MESSAGE: ' . $Message . ' METADATA: ' . $JSON_Metadata_Encode . PHP_EOL .
+                        '-------------------------' . PHP_EOL;
+                    $path = Mage::getBaseDir('log') . '/clerk_log.log';
+
+                    fopen($path, "a+");
+                    file_put_contents($path, $log, FILE_APPEND);
 
                 }
-
-                $curl = curl_init();
-
-                curl_setopt($curl, CURLOPT_URL, $Endpoint);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                curl_exec($curl);
-                curl_close($curl);
-
-            } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'local') {
-
-                $log = $this->Date->format('Y-m-d H:i:s') . ' MESSAGE: ' . $Message . ' METADATA: ' . $JSON_Metadata_Encode . PHP_EOL .
-                    '-------------------------' . PHP_EOL;
-                $path = Mage::getBaseDir('log').'/clerk_log.log';
-
-                fopen($path, "a+");
-                file_put_contents($path, $log, FILE_APPEND);
-
             }
+
         }
 
     }
 
-    public function error ($Message, $Metadata) {
+    /**
+     * @param $Message
+     * @param $Metadata
+     */
+    public function error($Message, $Metadata)
+    {
 
         //Customize $Platform and the function for getting the public key.
         $JSON_Metadata_Encode = json_encode($Metadata);
         $Type = 'error';
 
-        if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
-
-            if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'all') {
-
-                $Endpoint = 'api.clerk.io/v2/log/debug?debug=1&key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
-
-            } else {
-
-                $Endpoint = 'api.clerk.io/v2/log/debug?key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
-
-            }
-
-            $curl = curl_init();
-
-            curl_setopt($curl, CURLOPT_URL, $Endpoint);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_exec($curl);
-            curl_close($curl);
-
-        } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'local') {
-
-            $log = $this->Date->format('Y-m-d H:i:s') . ' MESSAGE: ' . $Message . ' METADATA: ' . $JSON_Metadata_Encode . PHP_EOL .
-                '-------------------------' . PHP_EOL;
-            $path = Mage::getBaseDir('log').'/clerk_log.log';
-
-            fopen($path, "a+");
-            file_put_contents($path, $log, FILE_APPEND);
-
-        }
+        if (Mage::helper('clerk')->getSetting('clerk/log/enabled') !== '1') {
 
 
-    }
-
-    public function warn ($Message, $Metadata) {
-
-        //Customize $Platform and the function for getting the public key.
-        $JSON_Metadata_Encode = json_encode($Metadata);
-        $Type = 'warn';
-
-        if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'error') {
-
-
-        }else {
+        } else {
 
             if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
 
@@ -154,17 +148,71 @@ class ClerkLogger
                 curl_exec($curl);
                 curl_close($curl);
 
-            } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'local') {
+            } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'file') {
 
                 $log = $this->Date->format('Y-m-d H:i:s') . ' MESSAGE: ' . $Message . ' METADATA: ' . $JSON_Metadata_Encode . PHP_EOL .
                     '-------------------------' . PHP_EOL;
-                $path = Mage::getBaseDir('log').'/clerk_log.log';
+                $path = Mage::getBaseDir('log') . '/clerk_log.log';
 
                 fopen($path, "a+");
                 file_put_contents($path, $log, FILE_APPEND);
 
             }
         }
+    }
 
+    /**
+     * @param $Message
+     * @param $Metadata
+     */
+    public function warn($Message, $Metadata)
+    {
+
+        //Customize $Platform and the function for getting the public key.
+        $JSON_Metadata_Encode = json_encode($Metadata);
+        $Type = 'warn';
+
+        if (Mage::helper('clerk')->getSetting('clerk/log/enabled') !== '1') {
+
+
+        } else {
+
+
+            if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'error') {
+
+
+            } else {
+
+                if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
+
+                    if (Mage::helper('clerk')->getSetting('clerk/log/level') == 'all') {
+
+                        $Endpoint = 'api.clerk.io/v2/log/debug?debug=1&key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+
+                    } else {
+
+                        $Endpoint = 'api.clerk.io/v2/log/debug?key=' . $this->Key . '&source=' . $this->Platform . '&time=' . $this->Time . '&type=' . $Type . '&message=' . $Message . '&metadata=' . urlencode($JSON_Metadata_Encode);
+
+                    }
+
+                    $curl = curl_init();
+
+                    curl_setopt($curl, CURLOPT_URL, $Endpoint);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_exec($curl);
+                    curl_close($curl);
+
+                } elseif (Mage::helper('clerk')->getSetting('clerk/log/to') == 'file') {
+
+                    $log = $this->Date->format('Y-m-d H:i:s') . ' MESSAGE: ' . $Message . ' METADATA: ' . $JSON_Metadata_Encode . PHP_EOL .
+                        '-------------------------' . PHP_EOL;
+                    $path = Mage::getBaseDir('log') . '/clerk_log.log';
+
+                    fopen($path, "a+");
+                    file_put_contents($path, $log, FILE_APPEND);
+
+                }
+            }
+        }
     }
 }

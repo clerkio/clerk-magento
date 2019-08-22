@@ -13,12 +13,12 @@ class Clerk_Clerk_Model_System_Config_Source_LoggerLevel
     {
         $logger_level = array(
             array(
-                'value' => 'error',
-                'label' => Mage::helper('clerk')->__('Error'),
-            ),
-            array(
                 'value' => 'warn',
                 'label' => Mage::helper('clerk')->__('Warn'),
+            ),
+            array(
+                'value' => 'error',
+                'label' => Mage::helper('clerk')->__('Error'),
             ),
             array(
                 'value' => 'all',

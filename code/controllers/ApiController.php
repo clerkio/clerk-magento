@@ -6,17 +6,15 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     private $logger;
 
     /**
-     * Set content-type header and validate keys
-     *
      * @return Mage_Core_Controller_Front_Action
-     * @throws Zend_Controller_Request_Exception
+     * @throws Exception
      */
     public function preDispatch()
     {
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Validation of Public and private key is started', []);
+            $this->logger->log('Validation of Public and private key is started', ['response' => '']);
             $this->setStore();
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
@@ -37,7 +35,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     ->sendResponse();
                 exit;
             }
-            $this->logger->log('Public and private key is validated', []);
+            $this->logger->log('Public and private key is validated', ['response' => '']);
             return parent::preDispatch();
         } catch (Exception $e) {
 
@@ -89,7 +87,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
 
         try {
-            $this->logger->log('Fetching Version Started', ['']);
+            $this->logger->log('Fetching Version Started', ['response' => '']);
             $response = [
                 'platform' => 'Magento',
                 'version' => (string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version,
@@ -115,7 +113,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Fetching Stores Started', []);
+            $this->logger->log('Fetching Stores Started', ['response' => '']);
             $data = [];
 
             foreach (Mage::helper('clerk')->getAllStores() as $store) {
@@ -146,7 +144,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Products Synchronization Started', []);
+            $this->logger->log('Products Synchronization Started', ['response' => '']);
             // Handler for product endpoint. E.g.
             // http://store.com/clerk/api/product/id/24
             $id = $this->getRequest()->getParam('id', false);
@@ -183,18 +181,17 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Get int parameter, show error message if supplied param is not a number
-     *
      * @param $key
      * @param null $errmsg
      * @return int
+     * @throws Exception
      */
     private function getIntParam($key, $errmsg = null)
     {
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Fetching Parameters Started', []);
+            $this->logger->log('Fetching Parameters Started', ['response' => '']);
             $value = $this->getRequest()->getParam($key);
 
             if (!is_numeric($value)) {
@@ -232,16 +229,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Endpoint for category import
-     *
-     * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      */
     public function categoryAction()
     {
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Category Synchronization Started', []);
+            $this->logger->log('Category Synchronization Started', ['response' => '']);
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
 
@@ -297,17 +292,17 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Order Synchronization Started', []);
+            $this->logger->log('Order Synchronization Started', ['response' => '']);
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
             $days = $this->getIntParam('days');
 
             if (Mage::getStoreConfigFlag('clerk/general/disable_order_synchronization')) {
-                $this->logger->log('Order Synchronization is disabled', []);
+                $this->logger->log('Order Synchronization is disabled', ['response' => '']);
                 $this->getResponse()->setBody(json_encode([]));
             } else {
                 $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
-                $this->logger->log('Order Synchronization Done', []);
+                $this->logger->log('Order Synchronization Done', ['response' => '']);
                 $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
                 $this->getResponse()->setBody(json_encode($page->array));
             }

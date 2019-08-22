@@ -13,12 +13,12 @@ class Clerk_Clerk_Model_System_Config_Source_LoggerTo
     {
         $logger_to = array(
             array(
-                'value' => 'local',
-                'label' => Mage::helper('clerk')->__('Local'),
-            ),
-            array(
                 'value' => 'collect',
                 'label' => Mage::helper('clerk')->__('Collect'),
+            ),
+            array(
+                'value' => 'file',
+                'label' => Mage::helper('clerk')->__('File'),
             ),
         );
 

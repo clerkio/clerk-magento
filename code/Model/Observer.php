@@ -148,6 +148,7 @@ class Clerk_Clerk_Model_Observer
      */
     public function coreBlockAbstractToHtmlBefore(Varien_Event_Observer $observer)
     {
+
         if (Mage::getStoreConfigFlag(self::XML_PATH_CATEGORY_ENABLED)) {
             /** @var Mage_Core_Block_Abstract $block */
             $block = $observer->getEvent()->getBlock();

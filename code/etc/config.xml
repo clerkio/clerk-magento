@@ -215,6 +215,11 @@
                 <enabled>0</enabled>
                 <content>cart-others-also-bought</content>
             </cart>
+            <cart>
+                <enabled>1</enabled>
+                <level>warn</level>
+                <level>collect</level>
+            </cart>
         </clerk>
     </default>
 </config>
