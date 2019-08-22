@@ -87,13 +87,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
 
         try {
-            $this->logger->log('Fetching Version Started', ['response' => '']);
+
             $response = [
                 'platform' => 'Magento',
                 'version' => (string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version,
             ];
-
-            $this->logger->log('Fetched Version Done', ['response' => $response]);
 
             $this->getResponse()->setBody(json_encode($response));
 
@@ -113,7 +111,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Fetching Stores Started', ['response' => '']);
             $data = [];
 
             foreach (Mage::helper('clerk')->getAllStores() as $store) {
@@ -123,8 +120,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     'active' => (bool)Mage::getStoreConfig('clerk/general/active', $store),
                 ];
             }
-
-            $this->logger->log('Fetched Stores Done', ['response' => $data]);
 
             $this->getResponse()->setBody(json_encode($data));
 
@@ -191,7 +186,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Fetching Parameters Started', ['response' => '']);
             $value = $this->getRequest()->getParam($key);
 
             if (!is_numeric($value)) {
@@ -218,7 +212,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 $this->getResponse()->setBody(json_encode($response))->sendResponse();
                 exit;
             }
-            $this->logger->log('Fetched Parameters Done', ['response' => $value]);
             return (int)$value;
 
         } catch (Exception $e) {
