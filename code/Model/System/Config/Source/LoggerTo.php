@@ -14,7 +14,7 @@ class Clerk_Clerk_Model_System_Config_Source_LoggerTo
         $logger_to = array(
             array(
                 'value' => 'collect',
-                'label' => Mage::helper('clerk')->__('Collect'),
+                'label' => Mage::helper('clerk')->__('my.clerk.io'),
             ),
             array(
                 'value' => 'file',

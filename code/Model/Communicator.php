@@ -1,203 +1,99 @@
 <?php
-
+require_once(Mage::getBaseDir('code') . '/community/Clerk/Clerk/controllers/ClerkLogger.php');
 class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 {
+    const XML_PATH_PUBLIC_KEY = 'clerk/general/publicapikey';
+    const XML_PATH_PRIVATE_KEY = 'clerk/general/privateapikey';
     /**
      * @var string
      */
     protected $baseUrl = 'https://api.clerk.io/v2/';
-
-    const XML_PATH_PUBLIC_KEY = 'clerk/general/publicapikey';
-    const XML_PATH_PRIVATE_KEY = 'clerk/general/privateapikey';
+    /**
+     * @var
+     */
+    private $logger;
 
     /**
-     * Sync product(s) with Clerk, removing it if it is excluded
-     *
      * @param $productIds
-     * @throws Mage_Core_Exception
+     * @throws Exception
      */
     public function syncProduct($productIds)
     {
-        if (!is_array($productIds)) {
-            $productIds = array($productIds);
-        }
+        $this->logger = new ClerkLogger();
 
-        $appEmulation = Mage::getSingleton('core/app_emulation');
+        try {
 
-        foreach (Mage::app()->getStores() as $store) {
-            if (!Mage::helper('clerk')->getSetting('clerk/general/active', $store->getId())) {
-                continue;
+            if (!is_array($productIds)) {
+                $productIds = array($productIds);
             }
 
-            $productData = [];
+            $appEmulation = Mage::getSingleton('core/app_emulation');
 
-            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
-
-            foreach ($productIds as $productId) {
-                $product = Mage::getModel('clerk/product')->load($productId);
-
-                if ($product->isExcluded()) {
-                    $this->removeProduct($productId);
-                } else {
-                    $productData[] = $product->getClerkExportData();
+            foreach (Mage::app()->getStores() as $store) {
+                if (!Mage::helper('clerk')->getSetting('clerk/general/active', $store->getId())) {
+                    continue;
                 }
+
+                $productData = [];
+
+                $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
+
+                foreach ($productIds as $productId) {
+                    $product = Mage::getModel('clerk/product')->load($productId);
+
+                    if ($product->isExcluded()) {
+                        $this->removeProduct($productId);
+                    } else {
+                        $productData[] = $product->getClerkExportData();
+                    }
+                }
+
+                $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
+                $data['key'] = $this->getPublicKey($store->getId());
+                $data['private_key'] = $this->getPrivateKey($store->getId());
+                $data['products'] = $productData;
+
+                $this->post('product/add', $data);
             }
 
-            $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+        } catch (Exception $e) {
 
-            $data['key'] = $this->getPublicKey($store->getId());
-            $data['private_key'] = $this->getPrivateKey($store->getId());
-            $data['products'] = $productData;
+            $this->logger->error('ERROR Communicator "syncProduct"', ['error' => $e->getMessage()]);
 
-            $this->post('product/add', $data);
         }
     }
 
     /**
-     * Remove product from Clerk
-     *
      * @param $productId
-     * @throws Mage_Core_Exception
+     * @throws Exception
      */
     public function removeProduct($productId)
     {
-        $product = Mage::getModel('clerk/product')->load($productId);
+        $this->logger = new ClerkLogger();
 
-        foreach ($product->getStoreIds() as $storeId) {
-            $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);
+        try {
 
-            if ($enabled) {
-                $data = [];
-                $data['products'] = [$productId];
-                $data['key'] = $this->getPublicKey($storeId);
-                $data['private_key'] = $this->getPrivateKey($storeId);
+            $product = Mage::getModel('clerk/product')->load($productId);
 
-                $this->get('product/remove', $data);
+            foreach ($product->getStoreIds() as $storeId) {
+                $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);
+
+                if ($enabled) {
+                    $data = [];
+                    $data['products'] = [$productId];
+                    $data['key'] = $this->getPublicKey($storeId);
+                    $data['private_key'] = $this->getPrivateKey($storeId);
+
+                    $this->get('product/remove', $data);
+                }
             }
-        }
-    }
-
-    /**
-     * Get facet attributes
-     *
-     * @param $store
-     * @return Zend_Http_Response
-     * @throws Mage_Core_Exception
-     */
-    public function getFacetAttributes($store)
-    {
-        $data = [];
-        $data['key'] = $this->getPublicKey($store);
-        $data['private_key'] = $this->getPrivateKey($store);
-
-        if ($store) {
-            return $this->get('product/facets', $data);
-        }
-    }
-
-    /**
-     * Validate public & private keys
-     *
-     * @param $publicKey
-     * @param $privateKey
-     * @return Zend_Http_Response
-     * @throws Mage_Core_Exception
-     */
-    public function keysValid($publicKey, $privateKey)
-    {
-        $data = [
-            'key' => $publicKey,
-            'private_key' => $privateKey,
-        ];
-
-        return $this->get('client/account/info', $data);
-    }
-
-    /**
-     * Make Clerk synchronize everything
-     */
-    public function syncAll()
-    {
-        $endpoint = 'client/account/importer/start';
-
-        foreach (Mage::app()->getStores() as $store) {
-            $data = [
-                'key' => $this->getPublicKey($store->getId()),
-                'private_key' => $this->getPrivateKey($store->getId()),
-            ];
-
-            $this->get($endpoint, $data);
-        }
-    }
-
-    /**
-     * Get Clerk content
-     *
-     * @param $storeId
-     * @return Zend_Http_Response
-     * @throws Mage_Core_Exception
-     */
-    public function getContent($storeId)
-    {
-        $endpoint = 'client/account/content/list';
-
-        $data = [
-            'key' => $this->getPublicKey($storeId),
-            'private_key' => $this->getPrivateKey($storeId),
-        ];
-
-        return $this->get($endpoint, $data);
-    }
-
-    /**
-     * Perform a POST request to Clerk API
-     *
-     * @param $data
-     * @param $endpoint
-     */
-    public function post($endpoint, $data = [])
-    {
-        $url = $this->baseUrl . $endpoint;
-
-        try {
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
-            curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
-            $response = curl_exec($ch);
         } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-        }
-    }
 
-    /**
-     * Perform a GET request to the Clerk API
-     *
-     * @param $endpoint
-     * @param array $data
-     *
-     * @return Zend_Http_Response
-     * @throws Mage_Core_Exception
-     */
-    private function get($endpoint, $data = [])
-    {
-        $url = $this->baseUrl . $endpoint;
-        $client = new Zend_Http_Client();
+            $this->logger->error('ERROR Communicator "removeProduct"', ['error' => $e->getMessage()]);
 
-        try {
-            $response = $client->setUri($url)
-                ->setParameterGet($data)
-                ->request('GET');
-        } catch (Zend_Http_Client_Exception $e) {
-            Mage::throwException($e->getMessage());
         }
 
-        return $response;
     }
 
     /**
@@ -218,5 +114,167 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     private function getPrivateKey($storeId = null)
     {
         return Mage::getStoreConfig(self::XML_PATH_PRIVATE_KEY, $storeId);
+    }
+
+    /**
+     * @param $endpoint
+     * @param array $data
+     * @return Zend_Http_Response
+     * @throws Exception
+     */
+    private function get($endpoint, $data = [])
+    {
+        $this->logger = new ClerkLogger();
+        try {
+            $url = $this->baseUrl . $endpoint;
+            $client = new Zend_Http_Client();
+
+            try {
+                $response = $client->setUri($url)
+                    ->setParameterGet($data)
+                    ->request('GET');
+            } catch (Zend_Http_Client_Exception $e) {
+                Mage::throwException($e->getMessage());
+            }
+
+            return $response;
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "get"', ['error' => $e->getMessage()]);
+
+        }
+
+    }
+
+    /**
+     * @param $endpoint
+     * @param array $data
+     * @throws Exception
+     */
+    public function post($endpoint, $data = [])
+    {
+        $this->logger = new ClerkLogger();
+
+        $url = $this->baseUrl . $endpoint;
+
+        try {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
+            curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
+            $response = curl_exec($ch);
+        } catch (Exception $e) {
+            $this->logger->error('ERROR Communicator "post"', ['error' => $e->getMessage()]);
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+    }
+
+    /**
+     * @param $store
+     * @return Zend_Http_Response
+     * @throws Exception
+     */
+    public function getFacetAttributes($store)
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+            $data = [];
+            $data['key'] = $this->getPublicKey($store);
+            $data['private_key'] = $this->getPrivateKey($store);
+
+            if ($store) {
+                return $this->get('product/facets', $data);
+            }
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "getFacetAttributes"', ['error' => $e->getMessage()]);
+
+        }
+
+    }
+
+    /**
+     * @param $publicKey
+     * @param $privateKey
+     * @return Zend_Http_Response
+     * @throws Exception
+     */
+    public function keysValid($publicKey, $privateKey)
+    {
+
+        $this->logger = new ClerkLogger();
+
+        try {
+            $data = [
+                'key' => $publicKey,
+                'private_key' => $privateKey,
+            ];
+
+            return $this->get('client/account/info', $data);
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "keysValid"', ['error' => $e->getMessage()]);
+
+        }
+    }
+
+    /**
+     * Make Clerk synchronize everything
+     */
+    public function syncAll()
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+
+            $endpoint = 'client/account/importer/start';
+
+            foreach (Mage::app()->getStores() as $store) {
+                $data = [
+                    'key' => $this->getPublicKey($store->getId()),
+                    'private_key' => $this->getPrivateKey($store->getId()),
+                ];
+
+                $this->get($endpoint, $data);
+            }
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "syncAll"', ['error' => $e->getMessage()]);
+
+        }
+
+    }
+
+    /**
+     * @param $storeId
+     * @return Zend_Http_Response
+     * @throws Exception
+     */
+    public function getContent($storeId)
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+            $endpoint = 'client/account/content/list';
+
+            $data = [
+                'key' => $this->getPublicKey($storeId),
+                'private_key' => $this->getPrivateKey($storeId),
+            ];
+
+            return $this->get($endpoint, $data);
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "getContent"', ['error' => $e->getMessage()]);
+
+        }
     }
 }

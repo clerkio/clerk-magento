@@ -14,7 +14,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Validation of Public and private key is started', ['response' => '']);
             $this->setStore();
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
@@ -22,12 +21,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
 
             if (!$secret || $input !== trim($secret)) {
+
                 $response = [
                     'error' => [
                         'code' => 403,
                         'message' => 'Invalid public or private key supplied'
                     ]
                 ];
+
                 $this->logger->warn('Invalid public or private key supplied', ['response' => $response]);
                 $this->getResponse()
                     ->setHeader('HTTP/1.1', '403', true)
@@ -35,11 +36,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     ->sendResponse();
                 exit;
             }
-            $this->logger->log('Public and private key is validated', ['response' => '']);
+
             return parent::preDispatch();
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Key validation "preDispatch"', ['error' => $e]);
+            $this->logger->error('ERROR Key validation "preDispatch"', ['error' => $e->getMessage()]);
 
         }
     }
@@ -97,7 +98,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Fetching Version "versionAction"', ['error' => $e]);
+            $this->logger->error('ERROR Fetching Version "versionAction"', $e->getMessage());
 
         }
     }
@@ -125,7 +126,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Fetching Store "storeAction"', ['error' => $e]);
+            $this->logger->error('ERROR Fetching Store "storeAction"', $e->getMessage());
 
         }
     }
@@ -139,7 +140,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Products Synchronization Started', ['response' => '']);
             // Handler for product endpoint. E.g.
             // http://store.com/clerk/api/product/id/24
             $id = $this->getRequest()->getParam('id', false);
@@ -158,6 +158,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     ];
                 }
             } else {
+
                 $page = $this->getIntParam('page');
                 $limit = $this->getIntParam('limit');
                 $page = Mage::getModel('clerk/productpage')->load((int)$page, $limit);
@@ -165,12 +166,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
             }
 
-            $this->logger->log('Products Synchronization Done', ['response' => $response]);
+            $this->logger->log('Products Fetched', ['response' => $response]);
             $this->getResponse()->setBody(json_encode($response));
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Products Synchronization "productAction"', ['error' => $e]);
+            $this->logger->error('ERROR Products Synchronization "productAction"', $e->getMessage());
 
         }
     }
@@ -208,15 +209,16 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         ]
                     ];
                 }
-                $this->logger->warn('WARN Fetching Parameters', ['response' => $response]);
+
                 $this->getResponse()->setBody(json_encode($response))->sendResponse();
                 exit;
             }
+
             return (int)$value;
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Fetching Parameters "getIntParam"', ['error' => $e]);
+            $this->logger->error('ERROR Fetching Parameters "getIntParam"', $e->getMessage());
 
         }
     }
@@ -229,7 +231,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Category Synchronization Started', ['response' => '']);
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
 
@@ -265,13 +266,13 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             if ($page > $categories->getLastPageNumber()) {
                 $this->getResponse()->setBody(json_encode([]));
             } else {
-                $this->logger->log('Category Synchronization Done', ['response' => $items]);
+                $this->logger->log('Categories Fetched', ['response' => $items]);
                 $this->getResponse()->setBody(json_encode($items));
             }
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Category Synchronization "categoryAction"', ['error' => $e]);
+            $this->logger->error('ERROR Category Synchronization "categoryAction"', $e->getMessage());
 
         }
     }
@@ -285,7 +286,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->logger = new ClerkLogger();
         try {
 
-            $this->logger->log('Order Synchronization Started', ['response' => '']);
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
             $days = $this->getIntParam('days');
@@ -295,14 +295,14 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 $this->getResponse()->setBody(json_encode([]));
             } else {
                 $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
-                $this->logger->log('Order Synchronization Done', ['response' => '']);
+                $this->logger->log('Order Fetched', ['response' => '']);
                 $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
                 $this->getResponse()->setBody(json_encode($page->array));
             }
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR Order Synchronization "orderAction"', ['error' => $e]);
+            $this->logger->error('ERROR Order Synchronization "orderAction"', $e->getMessage());
 
         }
     }
