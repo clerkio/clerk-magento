@@ -25,25 +25,33 @@ class Clerk_Clerk_Model_Orderpage
     private $collection;
 
     /**
-     * Load order collection
-     *
      * @param $page
      * @param $limit
+     * @param $start_date
+     * @param int $end_date
      * @param int $delta
      * @return $this
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function load($page, $limit, $delta = 1500)
+    public function load($page, $limit,  $start_date, $end_date = 0, $delta = 1500)
     {
         $this->limit = $limit;
         $this->page = $page;
         $this->delta = $delta;
+
+        if($end_date == 0) {
+
+            $end_date = strtotime(time());
+
+        }
+
         $this->collection = Mage::getModel('sales/order')
             ->getCollection()
             ->addFieldToFilter('store_id', Mage::app()->getStore()->getId())
             ->addFieldToFilter('status', array('neq' => 'canceled'))
             ->addFieldToFilter('created_at', array(
-                    'from' => strtotime("-{$delta} day", time()),
+                    'from' => strtotime($start_date),
+                    'to' => $end_date,
                     'datetime' => true, ))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)

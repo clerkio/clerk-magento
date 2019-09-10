@@ -13,7 +13,8 @@ class Clerk_Clerk_Block_Adminhtml_Version extends Mage_Adminhtml_Block_System_Co
 
         $clerk_confirm = <<<CLERKJS
 
-  <script>		
+  <script>
+  		
 document.addEventListener('DOMContentLoaded', function(){
     var userPreference;
     var levelbefore = document.getElementById("clerk_log_level").value;

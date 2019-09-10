@@ -14,7 +14,8 @@ class Clerk_Clerk_Model_Observer
      */
     public function itemAddedToCart(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
+
+        if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active') && Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
             return;
         }
 
@@ -25,7 +26,7 @@ class Clerk_Clerk_Model_Observer
         }
 
         if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
-            $request->setParam('return_url', Mage::getBaseUrl().'checkout/cart/clerk');
+            $request->setParam('return_url', Mage::getBaseUrl() . 'checkout/cart/clerk');
         } else {
             $referer = $request->getHeader('referer');
             $request->setParam('return_url', $referer);
@@ -40,8 +41,12 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncProduct(Varien_Event_Observer $observer)
     {
-        $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->syncProduct($productId);
+        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+
+            $productId = $observer->getEvent()->getProduct()->getId();
+            Mage::getModel('clerk/communicator')->syncProduct($productId);
+
+        }
     }
 
     /**
@@ -51,8 +56,12 @@ class Clerk_Clerk_Model_Observer
      */
     public function deleteProduct(Varien_Event_Observer $observer)
     {
-        $productId = $observer->getEvent()->getProduct()->getId();
-        Mage::getModel('clerk/communicator')->removeProduct($productId);
+        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+
+            $productId = $observer->getEvent()->getProduct()->getId();
+            Mage::getModel('clerk/communicator')->removeProduct($productId);
+
+        }
     }
 
     /**
@@ -62,13 +71,19 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncProducts(Varien_Event_Observer $observer)
     {
-        $productIds = $observer->getEvent()->getProductIds();
 
-        if (!is_array($productIds)) {
-            $productIds = [$productIds];
+        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+
+            $productIds = $observer->getEvent()->getProductIds();
+
+            if (!is_array($productIds)) {
+                $productIds = [$productIds];
+            }
+
+            Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
+
         }
 
-        Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
     }
 
     /**
@@ -78,11 +93,16 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncOnCatalogRuleSave(Varien_Event_Observer $observer)
     {
-        /** @var Mage_CatalogRule_Model_Rule $catalogRule */
-        $catalogRule = $observer->getEvent()->getRule();
-        if ($catalogRule->getIsActive()) {
-            //Request a resync of everything
-            Mage::getModel('clerk/communicator')->syncAll();
+
+        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+
+            /** @var Mage_CatalogRule_Model_Rule $catalogRule */
+            $catalogRule = $observer->getEvent()->getRule();
+            if ($catalogRule->getIsActive()) {
+                //Request a resync of everything
+                Mage::getModel('clerk/communicator')->syncAll();
+            }
+
         }
     }
 
@@ -93,7 +113,9 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncOnCleanCatalogImagesCacheAfter(Varien_Event_Observer $observer)
     {
-        Mage::getModel('clerk/communicator')->syncAll();
+        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+            Mage::getModel('clerk/communicator')->syncAll();
+        }
     }
 
     /**
@@ -107,22 +129,22 @@ class Clerk_Clerk_Model_Observer
      */
     public function formatScpOrderItem(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('core')->isModuleEnabled('OrganicInternet_SimpleConfigurableProducts')) {
-            return;
-        }
+            if (!Mage::helper('core')->isModuleEnabled('OrganicInternet_SimpleConfigurableProducts')) {
+                return;
+            }
 
-        /** @var array $output */
-        $output = $observer->getEvent()->getOutput();
+            /** @var array $output */
+            $output = $observer->getEvent()->getOutput();
 
-        /** @var Mage_Sales_Model_Order_Item $_item */
-        $_item = $observer->getEvent()->getItem();
+            /** @var Mage_Sales_Model_Order_Item $_item */
+            $_item = $observer->getEvent()->getItem();
 
-        /** @var array $buyRequest */
-        $buyRequest = $_item->getProductOptionByCode('info_buyRequest');
+            /** @var array $buyRequest */
+            $buyRequest = $_item->getProductOptionByCode('info_buyRequest');
 
-        if ($buyRequest && isset($buyRequest['cpid'])) {
-            $output['id'] = (int) $buyRequest['cpid'];
-        }
+            if ($buyRequest && isset($buyRequest['cpid'])) {
+                $output['id'] = (int)$buyRequest['cpid'];
+            }
     }
 
     /**
@@ -183,6 +205,14 @@ class Clerk_Clerk_Model_Observer
         }
     }
 
+    public function getCategoryId()
+    {
+        $category = Mage::registry('current_category');
+        $categoryId = sprintf('category/%s', $category->getId());
+
+        return $categoryId;
+    }
+
     /**
      * Get current product id
      *
@@ -194,13 +224,5 @@ class Clerk_Clerk_Model_Observer
         $productId = sprintf('product/%s', $product->getId());
 
         return $productId;
-    }
-
-    public function getCategoryId()
-    {
-        $category = Mage::registry('current_category');
-        $categoryId = sprintf('category/%s', $category->getId());
-
-        return $categoryId;
     }
 }

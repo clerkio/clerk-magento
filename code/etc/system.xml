@@ -62,24 +62,38 @@
                             <sort_order>30</sort_order>
                             <show_in_store>1</show_in_store>
                         </privateapikey>
+                        <realtime_updates>
+                            <label>Use Real-time Updates</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </realtime_updates>
+                        <additional_fields>
+                            <label>Additional Fields</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <comment>A comma separated list of additional fields to sync to Clerk.io</comment>
+                        </additional_fields>
                         <collect_emails>
                             <label>Collect Emails</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>35</sort_order>
+                            <sort_order>45</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_emails>
                         <disable_order_synchronization>
                             <label>Disable Order Synchronization</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>40</sort_order>
+                            <sort_order>50</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
                         <include_out_of_stock_products>
                             <label>Include Out Of Stock Products</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>40</sort_order>
+                            <sort_order>55</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </include_out_of_stock_products>
@@ -87,7 +101,7 @@
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_url</frontend_model>
-                            <sort_order>40</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_store>1</show_in_store>
                             <comment>Use this url to configure an importer from my.clerk.io</comment>
                         </url>
@@ -95,7 +109,7 @@
                             <label>Extension version</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_version</frontend_model>
-                            <sort_order>50</sort_order>
+                            <sort_order>65</sort_order>
                             <show_in_store>1</show_in_store>
                         </version>
                     </fields>

@@ -288,13 +288,15 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
+            $start_date = $this->getIntParam('start_date');
+            $end_date = $this->getIntParam('end_date');
             $days = $this->getIntParam('days');
 
             if (Mage::getStoreConfigFlag('clerk/general/disable_order_synchronization')) {
                 $this->logger->log('Order Synchronization is disabled', ['response' => '']);
                 $this->getResponse()->setBody(json_encode([]));
             } else {
-                $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $days);
+                $page = Mage::getModel('clerk/orderpage')->load($page, $limit, $start_date, $end_date, $days);
                 $this->logger->log('Order Fetched', ['response' => '']);
                 $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
                 $this->getResponse()->setBody(json_encode($page->array));

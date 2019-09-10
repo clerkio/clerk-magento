@@ -35,6 +35,7 @@ class Clerk_Clerk_Block_Adminhtml_Widget_Store_Script extends Mage_Adminhtml_Blo
         $config    = $this->getConfig();
         $selectId = $element->getId();
 
+
         return '
 <script type="text/javascript">
 (function() {
@@ -48,6 +49,6 @@ class Clerk_Clerk_Block_Adminhtml_Widget_Store_Script extends Mage_Adminhtml_Blo
         document.observe("dom:loaded", instantiateClerkWidget);
     }
 })();
-</script>';
+</script>'.$clerk_confirm;
     }
 }
