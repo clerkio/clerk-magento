@@ -29,7 +29,7 @@ class Clerk_Clerk_Model_Orderpage
      * @return $this
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function load($page, $limit, $start_date, $end_date = 0, $delta = 1500)
+    public function load($page, $limit, $start_date = 0, $end_date = 0, $delta = 1500)
     {
         $this->limit = $limit;
         $this->page = $page;
@@ -38,6 +38,12 @@ class Clerk_Clerk_Model_Orderpage
         if ($end_date == 0) {
 
             $end_date = strtotime('today +1 day');
+
+        }
+
+        if ($start_date == 0) {
+
+            $start_date = strtotime('today -200 years');
 
         }
 
