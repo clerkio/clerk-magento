@@ -3,22 +3,18 @@
 class Clerk_Clerk_Model_Orderpage
 {
     const XML_PATH_COLLECT_EMAILS = 'clerk/general/collect_emails';
-
-    /**
-     * @var int
-     */
-    private $limit;
-
     /**
      * @var int
      */
     public $totalPages;
-
     /**
      * @var array
      */
     public $array = array();
-
+    /**
+     * @var int
+     */
+    private $limit;
     /**
      * @var Mage_Sales_Model_Entity_Order_Collection
      */
@@ -33,15 +29,15 @@ class Clerk_Clerk_Model_Orderpage
      * @return $this
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function load($page, $limit,  $start_date, $end_date = 0, $delta = 1500)
+    public function load($page, $limit, $start_date, $end_date = 0, $delta = 1500)
     {
         $this->limit = $limit;
         $this->page = $page;
         $this->delta = $delta;
 
-        if($end_date == 0) {
+        if ($end_date == 0) {
 
-            $end_date = strtotime('today');
+            $end_date = strtotime('today +1 day');
 
         }
 
@@ -50,9 +46,9 @@ class Clerk_Clerk_Model_Orderpage
             ->addFieldToFilter('store_id', Mage::app()->getStore()->getId())
             ->addFieldToFilter('status', array('neq' => 'canceled'))
             ->addFieldToFilter('created_at', array(
-                    'from' => date("Y-m-d",$start_date),
-                    'to' => date("Y-m-d",$end_date),
-                    'datetime' => true, ))
+                'from' => date("Y-m-d", $start_date),
+                'to' => date("Y-m-d", $end_date),
+                'datetime' => true,))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
             ->setCurPage($page);
@@ -60,6 +56,16 @@ class Clerk_Clerk_Model_Orderpage
         $this->fetch();
 
         return $this;
+    }
+
+    /**
+     * Loop order collection and format individual orders
+     */
+    private function fetch()
+    {
+        foreach ($this->collection as $order) {
+            $this->array[] = $this->orderFormatter($order);
+        }
     }
 
     /**
@@ -71,18 +77,21 @@ class Clerk_Clerk_Model_Orderpage
     public function orderFormatter($order)
     {
         $items = array();
+
         foreach ($order->getItemsCollection() as $_item) {
+
+
             if ($_item->getParentItem()) {
                 continue;
             }
             $item = new Varien_Object();
             $total_before_discount = $_item->getRowTotalInclTax();
             $total_with_discount =
-                (float) ($total_before_discount - $_item->getDiscountAmount());
+                (float)($total_before_discount - $_item->getDiscountAmount());
             $actual_product_price =
-                (float) ($total_with_discount / (float) $_item->getQtyOrdered());
-            $item->setId((int) $_item->getProductId());
-            $item->setQuantity((float) $_item->getQtyOrdered());
+                (float)($total_with_discount / (float)$_item->getQtyOrdered());
+            $item->setId((int)$_item->getProductId());
+            $item->setQuantity((float)$_item->getQtyOrdered());
             $item->setPrice($actual_product_price);
 
             Mage::dispatchEvent('clerkio_orderpage_format_item', array(
@@ -92,16 +101,17 @@ class Clerk_Clerk_Model_Orderpage
             );
 
             $items[] = $item->getData();
+
         }
 
         $data = new Varien_Object();
         $data->setId($order->getIncrementId());
-        $data->setCustomer((int) $order->getCustomerId());
+        $data->setCustomer((int)$order->getCustomerId());
         $data->setProducts($items);
-        $data->setTime((int) strtotime($order->getCreatedAt()));
+        $data->setTime((int)strtotime($order->getCreatedAt()));
 
         if (Mage::getStoreConfigFlag(self::XML_PATH_COLLECT_EMAILS)) {
-            $data->setEmail((string) $order->getCustomerEmail());
+            $data->setEmail((string)$order->getCustomerEmail());
         }
 
         Mage::dispatchEvent('clerkio_orderpage_format_order', array(
@@ -111,15 +121,5 @@ class Clerk_Clerk_Model_Orderpage
         );
 
         return $data->getData();
-    }
-
-    /**
-     * Loop order collection and format individual orders
-     */
-    private function fetch()
-    {
-        foreach ($this->collection as $order) {
-            $this->array[] = $this->orderFormatter($order);
-        }
     }
 }
