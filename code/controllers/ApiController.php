@@ -288,8 +288,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             $page = $this->getIntParam('page');
             $limit = $this->getIntParam('limit');
-            $start_date = $this->getIntParam('start_date');
-            $end_date = $this->getIntParam('end_date');
+            $start_date = $this->getRequest()->getParam('start_date');
+            $end_date = $this->getRequest()->getParam('end_date');
             $days = $this->getIntParam('days');
 
             if (Mage::getStoreConfigFlag('clerk/general/disable_order_synchronization')) {

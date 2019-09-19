@@ -41,7 +41,7 @@ class Clerk_Clerk_Model_Orderpage
 
         if($end_date == 0) {
 
-            $end_date = strtotime(time());
+            $end_date = strtotime('today');
 
         }
 
@@ -50,8 +50,8 @@ class Clerk_Clerk_Model_Orderpage
             ->addFieldToFilter('store_id', Mage::app()->getStore()->getId())
             ->addFieldToFilter('status', array('neq' => 'canceled'))
             ->addFieldToFilter('created_at', array(
-                    'from' => strtotime($start_date),
-                    'to' => $end_date,
+                    'from' => date("Y-m-d",$start_date),
+                    'to' => date("Y-m-d",$end_date),
                     'datetime' => true, ))
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setPageSize($limit)
