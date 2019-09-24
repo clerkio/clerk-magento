@@ -9,3 +9,32 @@
 "Categories","Kategorier"
 "Select a store to view dashboard","Vælg en butik for at se dashboard"
 "Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>","Clerk er ikke konfigureret for butikken. <a href=""%s"">Klik her for at konfigurere</a>"
+"Public and private key must be set in order to enable faceted search","Offentlig og privat nøgle skal indsættes for at aktivere facetteret søgning"
+"Public or private key invalid","Offentlig eller privat nøgle er ugyldig"
+"Search results for '%s'","Søgeresultater for '%s'"
+Page,Side
+Popup,Popup
+"-- Please Select --","-- Vælg venligst --"
+Content,Indhold
+"Clerk Content Options","Clerk's Indholdsmuligheder"
+"Select Product...","Vælg produkt ..."
+"Select Category...","Vælg Kategori..."
+"Select a store to view dashboard","Vælg en butik for at se dashboard"
+"Clerk is not configured for this store. <a href=""%s"">Click here to configure</a>","Clerk er ikke konfigureret til denne butik. <a href=""%s"">Klik her for at konfigurere</a>"
+"%s was successfully added to your shopping cart.","%s blev føjet til din indkøbskurv."
+"You have %s products in your shopping cart","Du har %s produkter i din indkøbskurv"
+Total,i alt
+"Continue Shopping","Fortsætte med at handle"
+Checkout,Bestilling
+Clerk,Clerk
+Dashboard,Dashboard
+Search results for '%s',Søgeresultater for '%s'
+Filters,Filtre
+Category,Kategori
+Categories,Kategorier
+Product,Produkt
+Products,Produkter
+"View Shopping Cart","Se indkøbskurv"
+Add to Cart,Tilføj til kurv
+Continue Shopping,Fortsætte med at handle
+Continue to Checkout,Fortsæt til kassen
