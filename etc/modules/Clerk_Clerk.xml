@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <modules>
+    <Clerk_Clerk>
+      <active>true</active>
+      <codePool>community</codePool>
+    </Clerk_Clerk>
+  </modules>
+</config>

@@ -7,29 +7,28 @@ $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode
 $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, $currentCurrencyCode);
 ?>
 <script type="text/javascript">
-    window.clerkAsyncInit = function() {
-        Clerk.config({
-            key: '<?php echo $this->getPublicKey(); ?>',
-            collect_email: <?php echo $this->collectEmails() ? 'true' : 'false'; ?>,
-            templateFormatters: {
-                form_key: function () {
-                    return '<?php echo $this->getFormKey(); ?>';
-                },
-                <?php if ($rates && isset($rates[$currentCurrencyCode])) : ?>
-                price_in_currency: function(price) {
-                    price =  Math.round(price * 100) / 100;
-                    var price_converted = Math.round((price * <?php echo (float)$rates[$currentCurrencyCode]; ?>) * 100) / 100;
-                    var retVal = <?php echo json_encode($currentCurrencySymbol); ?> + ' ' + price_converted.toFixed(2).toString();
+    (function(w,d){
+        var e=d.createElement('script');e.type='text/javascript';e.async=true;
+        e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
+        var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
+        w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk||function(){w.__clerk_q.push(arguments)};
+    })(window,document);
+    Clerk('config', {
+        key: '<?php echo $this->getPublicKey(); ?>',
+        collect_email: <?php echo $this->collectEmails() ? 'true' : 'false'; ?>,
+        templateFormatters: {
+            form_key: function () {
+                return '<?php echo $this->getFormKey(); ?>';
+            },
+            <?php if ($rates && isset($rates[$currentCurrencyCode])) : ?>
+            price_in_currency: function(price) {
+                price =  Math.round(price * 100) / 100;
+                var price_converted = Math.round((price * <?php echo (float)$rates[$currentCurrencyCode]; ?>) * 100) / 100;
+                var retVal = <?php echo json_encode($currentCurrencySymbol); ?> + ' ' + price_converted.toFixed(2).toString();
 
-                    return retVal;
-                }
-                <?php endif; ?>
+                return retVal;
             }
-        });
-    };
-    (function(){
-        var e = document.createElement('script'); e.type='text/javascript'; e.async = true;
-        e.src = document.location.protocol + '//api.clerk.io/static/clerk.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
-    })();
+            <?php endif; ?>
+        }
+    });
 </script>
