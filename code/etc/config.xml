@@ -180,6 +180,7 @@
             <general>
                 <active>0</active>
                 <collect_emails>1</collect_emails>
+                <collect_pages>1</collect_pages>
                 <disable_order_synchronization>0</disable_order_synchronization>
                 <include_out_of_stock_products>0</include_out_of_stock_products>
             </general>
@@ -192,6 +193,9 @@
             <livesearch>
                 <active>0</active>
                 <show_categories>0</show_categories>
+                <suggestions>5</suggestions>
+                <categories>5</categories>
+                <pages>3</pages>
                 <template>live-search</template>
             </livesearch>
             <powerstep>

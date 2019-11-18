@@ -3,6 +3,14 @@ require_once(Mage::getBaseDir('code') . '/community/Clerk/Clerk/controllers/Cler
 
 class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 {
+    /**
+     *
+     */
+    const XML_PATH_COLLECT_PAGES = 'clerk/general/collect_pages';
+
+    /**
+     * @var
+     */
     private $logger;
 
     /**
@@ -12,8 +20,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     public function preDispatch()
     {
         $this->logger = new ClerkLogger();
-        try {
 
+        try {
             $this->setStore();
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
@@ -223,10 +231,86 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
+    public function pageAction()
+    {
+
+        $this->logger = new ClerkLogger();
+        try {
+            if (Mage::getStoreConfigFlag(self::XML_PATH_COLLECT_PAGES)) {
+
+                if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+
+                    $Url = "http://" . $_SERVER['HTTP_HOST'];
+
+                else {
+
+                    $Url = "http://" . $_SERVER['HTTP_HOST'];
+
+                }
+                $items = array();
+                $Additional_Fields = explode(',', Mage::getStoreConfig('clerk/general/pages_additional_fields'));
+                $pages = Mage::getModel('cms/page')->getCollection();
+
+                foreach ($pages as $page) {
+
+                    $item = [];
+                    $url = Mage::helper('cms/page')->getPageUrl($page->page_id);
+                    $item['id'] = $page->page_id;
+                    $item['type'] = 'CMS Page';
+                    $item['url'] = $url;
+                    $item['title'] = $page->title;
+                    $item['text'] = $page->content;
+
+                    if (!empty($Additional_Fields)) {
+
+                        foreach ($Additional_Fields as $Additional_Field) {
+
+                            try {
+
+                                if ($page->{str_replace(' ', '', $Additional_Field)} != null) {
+
+                                    $item[str_replace(' ', '', $Additional_Field)] = $page->{str_replace(' ', '', $Additional_Field)};
+
+                                }else {
+
+                                    continue;
+
+                                }
+
+                            } catch (Exception $e) {
+
+                                continue;
+
+                            }
+
+                        }
+
+                    }
+
+                    $items[] = $item;
+                }
+
+                $this->logger->log('Pages Fetched', ['response' => json_encode($items)]);
+                $this->getResponse()->setBody(json_encode($items));
+            } else {
+
+                $this->getResponse()->setBody(json_encode([]));
+
+            }
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Page Synchronization "pageAction"', $e->getMessage());
+
+        }
+
+    }
+
     /**
      * @throws Exception
      */
-    public function categoryAction()
+    public
+    function categoryAction()
     {
         $this->logger = new ClerkLogger();
         try {
@@ -281,7 +365,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      * Endpoint for order import
      *
      */
-    public function orderAction()
+    public
+    function orderAction()
     {
         $this->logger = new ClerkLogger();
         try {

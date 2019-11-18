@@ -1,10 +1,11 @@
 <span
     class="clerk"
     data-template="@<?php echo ltrim(Mage::helper('clerk')->getSetting('clerk/livesearch/template'),"@") ?>"
-    data-live-search-categories="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/show_categories') ?>"
-    data-live-search-categories-title="<?php echo $this->__('Categories') ?>"
-    data-live-search-products-title="<?php echo $this->__('Products') ?>"
-    data-bind-live-search="#search">
+    data-instant-search-suggestions="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/suggestions') ?>"
+    data-instant-search-categories="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/categories') ?>"
+    data-instant-search-pages="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/pages') ?>"
+    data-instant-search-pages-type="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/pages-type') ?>"
+    data-instant-search="#search">
 </span>
 <style type="text/css">
 	#search_autocomplete { display: none !important; }

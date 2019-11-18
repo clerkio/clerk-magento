@@ -19,12 +19,13 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
 
         foreach (explode(',', $attributes) as $attribute) {
             $value = isset($values[$attribute]) ? $values[$attribute] : $attribute;
-
-            $html .= '<tr>';
-            $html .= '<td><input id="' . $element->getHtmlId() . '_orig" class="input-text disabled" value="' . $attribute . '" type="text" readonly></td>';
-            $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][label]" value="' . $value['label'] . '' . '" type="text"></td>';
-            $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][sort_order]" value="' . $value['sort_order'] . '' . '" type="text"></td>';
-            $html .= '</tr>';
+            if (isset($element->getName()[' . $attribute . ']['label'])) {
+                $html .= '<tr>';
+                $html .= '<td><input id="' . $element->getHtmlId() . '_orig" class="input-text disabled" value="' . $attribute . '" type="text" readonly></td>';
+                $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][label]" value="' . $value['label'] . '' . '" type="text"></td>';
+                $html .= '<td><input id="' . $element->getHtmlId() . '" class="input-text" name="' . $element->getName() . '[' . $attribute . '][sort_order]" value="' . $value['sort_order'] . '' . '" type="text"></td>';
+                $html .= '</tr>';
+            }
         }
 
         $html .= '</tbody></table></div>';

@@ -76,32 +76,53 @@
                             <show_in_store>1</show_in_store>
                             <comment>A comma separated list of additional fields to sync to Clerk.io</comment>
                         </additional_fields>
+                        <collect_pages>
+                            <label>Include Pages</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </collect_pages>
+                        <pages_additional_fields>
+                            <label>Additional Fields For Pages</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <comment>A comma separated list of additional fields for pages to sync to Clerk.io</comment>
+                        </pages_additional_fields>
                         <collect_emails>
                             <label>Collect Emails</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>45</sort_order>
+                            <sort_order>55</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_emails>
                         <disable_order_synchronization>
                             <label>Disable Order Synchronization</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>50</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
                         <include_out_of_stock_products>
                             <label>Include Out Of Stock Products</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>55</sort_order>
+                            <sort_order>65</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </include_out_of_stock_products>
+                        <lang>
+                            <label>Language</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_language</source_model>
+                        </lang>
                         <url>
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_url</frontend_model>
-                            <sort_order>60</sort_order>
+                            <sort_order>75</sort_order>
                             <show_in_store>1</show_in_store>
                             <comment>Use this url to configure an importer from my.clerk.io</comment>
                         </url>
@@ -109,7 +130,7 @@
                             <label>Extension version</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_version</frontend_model>
-                            <sort_order>65</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_store>1</show_in_store>
                         </version>
                     </fields>
@@ -230,6 +251,46 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </show_categories>
+                        <suggestions>
+                            <label>Number of Suggestions</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_numbers</source_model>
+                        </suggestions>
+                        <categories>
+                            <label>Number of Categories</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_numbers</source_model>
+                        </categories>
+                        <pages>
+                            <label>Number of Pages</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_numbers</source_model>
+                        </pages>
+                        <pages-type>
+                            <label>Pages Type</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_pagestype</source_model>
+                        </pages-type>
                         <template>
                             <label>Content</label>
                             <depends>
@@ -237,7 +298,7 @@
                             </depends>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
-                            <sort_order>30</sort_order>
+                            <sort_order>70</sort_order>
                             <show_in_store>1</show_in_store>
                         </template>
                     </fields>
@@ -421,6 +482,16 @@
                             <sort_order>40</sort_order>
                             <show_in_store>1</show_in_store>
                         </file>
+                        <guide>
+                            <label>Debug Mode</label>
+                            <depends>
+                                <to>enabled</to>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_debugGuide</source_model>
+                        </guide>
                     </fields>
                 </log>
             </groups>

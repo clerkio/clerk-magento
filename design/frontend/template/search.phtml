@@ -14,10 +14,6 @@
     <p class="note-msg"><?php echo $this->getNoResultsText(); ?></p>
 </div>
 
-<div id="clerk-search-load-more-button" style="text-align:center; display: none;">
-    <button class="button"><?php echo $this->getLoadMoreText(); ?></button>
-</div>
-
 <script type="text/javascript">
     var total_loaded = 0;
     function _clerk_after_load_event(data) {
@@ -32,13 +28,6 @@
         e.data('limit', data.response.result.length)
         }
 
-        // Setup eventhandler for loadmore button
-        $_('#clerk-search-load-more-button').on('click', function() {
-            e.data('offset', e.data('offset') + e.data('limit'));
-            Clerk.renderBlocks('#clerk-search');
-            $_('#clerk-search-load-more-button').off();
-        });
-
         // If total is 0, show no results
         if (total_loaded == 0) {
             $_('#clerk-search-no-results').show();
@@ -46,11 +35,5 @@
             $_('#clerk-search-no-results').hide();
         }
 
-        // Show LoadMore button if totalloadses is not eq to hits
-        if (total_loaded == data.response.hits) {
-            $_('#clerk-search-load-more-button').hide();
-        } else{
-            $_('#clerk-search-load-more-button').show();
-        }
     }
 </script>
