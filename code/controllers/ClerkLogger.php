@@ -63,7 +63,10 @@ class ClerkLogger
      */
     public function log($Message, $Metadata)
     {
-
+        $i = Mage::getVersionInfo();
+        $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
+            . "-{$i['stability']}{$i['number']}", '.-');
+        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
             $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -142,7 +145,10 @@ class ClerkLogger
      */
     public function error($Message, $Metadata)
     {
-
+        $i = Mage::getVersionInfo();
+        $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
+            . "-{$i['stability']}{$i['number']}", '.-');
+        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
             $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -214,7 +220,10 @@ class ClerkLogger
      */
     public function warn($Message, $Metadata)
     {
-
+        $i = Mage::getVersionInfo();
+        $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
+            . "-{$i['stability']}{$i['number']}", '.-');
+        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
             $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

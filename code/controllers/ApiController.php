@@ -19,6 +19,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     public function preDispatch()
     {
+
+        $i = Mage::getVersionInfo();
+        $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
+            . "-{$i['stability']}{$i['number']}", '.-');
+        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         $this->logger = new ClerkLogger();
 
         try {
@@ -97,9 +102,15 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         try {
 
+            $i = Mage::getVersionInfo();
+            $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
+                . "-{$i['stability']}{$i['number']}", '.-');
+
             $response = [
                 'platform' => 'Magento',
-                'version' => (string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version,
+                'platform_version' => $version,
+                'clerk_version' => (string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version,
+                'php_version' => phpversion()
             ];
 
             $this->getResponse()->setBody(json_encode($response));
@@ -107,6 +118,24 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         } catch (Exception $e) {
 
             $this->logger->error('ERROR Fetching Version "versionAction"', $e->getMessage());
+
+        }
+    }
+
+    public function pluginAction()
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+
+            $modules = Mage::getConfig()->getNode('modules')->children();
+            $respponse = (array)$modules;
+
+            $this->getResponse()->setBody(json_encode($respponse));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Fetching Plugin\'s "pluginAction"', $e->getMessage());
 
         }
     }
@@ -247,6 +276,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     $Url = "http://" . $_SERVER['HTTP_HOST'];
 
                 }
+
                 $items = array();
                 $Additional_Fields = explode(',', Mage::getStoreConfig('clerk/general/pages_additional_fields'));
                 $pages = Mage::getModel('cms/page')->getCollection();
@@ -256,10 +286,16 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     $item = [];
                     $url = Mage::helper('cms/page')->getPageUrl($page->page_id);
                     $item['id'] = $page->page_id;
-                    $item['type'] = 'CMS Page';
+                    $item['type'] = 'cms page';
                     $item['url'] = $url;
                     $item['title'] = $page->title;
                     $item['text'] = $page->content;
+
+                    if (!$this->ValidatePage($item)) {
+
+                        continue;
+
+                    }
 
                     if (!empty($Additional_Fields)) {
 
@@ -303,6 +339,26 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $this->logger->error('ERROR Page Synchronization "pageAction"', $e->getMessage());
 
         }
+
+    }
+
+    /**
+     * @param $Page
+     * @return bool
+     */
+    public function ValidatePage($Page) {
+
+        foreach ($Page as $key => $content) {
+
+            if (empty($content)) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
 
     }
 

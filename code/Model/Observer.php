@@ -7,6 +7,30 @@ class Clerk_Clerk_Model_Observer
     const XML_PATH_PRODUCT_ENABLED = 'clerk/product/enabled';
     const XML_PATH_PRODUCT_CONTENT = 'clerk/product/content';
 
+
+    public function checkMessages($observer)
+    {
+        $modules_for_warning = [
+            //'Clerk_Clerk' => ['message' => 'This module can interfear with how we inject our instant search.', 'link' => 'https://clerk.io']
+        ];
+
+        $modules = Mage::getConfig()->getNode('modules')->children();
+
+        $modules_array = (array)$modules;
+
+        foreach ($modules_array as $name => $module) {
+
+            if (array_key_exists($name, $modules_for_warning)) {
+
+                $notifications = Mage::getSingleton('clerk/notification');
+                $notifications->addMessage('<strong style="color:#eb5e00">Warning: </strong>'.$name.' is installed. '.$modules_for_warning[$name]['message'].'.<a target="_blank" href="'.$modules_for_warning[$name]['link'].'"> Read more here</a>');
+
+            }
+        }
+
+        return $observer;
+    }
+
     /**
      * The function is run by the observer when a new product is added to the cart.
      *
