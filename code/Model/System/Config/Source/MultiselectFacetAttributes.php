@@ -14,6 +14,7 @@ class Clerk_Clerk_Model_System_Config_Source_MultiselectFacetAttributes
         $values = [];
 
         foreach (explode(',', $attributes) as $attribute) {
+            $attribute = str_replace(' ','',$attribute);
             $values[] = [
                 'value' => $attribute,
                 'label' => $attribute,

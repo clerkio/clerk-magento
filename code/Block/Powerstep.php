@@ -53,6 +53,12 @@ class Clerk_Clerk_Block_Powerstep extends Mage_Core_Block_Template
             $this->templates = array_map('trim', explode(',', $this->templates));
         }
 
+        foreach ($this->templates as $key => $value) {
+
+            $this->templates[$key] = str_replace(' ','', $value);
+
+        }
+
         return $this->templates;
     }
 
