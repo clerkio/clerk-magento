@@ -49,7 +49,15 @@ class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
                     return $a['sort_order'] > $b['sort_order'];
                 });
 
-                $spanAttributes['data-facets-titles'] = json_encode(array_filter(array_combine(array_keys($titles), $titles['label'])));
+                $labels = [];
+
+                foreach ($titles as $title) {
+
+                    array_push($labels, $title['label']);
+
+                }
+
+                $spanAttributes['data-facets-titles'] = json_encode(array_filter(array_combine(array_keys($titles), $labels)));
                 $spanAttributes['data-facets-attributes'] = json_encode(array_keys($titles));
 
                 if ($multiselectAttributes = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_MULTISELECT_ATTRIBUTES)) {
