@@ -11,20 +11,12 @@ class Clerk_Clerk_Model_Productpage
     {
         $this->limit = $limit;
         $this->page = $page;
-        $AttributeToSelect = explode(',', Mage::getStoreConfigFlag('clerk/general/additional_fields'));
-
-        foreach ($AttributeToSelect as $key => $value) {
-
-            $AttributeToSelect[$key] = str_replace(' ','', $value);
-
-        }
 
         $this->collection = Mage::getResourceModel('catalog/product_collection')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH) //only include visible products
             ->setPageSize($limit)
             ->setCurPage($page)
-            ->addAttributeToSelect($AttributeToSelect)
             ->addStoreFilter();
 
         //Only grab products in stock

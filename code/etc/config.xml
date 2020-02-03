@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>4.2.0</version>
+            <version>4.2.3</version>
         </Clerk_Clerk>
     </modules>
     <global>
