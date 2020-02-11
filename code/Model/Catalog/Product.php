@@ -48,12 +48,15 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         $data->setDiscountPercent($this->getDiscountPercent());
         $data->setStock(round($this->getStockItem()->getQty()));
         
-        $AttributeToSelect = explode(',', Mage::getStoreConfig('clerk/general/additional_fields'));
+        $additionalFieldsConfig = Mage::getStoreConfig('clerk/general/additional_fields');
 
-        foreach ($AttributeToSelect as $key => $value) {
+        if (!empty($additionalFieldsConfig) && !empty(trim($additionalFieldsConfig))) {
+            $AttributeToSelect = explode(',', $additionalFieldsConfig);
 
-            $data[str_replace(' ','', $value)] = $this->getAttributeText(str_replace(' ','', $value));
-
+            foreach ($AttributeToSelect as $key => $value) {
+                $attrCode = str_replace(' ','', $value);
+                $data[$attrCode] = $this->getAttributeText($attrCode);
+            }
         }
 
         Mage::dispatchEvent('clerk_get_export_data', array('product' => $this, 'data' => $data));
