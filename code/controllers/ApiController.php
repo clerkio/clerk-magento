@@ -51,6 +51,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             }
 
             return parent::preDispatch();
+
         } catch (Exception $e) {
 
             $this->logger->error('ERROR Key validation "preDispatch"', ['error' => $e->getMessage()]);
@@ -90,6 +91,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
 
         $this->getResponse()->setBody(json_encode($response))->sendResponse();
+
         exit;
     }
 
@@ -199,6 +201,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 $page = $this->getIntParam('page');
                 $limit = $this->getIntParam('limit');
                 $page = Mage::getModel('clerk/productpage')->load((int)$page, $limit);
+
                 $response = $page->array;
                 $this->getResponse()->setHeader('Total-Page-Count', $page->totalPages);
             }
@@ -365,8 +368,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     /**
      * @throws Exception
      */
-    public
-    function categoryAction()
+    public function categoryAction()
     {
         $this->logger = new ClerkLogger();
         try {
@@ -421,8 +423,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      * Endpoint for order import
      *
      */
-    public
-    function orderAction()
+    public function orderAction()
     {
         $this->logger = new ClerkLogger();
         try {
