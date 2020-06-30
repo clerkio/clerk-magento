@@ -16,7 +16,9 @@ $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCod
     Clerk('config', {
         key: '<?php echo $this->getPublicKey(); ?>',
         collect_email: <?php echo $this->collectEmails() ? 'true' : 'false'; ?>,
-        language: '<?php echo str_replace('auto_','',Mage::helper('clerk')->getSetting('clerk/general/lang')) ?>',
+        <?php if (strpos(Mage::helper('clerk')->getSetting('clerk/general/lang'), 'auto_') === false) {
+            echo "language: '".Mage::helper('clerk')->getSetting('clerk/general/lang')."',";
+        }?>
         formatters: {
             form_key: function () {
                 return '<?php echo $this->getFormKey(); ?>';

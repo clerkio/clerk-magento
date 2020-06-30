@@ -58,9 +58,36 @@
     <div class="clerk-clearer"></div>
 
     <div class="clerk-results">
-        <?php foreach ($this->getTemplates() as $template) : ?>
-            <span class="clerk" data-template="@<?php echo $template ?>" data-products="[<?php echo $this->getProduct()->getId(); ?>]"></span>
-        <?php endforeach; ?>
+        <?php
+        $Issetdataexclude = false;
+        $dataexcludestring = '';
+        $count = 0;
+        foreach ($this->getTemplates() as $template) :
+            $count++;
+            $id = 'clerk_'.time().$count;
+            ?>
+            <span class="clerk"
+                  id="<?php echo $id ?>"
+                  <?php if($Issetdataexclude) {
+                      echo 'data-exclude-from="'.$dataexcludestring.'"';
+                  } ?>
+                  data-template="@<?php echo $template ?>"
+                  data-products="[<?php echo $this->getProduct()->getId(); ?>]"
+                  data-category="<?php echo $this->getProduct()->getCategoryId(); ?>">
+            </span>
+        <?php
+
+            if ($count == 1) {
+
+                $dataexcludestring .= '#'.$id.':limit(4)';
+
+            }else {
+
+                $dataexcludestring .= ',#'.$id.':limit(4)';
+
+            }
+            $Issetdataexclude = true;
+        endforeach; ?>
     </div>
     <div class="clerk-clearer"></div>
     <hr><br />
