@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>4.3.0</version>
+            <version>4.4.0</version>
         </Clerk_Clerk>
     </modules>
     <global>
@@ -206,6 +206,7 @@
                 <categories>5</categories>
                 <pages>3</pages>
                 <template>live-search</template>
+                <css_input_selector>#search</css_input_selector>
             </livesearch>
             <powerstep>
                 <active>0</active>

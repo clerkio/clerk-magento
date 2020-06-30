@@ -311,6 +311,16 @@
                             <sort_order>70</sort_order>
                             <show_in_store>1</show_in_store>
                         </template>
+                        <css_input_selector>
+                            <label>Live Search Input Selector</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>75</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </css_input_selector>
                     </fields>
                 </livesearch>
                 <powerstep module="clerk">
