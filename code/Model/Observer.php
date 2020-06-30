@@ -7,7 +7,6 @@ class Clerk_Clerk_Model_Observer
     const XML_PATH_PRODUCT_ENABLED = 'clerk/product/enabled';
     const XML_PATH_PRODUCT_CONTENT = 'clerk/product/content';
 
-
     public function checkMessages($observer)
     {
         $modules_for_warning = [
@@ -39,7 +38,7 @@ class Clerk_Clerk_Model_Observer
     public function itemAddedToCart(Varien_Event_Observer $observer)
     {
 
-        if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active') && Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+        if (!Mage::helper('clerk')->getSetting('clerk/powerstep/active')) {
             return;
         }
 
@@ -65,11 +64,20 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncProduct(Varien_Event_Observer $observer)
     {
-        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
 
-            $productId = $observer->getEvent()->getProduct()->getId();
-            Mage::getModel('clerk/communicator')->syncProduct($productId);
+                    if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
 
+                        $productId = $observer->getEvent()->getProduct()->getId();
+                        Mage::getModel('clerk/communicator')->syncProduct($productId);
+
+                    }
+
+                }
+            }
         }
     }
 
@@ -80,12 +88,22 @@ class Clerk_Clerk_Model_Observer
      */
     public function deleteProduct(Varien_Event_Observer $observer)
     {
-        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
 
-            $productId = $observer->getEvent()->getProduct()->getId();
-            Mage::getModel('clerk/communicator')->removeProduct($productId);
+                    if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
 
+                        $productId = $observer->getEvent()->getProduct()->getId();
+                        Mage::getModel('clerk/communicator')->removeProduct($productId);
+
+                    }
+
+                }
+            }
         }
+
     }
 
     /**
@@ -95,19 +113,26 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncProducts(Varien_Event_Observer $observer)
     {
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
 
-        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+                    if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
 
-            $productIds = $observer->getEvent()->getProductIds();
+                        $productIds = $observer->getEvent()->getProductIds();
 
-            if (!is_array($productIds)) {
-                $productIds = [$productIds];
+                        if (!is_array($productIds)) {
+                            $productIds = [$productIds];
+                        }
+
+                        Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
+
+                    }
+
+                }
             }
-
-            Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
-
         }
-
     }
 
     /**
@@ -117,16 +142,23 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncOnCatalogRuleSave(Varien_Event_Observer $observer)
     {
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
 
-        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
+                    if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
 
-            /** @var Mage_CatalogRule_Model_Rule $catalogRule */
-            $catalogRule = $observer->getEvent()->getRule();
-            if ($catalogRule->getIsActive()) {
-                //Request a resync of everything
-                Mage::getModel('clerk/communicator')->syncAll();
+                        /** @var Mage_CatalogRule_Model_Rule $catalogRule */
+                        $catalogRule = $observer->getEvent()->getRule();
+                        if ($catalogRule->getIsActive()) {
+                            //Request a resync of everything
+                            Mage::getModel('clerk/communicator')->syncAll();
+                        }
+
+                    }
+                }
             }
-
         }
     }
 
@@ -137,8 +169,18 @@ class Clerk_Clerk_Model_Observer
      */
     public function syncOnCleanCatalogImagesCacheAfter(Varien_Event_Observer $observer)
     {
-        if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates') == '1') {
-            Mage::getModel('clerk/communicator')->syncAll();
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
+
+                    if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
+                        Mage::getModel('clerk/communicator')->syncAll();
+                    }
+
+
+                }
+            }
         }
     }
 
