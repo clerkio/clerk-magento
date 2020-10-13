@@ -20,7 +20,7 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
         foreach (explode(',', $attributes) as $attribute) {
             $attribute = str_replace(' ','',$attribute);
 
-            $value = isset($values[$attribute]) ? $values[$attribute] : $attribute;
+            $value = isset($values[$attribute]) ? $values[$attribute] : ['label' => $attribute, 'sort_order'=> 0];
 
             if (is_array($value) && array_key_exists('label', $value)) {
 
