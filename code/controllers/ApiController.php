@@ -124,6 +124,49 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
+    /**
+     * Return Customers
+     */
+    public function customerAction()
+    {
+        $this->logger = new ClerkLogger();
+
+        $storeid = $this->getRequest()->getParam('store');
+        $page = $this->getIntParam('page');
+        $limit = $this->getIntParam('limit');
+        $customers = [];
+
+        try {
+
+            $_customers = mage::getModel('customer/customer')->getCollection()
+            ->addAttributeToSelect('firstname')
+            ->addAttributeToSelect('lastname')
+            ->addAttributeToSelect('postcode')
+            ->addAttributeToSelect('city')
+            ->addAttributeToSelect('email')
+            ->addAttributeToFilter('store_id', $storeid)
+            ->setPageSize($limit)
+            ->setCurPage($page);
+
+            foreach ($_customers as $_customer) {
+                $customer = $_customer->getData();
+                
+                $customers[] = [
+                    'id' => $customer['entity_id'],
+                    'name' => $customer['firstname'] . ' ' . $customer['lastname'],
+                    'email' => $customer['email'],
+                ];
+            }
+
+            $this->getResponse()->setBody(json_encode($customers));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Fetching Version "customerAction"', $e->getMessage());
+
+        }
+    }
+
     public function pluginAction()
     {
         $this->logger = new ClerkLogger();
