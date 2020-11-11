@@ -11,7 +11,7 @@ class Clerk_Clerk_Model_System_Config_Source_Pagestype
     {
         $pages_types = array(
             array(
-                'value' => 'CMS Page',
+                'value' => 'cms page',
                 'label' => Mage::helper('clerk')->__('CMS Page'),
             ),
         );
