@@ -58,6 +58,84 @@ class Clerk_Clerk_Model_Observer
     }
 
     /**
+     * The function is run by the observer when a new product is added to the cart.
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function updateBasket(Varien_Event_Observer $observer)
+    {
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
+
+                    if (Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', $store->getId()) == '1') {
+
+                        $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
+
+                        $cart_product_ids = array();
+
+                        foreach ($cart_products as $product) {
+                            if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
+                                $cart_product_ids[] = $product->getProduct()->getId();
+                            }
+                        }
+
+                        if (count($cart_product_ids) > 0) {
+                            
+                            $email = "";
+
+                            if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+                                $customer = Mage::getSingleton('customer/session')->getCustomer();
+                                $email = $customer->getEmail();
+                            }
+
+                            if ($email != "") {
+
+                                $Endpoint = 'https://api.clerk.io/v2/log/basket/set';
+
+                                $data_string = json_encode([
+                                    'key' => Mage::helper('clerk')->getSetting('clerk/general/publicapikey', $store->getId()),
+                                    'products' => $cart_product_ids,
+                                    'email' => $email]);
+
+                                $curl = curl_init();
+
+                                curl_setopt($curl, CURLOPT_URL, $Endpoint);
+                                curl_setopt($curl, CURLOPT_POST, true);
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                                curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+                                curl_exec($curl);
+
+                            } else {
+
+                                echo "<script type='text/javascript'>(function(){
+                                    (function(w,d){
+                                        var e=d.createElement('script');e.type='text/javascript';e.async=true;
+                                        e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
+                                        var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
+                                        w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk|| function(){ w.__clerk_q.push(arguments) };
+                                    })(window,document);
+                                })();
+
+                                Clerk('config', {
+                                    key: '".Mage::helper('clerk')->getSetting('clerk/general/publicapikey', $store->getId())."',
+
+                                });
+
+                                Clerk('cart', 'set', [".implode(',', $cart_product_ids)."]);
+
+                                </script>";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
      * Sync single product
      *
      * @param $observer
