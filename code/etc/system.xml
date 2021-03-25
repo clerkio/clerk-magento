@@ -118,10 +118,26 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </include_out_of_stock_products>
+                        <image_w>
+                            <label>Custom Image Weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>75</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[If empty the default will be 210]]></comment>
+                        </image_w>
+                        <image_h>
+                            <label>Custom Image Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[If empty the default will be 210]]></comment>
+                        </image_h>
                         <lang>
                             <label>Language</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>75</sort_order>
+                            <sort_order>85</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>clerk/system_config_source_language</source_model>
                         </lang>
@@ -129,7 +145,7 @@
                             <label>Import url</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_url</frontend_model>
-                            <sort_order>80</sort_order>
+                            <sort_order>90</sort_order>
                             <show_in_store>1</show_in_store>
                             <comment>Use this url to configure an importer from my.clerk.io</comment>
                         </url>
@@ -137,7 +153,7 @@
                             <label>Extension version</label>
                             <frontend_type>select</frontend_type>
                             <frontend_model>clerk/adminhtml_version</frontend_model>
-                            <sort_order>85</sort_order>
+                            <sort_order>95</sort_order>
                             <show_in_store>1</show_in_store>
                         </version>
                     </fields>

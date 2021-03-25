@@ -185,6 +185,15 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
     public function getClerkImageUrl()
     {
         try {
+
+            if (Mage::getStoreConfig('clerk/general/image_h') != '') {
+                $this->imageHeight = str_replace('px', '', Mage::getStoreConfig('clerk/general/image_h'));
+            } 
+
+            if (Mage::getStoreConfig('clerk/general/image_w') != '') {
+                $this->imageWidth = str_replace('px', '', Mage::getStoreConfig('clerk/general/image_w'));
+            }
+
             return (string) Mage::helper('catalog/image')
                 ->init($this, 'small_image')
                 ->resize($this->imageHeight, $this->imageWidth);
