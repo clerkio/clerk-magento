@@ -81,7 +81,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
                 if ($enabled) {
                     $data = [];
-                    $data['products'] = [$productId];
+                    $data['products'] = json_encode([$productId]);
                     $data['key'] = $this->getPublicKey($storeId);
                     $data['private_key'] = $this->getPrivateKey($storeId);
 
