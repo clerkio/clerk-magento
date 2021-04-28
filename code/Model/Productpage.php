@@ -12,9 +12,30 @@ class Clerk_Clerk_Model_Productpage
         $this->limit = $limit;
         $this->page = $page;
 
+        $visibility = [];
+
+        if (!Mage::getStoreConfig('clerk/general/only_visibility') ||  Mage::getStoreConfig('clerk/general/only_visibility') == 0) {
+            $visibility = [
+                Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG,
+                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_SEARCH
+            ];
+        };
+
+        if (Mage::getStoreConfig('clerk/general/only_visibility') == 2) {
+            array_push($visibility, Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG);
+        };
+        if (Mage::getStoreConfig('clerk/general/only_visibility') == 3) {
+            array_push($visibility, Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_SEARCH);
+        };
+        if (Mage::getStoreConfig('clerk/general/only_visibility') == 4) {
+            array_push($visibility, Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
+        };
+
+
         $this->collection = Mage::getResourceModel('catalog/product_collection')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
-            ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH) //only include visible products
+            ->setVisibility($visibility)
             ->setPageSize($limit)
             ->setCurPage($page)
             ->addStoreFilter();

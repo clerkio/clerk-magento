@@ -83,45 +83,52 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_pages>
+                        <only_visibility>
+                            <label>Only Synchronize Product With Visibility</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_productvisibility</source_model>
+                        </only_visibility>
                         <pages_additional_fields>
                             <label>Additional Fields For Pages</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>50</sort_order>
+                            <sort_order>55</sort_order>
                             <show_in_store>1</show_in_store>
                             <comment>A comma separated list of additional fields for pages to sync to Clerk.io</comment>
                         </pages_additional_fields>
                         <collect_emails>
                             <label>Collect Emails</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>55</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_emails>
                         <collect_baskets>
                             <label>Collect Baskets</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>60</sort_order>
+                            <sort_order>65</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </collect_baskets>
                         <disable_order_synchronization>
                             <label>Disable Order Synchronization</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>65</sort_order>
+                            <sort_order>70</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </disable_order_synchronization>
                         <include_out_of_stock_products>
                             <label>Include Out Of Stock Products</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>70</sort_order>
+                            <sort_order>75</sort_order>
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </include_out_of_stock_products>
                         <image_w>
-                            <label>Custom Image Weight</label>
+                            <label>Custom Image Width</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>75</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_store>1</show_in_store>
                             <comment>
                                 <![CDATA[If empty the default will be 210]]></comment>
