@@ -5,6 +5,19 @@ $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
 $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
 $currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
 $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, $currentCurrencyCode);
+
+if (Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', Mage::app()->getStore()->getId()) == '1') {
+    
+    $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
+    $cart_product_ids = array();
+    foreach ($cart_products as $product) {
+        if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
+            $cart_product_ids[] = $product->getProduct()->getId();
+        }
+    }
+}
+        
+
 ?>
 <script type="text/javascript">
     (function(w,d){
@@ -38,4 +51,89 @@ $rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCod
             formkey: '<?php echo $this->getFormKey(); ?>'
         }
     });
+
+     <?php if(Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', Mage::app()->getStore()->getId()) == '1') : ?>
+
+        var clerk_productids = '<?php echo implode(',',$cart_product_ids); ?>'.split(",") ;
+        clerk_productids = clerk_productids.map(Number);
+        var clerk_last_productids = [];
+        if( localStorage.getItem('clerk_productids') !== null ){
+            clerk_last_productids = localStorage.getItem('clerk_productids').split(",");
+            clerk_last_productids = clerk_last_productids.map(Number);  
+        }
+        clerk_productids = clerk_productids.sort((a, b) => a - b);
+        clerk_last_productids = clerk_last_productids.sort((a, b) => a - b);
+        if(JSON.stringify(clerk_productids) == JSON.stringify(clerk_last_productids)){
+            // if equal - do nothing
+        }else{
+            // if not equal send cart to clerk
+            if(JSON.stringify(clerk_productids) === "[0]" ){
+                Clerk('cart', 'set', []);
+            }else{
+                Clerk('cart', 'set', clerk_productids);
+            }
+        }
+        localStorage.setItem("clerk_productids", clerk_productids);
+   
+            let open = XMLHttpRequest.prototype.open; 
+                XMLHttpRequest.prototype.open = function() {
+                    this.addEventListener("load", function(){
+
+                        if( this.responseURL.includes("/cart")){
+
+                                data = "form_key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>'";
+
+                                const request = new XMLHttpRequest();
+
+                                request.addEventListener('load', function () {
+
+                                if( this.responseURL.includes("/basket")){    
+                                    
+                                    if (this.readyState === 4 && this.status === 200) {
+
+                                        var response = this.responseText.replace('[', '').replace(']', '');
+                                        var clerk_productids = [];
+                                        clerk_productids = response.split(",")
+                                        clerk_productids = clerk_productids.map(Number);
+
+                                        var clerk_last_productids = [];
+                                        if( localStorage.getItem('clerk_productids') !== null ){
+                                            clerk_last_productids = localStorage.getItem('clerk_productids').split(",");
+                                            clerk_last_productids = clerk_last_productids.map(Number);  
+                                        }
+                                        //sort
+                                        clerk_productids = clerk_productids.sort((a, b) => a - b);
+                                        clerk_last_productids = clerk_last_productids.sort((a, b) => a - b);
+                                        // compare
+                                        if(JSON.stringify(clerk_productids) == JSON.stringify(clerk_last_productids)){
+                                            // if equal - do nothing
+                                            // console.log('equal: ', clerk_productids, clerk_last_productids)
+                                        }else{
+                                            // if not equal send cart to clerk
+                                            // console.log('not equal: ', clerk_productids, clerk_last_productids)
+                                            if(JSON.stringify(clerk_productids) === "[0]" ){
+                                                Clerk('cart', 'set', []);
+                                            }else{
+                                                Clerk('cart', 'set', clerk_productids);
+                                            }
+                                            
+                                        }
+                                        // save for next compare
+                                        localStorage.setItem("clerk_productids", clerk_productids);
+                                    }
+                                }
+
+                                });
+
+                                request.open('POST', '<?php echo Mage::getUrl('clerk/basket/basket'); ?>', true);
+                                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                                request.send(data);
+                        
+                        }
+                    }, false);
+                    open.apply(this, arguments);
+                };
+
+            <?php endif; ?>
+
 </script>
