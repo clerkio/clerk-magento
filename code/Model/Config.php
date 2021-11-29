@@ -9,4 +9,6 @@ class Clerk_Clerk_Model_Config
     const XML_PATH_FACETED_SEARCH_ATTRIBUTES = 'clerk/faceted_search/attributes';
     const XML_PATH_FACETED_SEARCH_MULTISELECT_ATTRIBUTES = 'clerk/faceted_search/multiselect_attributes';
     const XML_PATH_FACETED_SEARCH_TITLES = 'clerk/faceted_search/titles';
+    const XML_PATH_FACETED_SEARCH_DESIGN = 'clerk/faceted_search/design';
+
 }

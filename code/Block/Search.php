@@ -2,6 +2,13 @@
 
 class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
 {
+    
+    const XML_PATH_CLERK_SEARCH_SHOW_CATEGORIES = 'clerk/search/show_categories';
+    const XML_PATH_CLERK_SEARCH_CATEGORIES = 'clerk/search/categories';
+    const XML_PATH_CLERK_SEARCH_PAGES = 'clerk/search/pages';
+    const XML_PATH_CLERK_SEARCH_PAGES_TYPE = 'clerk/search/pages-type';
+
+
     const XML_PATH_CLERK_NO_RESULTS_TEXT = 'clerk/search/no_results_text';
     const XML_PATH_CLERK_LOAD_MORE_TEXT = 'clerk/search/load_more_text';
     const TARGET_ID = 'clerk-search-results';
@@ -38,8 +45,18 @@ class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
             'data-query' => $this->getRequest()->getParam('q'),
         ];
 
+        if(Mage::getStoreConfig(self::XML_PATH_CLERK_SEARCH_SHOW_CATEGORIES)){
+
+            $spanAttributes['data-search-categories'] = $this->getCategories();
+            $spanAttributes['data-search-pages'] = $this->getPages();
+            $spanAttributes['data-search-pages-type'] = $this->getPagesType();
+
+        }
+
+
         if (Mage::getStoreConfigFlag(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_ENABLED)) {
             $spanAttributes['data-facets-target'] = "#clerk-search-filters";
+            $spanAttributes['data-facets-design'] = $this->getFacetsDesign();
 
             if ($titles = Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_TITLES)) {
                 $titles = json_decode($titles, true);
@@ -92,6 +109,46 @@ class Clerk_Clerk_Block_Search extends Mage_CatalogSearch_Block_Result
     public function getLoadMoreText()
     {
         return Mage::getStoreConfig(self::XML_PATH_CLERK_LOAD_MORE_TEXT);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_CLERK_SEARCH_CATEGORIES);
+    }
+
+    /**
+     * Get pages
+     *
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_CLERK_SEARCH_PAGES);
+    }
+
+    /**
+     * Get pages-type
+     *
+     * @return mixed
+     */
+    public function getPagesType()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_CLERK_SEARCH_PAGES_TYPE);
+    }
+
+     /**
+     * Get Facet design
+     *
+     * @return mixed
+     */
+    public function getFacetsDesign()
+    {
+        return Mage::getStoreConfig(Clerk_Clerk_Model_Config::XML_PATH_FACETED_SEARCH_DESIGN);
     }
 
     /**

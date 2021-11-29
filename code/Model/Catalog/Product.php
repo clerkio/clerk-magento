@@ -57,7 +57,83 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
             foreach ($AttributeToSelect as $key => $value) {
                 $attrCode = str_replace(' ','', $value);
-                $data[$attrCode] = $this->getAttributeText($attrCode);
+
+                $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
+                if (null!==$attr->getId()){
+                    if(!isset( $data[$attrCode])){
+                        $data[$attrCode] = $this->getAttributeText($attrCode);
+                    }
+
+                }
+
+                    // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - start
+
+                    if($this->getTypeId() == "configurable"){
+                        $confchildIds = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getId());
+                        $confchildatributtes=[];
+                        foreach($confchildIds[0] as $cid){
+                            $colectinformation = "";
+                            $simple_product = Mage::getModel('catalog/product')->load($cid);
+                            $entity_attrCode = "entity_". $attrCode; // needed for id and such
+
+
+                            if ($attr->getId() != null || $attr->getId() != ''){
+                                $colectinformation = strval($simple_product->getAttributeText($attrCode));
+                            };
+
+                            if (is_null($colectinformation) || $colectinformation == ""){
+                                $product_data = $simple_product->getData();
+                                if(isset($product_data[$attrCode])){
+                                    $colectinformation = strval($product_data[$attrCode]);
+                                }else{
+                                    if(isset($product_data[$entity_attrCode])){ // needed for id and such
+                                        $colectinformation = strval($product_data[$entity_attrCode]);
+                                    }
+                                }
+                            }
+
+                            if($colectinformation != ""){
+                                array_push($confchildatributtes,$colectinformation);
+                            }
+
+                        }
+
+                        $confchildatributtes = array_values(array_unique($confchildatributtes));
+                        $data["child_" . $attrCode . "s"] = $confchildatributtes;
+
+                    }
+
+                    if ($this->getTypeId() == 'grouped'){
+                        $simple_collection = Mage::getModel('catalog/product_type_grouped')->getAssociatedProducts($this);
+                        $groupchildatributtes=[];
+                        foreach($simple_collection as $simple_product){
+                            $colectinformation = "";
+                            $entity_attrCode = "entity_". $attrCode; // needed for id and such
+
+                            if ($attr->getId() != null || $attr->getId() != ''){
+                                $colectinformation = strval($simple_product->getAttributeText($attrCode));
+                            };
+
+                            if (is_null($colectinformation) || $colectinformation == ""){
+                                $product_data = $simple_product->getData();
+                                if(isset($product_data[$attrCode])){
+                                    $colectinformation = strval($product_data[$attrCode]);
+                                }else{
+                                    if(isset($product_data[$entity_attrCode])){ // needed for id and such
+                                        $colectinformation = strval($product_data[$entity_attrCode]);
+                                    }
+                                }
+                            }
+
+                            if($colectinformation != ""){
+                                array_push($groupchildatributtes,$colectinformation);
+                            }
+                        }
+                        $groupchildatributtes = array_values(array_unique($groupchildatributtes));
+                        $data["child_" . $attrCode . "s"] = $groupchildatributtes;
+                    }
+
+                    // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - end
             }
         }
 

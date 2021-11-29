@@ -178,6 +178,46 @@
                             <show_in_store>1</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </active>
+                        <show_categories>
+                            <label>Show categories</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </show_categories>
+                        <categories>
+                            <label>Number of Categories</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_numbers</source_model>
+                        </categories>
+                        <pages>
+                            <label>Number of Pages</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_numbers</source_model>
+                        </pages>
+                        <pages-type>
+                            <label>Pages Type</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>clerk/system_config_source_pagestype</source_model>
+                        </pages-type>
                         <template>
                             <label>Content</label>
                             <depends>
@@ -185,7 +225,7 @@
                             </depends>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
-                            <sort_order>20</sort_order>
+                            <sort_order>70</sort_order>
                             <show_in_store>1</show_in_store>
                         </template>
                         <load_more_text>
@@ -195,7 +235,7 @@
                             </depends>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
-                            <sort_order>30</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_store>1</show_in_store>
                         </load_more_text>
                         <no_results_text>
@@ -205,7 +245,7 @@
                             </depends>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
-                            <sort_order>40</sort_order>
+                            <sort_order>90</sort_order>
                             <show_in_store>1</show_in_store>
                         </no_results_text>
                     </fields>
@@ -256,6 +296,16 @@
                                 <active>1</active>
                             </depends>
                         </titles>
+                         <design>
+                            <label>Design</label>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>50</sort_order>
+                            <show_in_store>1</show_in_store>
+                        </design>
                     </fields>
                 </faceted_search>
                 <livesearch module="clerk">

@@ -150,6 +150,30 @@ class Clerk_Clerk_Model_Observer
                     if (Mage::helper('clerk')->getSetting('clerk/general/realtime_updates', $store->getId()) == '1') {
 
                         $productId = $observer->getEvent()->getProduct()->getId();
+
+                        // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - start
+
+                        $product = Mage::getModel('clerk/product')->load($productId);
+
+                        if($product->getTypeId() == "simple"){
+                            $confParentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+                            $groupParentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($product->getId());
+                            if(isset($confParentIds)){
+                                foreach ($confParentIds as $parentId) {
+                                $parent = Mage::getModel('catalog/product')->load($parentId);
+                                    Mage::getModel('clerk/communicator')->syncProduct($parent->getId()); 
+                                }
+
+                            }
+                            if(isset($groupParentIds)){
+                                foreach ($groupParentIds as $parentId) {
+                                $parent = Mage::getModel('catalog/product')->load($parentId);
+                                    Mage::getModel('clerk/communicator')->syncProduct($parent->getId());
+                                }
+                            }
+                        }
+
+                        // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - end
                         Mage::getModel('clerk/communicator')->syncProduct($productId);
 
                     }
@@ -203,6 +227,31 @@ class Clerk_Clerk_Model_Observer
                         if (!is_array($productIds)) {
                             $productIds = [$productIds];
                         }
+
+                         // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - start
+
+                         foreach ($productIds as $productId) {
+                            $product = Mage::getModel('clerk/product')->load($productId);
+
+                            if($product->getTypeId() == "simple"){
+                                $confParentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+                                $groupParentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($product->getId());
+                                if(isset($confParentIds[0])){
+                                    foreach ($confParentIds[0] as $parentId) {
+                                    $parent = Mage::getModel('catalog/product')->load($parentId);
+                                        Mage::getModel('clerk/communicator')->syncProduct($parent->getId());
+                                    }
+                                }
+                                if(isset($groupParentIds[0])){
+                                    foreach ($groupParentIds[0] as $parentId) {
+                                    $parent = Mage::getModel('catalog/product')->load($parentId);
+                                        Mage::getModel('clerk/communicator')->syncProduct($parent->getId());
+                                    }
+                                }
+                            }
+                        }
+
+                        // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - end
 
                         Mage::getModel('clerk/communicator')->syncProduct($productIds, $observer->getEvent()->getName());
 

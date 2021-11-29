@@ -493,4 +493,31 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         }
     }
+
+    /**
+     * This endpoint will list current cart products
+     *
+     */
+    public function cartAction()
+    {
+        try {
+
+            $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
+            $cart_product_ids = array();
+
+            foreach ($cart_products as $product) {
+                if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
+                    $cart_product_ids[] = $product->getProduct()->getId();
+                }
+            }
+
+            $this->getResponse()->setBody(json_encode($cart_product_ids));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Fetching Store "cartAction"', $e->getMessage());
+
+        }
+    }
+
 }
