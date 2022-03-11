@@ -19,7 +19,7 @@ Magento](https://help.clerk.io/using-clerk-io-on-magento-1/getting-started/getti
 
 Installation
 --------------
-To setup this module, you'll need an Clerk account.
+To setup this module, you'll need a Clerk account.
 
   1. Contact Clerk and get your credentials for
      [my.clerk.io](http://my.clerk.io).
@@ -47,7 +47,7 @@ The easiest way to setup your development environment is to use [Docker](https:/
 Just run the following script to setup a running Magento 1.9.2 instance with some sample data & the Clerk extension installed:
 
 ```sh
-$ ./dev/restart.sh -b http://`docker ip`/
+$ ./devenv/restart.sh -b http://`docker ip`/
 $ # The default value for -b is 127.0.0.1.
 ```
 
