@@ -109,7 +109,7 @@ class Clerk_Clerk_Model_Observer
 
                             } else {
 
-                                echo "<script type='text/javascript'>(function(){
+                                echo "<script>(function(){
                                     (function(w,d){
                                         var e=d.createElement('script');e.type='text/javascript';e.async=true;
                                         e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
