@@ -96,6 +96,42 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
     }
 
+     /**
+     * @params $orderId, $productId, $quantity
+     * @throws Exception
+     */
+    public function returnProduct($orderId, $productId, $quantity)
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+
+            $product = Mage::getModel('clerk/product')->load($productId);
+
+            foreach ($product->getStoreIds() as $storeId) {
+                $enabled = Mage::getStoreConfigFlag('clerk/general/active', $storeId);
+
+                if ($enabled) {
+                    $data = [];
+                    $data['product'] = $productId;
+                    $data['order'] = $orderId;
+                    $data['quantity'] = $quantity;
+                    $data['key'] = $this->getPublicKey($storeId);
+                    $data['private_key'] = $this->getPrivateKey($storeId);
+
+                    $this->post('log/returned', $data);
+ 
+                }
+            }
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "returnProduct"', ['error' => $e->getMessage()]);
+
+        }
+
+    }
+
     /**
      * Get public key
      *
@@ -168,6 +204,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
             curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
             curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
             $response = curl_exec($ch);
+
         } catch (Exception $e) {
             $this->logger->error('ERROR Communicator "post"', ['error' => $e->getMessage()]);
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());

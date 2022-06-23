@@ -101,16 +101,16 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
     {
 
         $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
-        $cart_product_ids = array();
+            $cart_product_ids = array();
 
-        foreach ($cart_products as $product) {
-            if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
-                $cart_product_ids[] = $product->getProduct()->getId();
+            foreach ($cart_products as $product) {
+                if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
+                    $cart_product_ids[] = $product->getProduct()->getId();
+                }
             }
-        }
 
-        //$ids = Mage::getSingleton('checkout/cart')->getProductIds();
-
-        return json_encode($cart_product_ids);
+            $json_string = json_encode($cart_product_ids);
+            
+        return $json_string;
     }
 }

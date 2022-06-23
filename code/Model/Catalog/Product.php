@@ -29,6 +29,8 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         $data->setCategories(array_map('intval', $this->getCategoryIds()));
         $data->setDescription($this->getDescription() ? $this->getDescription() : '');
         $data->setHasTierprice($this->hasTierPrice());
+        $data->setTierPriceValues($this->getTierPricesClerk());
+        $data->setTierPriceQuantities($this->getTierPriceQuantitiesClerk());
         $data->setId((int)$this->getId());
         $data->setImage($this->getClerkImageUrl());
         $data->setIsOnSale($this->isOnSale());
@@ -44,9 +46,14 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         $data->setPriceRetailInclTax($this->getClerkRetailPriceInclTax());
         $data->setShortDescription($this->getShortDescription());
         $data->setSku($this->getSku());
+        $data->setRatingPct($this->getRating());
+        $data->setRating($this->getRating()/20);
+        $data->setReviewCount($this->getReviewCount());
+        $data->setProductType($this->getTypeId());
         $data->setUrl($this->getProductUrl());
         $data->setVisibility($this->getVisibility());
         $data->setDiscountPercent($this->getDiscountPercent());
+        $data->setIsSaleable($this->isSaleable());
         $data->setStock(round($this->getStockItem()->getQty()));
 
         $AttributeToSelect = str_replace(' ','',Mage::getStoreConfig('clerk/general/additional_fields'));
@@ -55,13 +62,42 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
             $AttributeToSelect = explode(',', $AttributeToSelect);
 
-            foreach ($AttributeToSelect as $key => $value) {
-                $attrCode = str_replace(' ','', $value);
+            $eavConfig = Mage::getModel('eav/config');
+            /* @var $eavConfig Mage_Eav_Model_Config */
+            $attributes = $eavConfig->getEntityAttributeCodes(
+                Mage_Catalog_Model_Product::ENTITY,
+                $this
+            );
 
+
+
+            foreach ($AttributeToSelect as $key => $value) {
+                $product_id = (int)$this->getId();
+                $variant_ids = [];
+                $variant_stocks = [];
+                $variant_attribute_labels = [];
+                $variant_attribute_values = [];
+                $variant_attribute_options = [];
+                $variant_skus = [];
+                $variant_prices = [];
+                $variant_list_prices = [];
+                $add_ids = false;
+                $add_skus = false;
+                $add_stocks = false;
+                $add_prices = false;
+                $add_list_prices = false;
+                $attrCode = str_replace(' ','', $value);
+                $mainAttrText = $this->getAttributeText($attrCode);
+                $mainAttrVal = $this->getData($attrCode);
                 $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
                 if (null!==$attr->getId()){
                     if(!isset( $data[$attrCode])){
-                        $data[$attrCode] = $this->getAttributeText($attrCode);
+                        if($mainAttrVal !== NULL){
+                            $data[$attrCode] = $mainAttrVal;
+                        }
+                        if($mainAttrText){
+                            $data[$attrCode.'_label'] = $mainAttrText;
+                        }
                     }
 
                 }
@@ -69,6 +105,23 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                     // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - start
 
                     if($this->getTypeId() == "configurable"){
+
+                        if(!isset($data['variant_skus'])){
+                            $add_skus = true;
+                        }
+                        if(!isset($data['variant_ids'])){
+                            $add_ids = true;
+                        }
+                        if(!isset($data['variant_stocks'])){
+                            $add_stocks = true;
+                        }
+                        if(!isset($data['variant_prices'])){
+                            $add_prices = true;
+                        }
+                        if(!isset($data['variant_list_prices'])){
+                            $add_list_prices = true;
+                        }
+
                         $confchildIds = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getId());
                         $confchildatributtes=[];
                         foreach($confchildIds[0] as $cid){
@@ -76,30 +129,76 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                             $simple_product = Mage::getModel('catalog/product')->load($cid);
                             $entity_attrCode = "entity_". $attrCode; // needed for id and such
 
-
-                            if ($attr->getId() != null || $attr->getId() != ''){
-                                $colectinformation = strval($simple_product->getAttributeText($attrCode));
-                            };
-
-                            if (is_null($colectinformation) || $colectinformation == ""){
-                                $product_data = $simple_product->getData();
-                                if(isset($product_data[$attrCode])){
-                                    $colectinformation = strval($product_data[$attrCode]);
-                                }else{
-                                    if(isset($product_data[$entity_attrCode])){ // needed for id and such
-                                        $colectinformation = strval($product_data[$entity_attrCode]);
-                                    }
+                            if($add_skus && $this->sanitizeAttributes($simple_product->getSku())){
+                                array_push($variant_skus, $simple_product->getSku());
+                            }
+                            if($add_stocks && $this->sanitizeAttributes((integer)$simple_product->getStockItem()->getQty())){
+                                array_push($variant_stocks, (integer)$simple_product->getStockItem()->getQty());
+                            }
+                            if($add_ids && $this->sanitizeAttributes($simple_product->getId())){
+                                array_push($variant_ids, $simple_product->getId());
+                            }
+                            if($add_prices){
+                                $price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($simple_product,$simple_product->getFinalPrice());
+                                if($this->sanitizeAttributes($price)){
+                                    array_push($variant_prices, (float)$price);
+                                }
+                            }
+                            if($add_list_prices){
+                                $list_price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($simple_product,$simple_product->getRegularPrice());
+                                if($this->sanitizeAttributes($list_price)){
+                                    array_push($variant_list_prices, (float)$list_price);
                                 }
                             }
 
-                            if($colectinformation != ""){
-                                array_push($confchildatributtes,$colectinformation);
+                            if(!is_array($simple_product->getAttributeText($attrCode))){
+                                if($this->sanitizeAttributes(strval($simple_product->getAttributeText($attrCode)))){
+                                    array_push($variant_attribute_options, strval($simple_product->getAttributeText($attrCode)));
+                                }
+                            }
+
+                            if(!is_array($simple_product->getData($attrCode))){
+                                if($this->sanitizeAttributes(strval($simple_product->getData($attrCode)))){
+                                    array_push($variant_attribute_values, strval($simple_product->getData($attrCode)));
+                                }
+                            }
+
+                            $variant_label_object = $simple_product->getResource()->getAttribute($attrCode);
+
+                            if($variant_label_object->usesSource()){
+                                $variant_label_holder = $variant_label_object->getSource()->getOptionText($simple_product->getData($attrCode));
+                                if($variant_label_holder !== false && !empty($variant_label_holder)){
+                                    array_push($variant_attribute_labels, $variant_label_holder);
+                                }
                             }
 
                         }
 
-                        $confchildatributtes = array_values(array_unique($confchildatributtes));
-                        $data["child_" . $attrCode . "s"] = $confchildatributtes;
+                        if(!empty(array_values(array_unique($variant_attribute_options)))){
+                            $data["variant_" . $attrCode . "s"] = array_values(array_unique($variant_attribute_options));
+                        }
+                        if(!empty(array_values(array_unique($variant_attribute_labels)))){
+                            $data["variant_" . $attrCode . "s_labels"] = array_values(array_unique($variant_attribute_labels));
+                        }
+                        if(!empty(array_values(array_unique($variant_attribute_values)))){
+                            $data["variant_" . $attrCode . "s_values"] = array_values(array_unique($variant_attribute_values));
+                        }
+
+                        if($add_skus){
+                            $data['variant_skus'] = $variant_skus;
+                        }
+                        if($add_ids){
+                            $data['variant_ids'] = $variant_ids;
+                        }
+                        if($add_stocks){
+                            $data['variant_stocks'] = $variant_stocks;
+                        }
+                        if($add_prices){
+                            $data['variant_prices'] = $variant_prices;
+                        }
+                        if($add_list_prices){
+                            $data['variant_list_prices'] = $variant_list_prices;
+                        }
 
                     }
 
@@ -167,4 +266,14 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
             $this->excludeReason = 'Product status says "disabled"';
         }
     }
+
+    public function sanitizeAttributes($value)
+    {
+        if($value == "" || $value == NULL){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

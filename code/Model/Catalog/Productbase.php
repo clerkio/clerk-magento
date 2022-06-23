@@ -182,6 +182,9 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         return $this->getClerkPrice(false, true);
     }
 
+    /**
+     * @return string
+     */
     public function getClerkImageUrl()
     {
         try {
@@ -205,6 +208,49 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
     }
 
     /**
+     * Get review score
+     * 
+     * @return float
+     */
+    public function getRating()
+    {
+        $productId = $this->getId();
+        $reviews = Mage::getModel('review/review')->getResourceCollection()->addStoreFilter(Mage::app()->getStore()->getId())->addEntityFilter('product', $productId)->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED)->setDateOrder()->addRateVotes();
+        $avg = 0;
+        $ratings = array();
+        if (count($reviews) > 0) {
+            foreach ($reviews->getItems() as $review) {
+                foreach( $review->getRatingVotes() as $vote ) {
+                    $ratings[] = $vote->getPercent();
+                }
+            }
+            $avg = array_sum($ratings)/count($ratings);
+        }
+        return (int)$avg;
+    }
+    /**
+     * Get number of reviews
+     * 
+     * @return float
+     */
+    public function getReviewCount()
+    {
+        $productId = $this->getId();
+        $reviews = Mage::getModel('review/review')->getResourceCollection()->addStoreFilter(Mage::app()->getStore()->getId())->addEntityFilter('product', $productId)->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED)->setDateOrder()->addRateVotes();
+        $avg = 0;
+        $ratings = array();
+        if (count($reviews) > 0) {
+            foreach ($reviews->getItems() as $review) {
+                foreach( $review->getRatingVotes() as $vote ) {
+                    $ratings[] = $vote->getPercent();
+                }
+            }
+            $avg = count($ratings);
+        }
+        return (int)$avg;
+    }
+
+    /**
      * Get product manufacturer
      *
      * @return mixed
@@ -224,6 +270,44 @@ class Clerk_Clerk_Model_Catalog_Productbase extends Mage_Catalog_Model_Product
         return count($this->getTierPrice()) > 0;
     }
 
+    /**
+     * Get tier prices for products
+     *
+     * @return array
+     */
+    public function getTierPricesClerk()
+    {   
+        $productType = $this->getTypeId();
+        if($this->hasTierPrice()){
+            $tierPrices = $this->getData('tier_price');
+            $prices = [];
+            foreach($tierPrices as $a){
+                $price = ($a['price']) ? $a['price'] : 0;
+                array_push($prices, (float)$price);
+            }
+            return $prices;
+        } else {
+            $tierPrices = [];
+            return $tierPrices;
+        }
+    }
+
+    public function getTierPriceQuantitiesClerk()
+    {   
+        $productType = $this->getTypeId();
+        if($this->hasTierPrice()){
+            $tierPrices = $this->getData('tier_price');
+            $quantities = [];
+            foreach($tierPrices as $a){
+                $qty = ($a['price_qty']) ? $a['price_qty'] : 0;
+                array_push($quantities, (integer)$qty);
+            }
+            return $quantities;
+        } else {
+            $tierPrices = [];
+            return $tierPrices;
+        }
+    }
     /**
      * If a product is on sale, calculate the reduction in percent
      *

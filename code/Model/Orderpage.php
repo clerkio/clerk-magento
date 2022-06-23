@@ -70,7 +70,9 @@ class Clerk_Clerk_Model_Orderpage
     private function fetch()
     {
         foreach ($this->collection as $order) {
+
             $this->array[] = $this->orderFormatter($order);
+
         }
     }
 
@@ -85,7 +87,6 @@ class Clerk_Clerk_Model_Orderpage
         $items = array();
 
         foreach ($order->getItemsCollection() as $_item) {
-
 
             if ($_item->getParentItem()) {
                 continue;
@@ -127,5 +128,6 @@ class Clerk_Clerk_Model_Orderpage
         );
 
         return $data->getData();
+
     }
 }

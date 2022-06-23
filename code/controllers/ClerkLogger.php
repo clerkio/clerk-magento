@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Clerk.io
- * @copyright Copyright (c) 2017 Clerk.io
+ * @author clerk.io
+ * @copyright Copyright (c) 2017 clerk.io
  *
  * @license MIT License
  *

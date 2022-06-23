@@ -37,7 +37,7 @@ class Clerk_Clerk_Block_Adminhtml_Widget_Store_Script extends Mage_Adminhtml_Blo
 
 
         return '
-<script>
+<script type="text/javascript">
 (function() {
     var instantiateClerkWidget = function() {
         window.clerkWidget = new WysiwygWidget.ClerkWidget("' . $selectId . '", "' . $this->getContentUrl() . '", "' . $this->getParametersUrl() . '");

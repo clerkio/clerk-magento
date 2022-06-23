@@ -109,7 +109,7 @@ class Clerk_Clerk_Model_Observer
 
                             } else {
 
-                                echo "<script>(function(){
+                                echo "<script type='text/javascript'>(function(){
                                     (function(w,d){
                                         var e=d.createElement('script');e.type='text/javascript';e.async=true;
                                         e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
@@ -199,6 +199,46 @@ class Clerk_Clerk_Model_Observer
 
                         $productId = $observer->getEvent()->getProduct()->getId();
                         Mage::getModel('clerk/communicator')->removeProduct($productId);
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+     /**
+     * refund single product
+     *
+     * @param $observer
+     */
+    public function refundProduct(Varien_Event_Observer $observer)
+    {
+
+        foreach (Mage::app()->getWebsites() as $website) {
+
+            foreach ($website->getGroups() as $group) {
+
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
+
+                    if (Mage::helper('clerk')->getSetting('clerk/general/enable_order_return_synchronization', $store->getId()) == '1') {
+
+                        $creditmemo = $observer->getEvent()->getCreditmemo();
+                        $order = Mage::getModel('sales/order')->load($creditmemo->getOrderId());
+                        $incrementid = $order->getIncrementId();
+                    
+                        foreach ($creditmemo->getAllItems() as $item) {
+
+                            $product_id = $item->getProductId();
+                            $quantity = $item->getQty();
+
+                            if ($product_id && $incrementid && $quantity !=0 ) {
+                                Mage::getModel('clerk/communicator')->returnProduct($incrementid, $product_id, $quantity);
+                            }
+
+                        }
 
                     }
 

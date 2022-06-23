@@ -7,7 +7,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      *
      */
     const XML_PATH_COLLECT_PAGES = 'clerk/general/collect_pages';
-
+    const XML_PATH_COLLECT_SUBSCRIBERS = 'clerk/general/subscribers';
     /**
      * @var
      */
@@ -31,14 +31,23 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
             $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
+            $privatekey = $this->getRequest()->getParam('private_key');
+            $key = $this->getRequest()->getParam('key');
+
             $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+            $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+            
+
+            if($secret && $privatekey == trim($secret) && $key && $key == trim($publicapikey) ){
+                return parent::preDispatch();
+            }
 
             if (!$secret || $input !== trim($secret)) {
 
                 $response = [
                     'error' => [
                         'code' => 403,
-                        'message' => 'Invalid public or private key supplied'
+                        'message' => 'Invalid public or private key supplied',
                     ]
                 ];
 
@@ -125,6 +134,428 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
     /**
+     * Return Clerk module config
+     */
+    public function getconfigAction()
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+
+            $this->setStore();
+            $storeid = $this->getRequest()->getParam('store');
+
+            $response = [
+
+                'store' => $storeid,
+                'CLERK_ACTIVE' => Mage::helper('clerk')->getSetting('clerk/general/active'),
+                'LANGUAGE' => Mage::helper('clerk')->getSetting('clerk/general/lang'),
+                'PATH_INCLUDE_PAGES' => Mage::helper('clerk')->getSetting('clerk/general/collect_pages'),
+                'PAGES_ADDITIONAL_FIELDS' => Mage::helper('clerk')->getSetting('clerk/general/pages_additional_fields'),
+                'PRODUCT_SYNCHRONIZATION_REAL_TIME_ENABLED' => Mage::helper('clerk')->getSetting('clerk/general/realtime_updates'),
+                'PRODUCT_SYNCHRONIZATION_COLLECT_EMAILS' => Mage::helper('clerk')->getSetting('clerk/general/collect_emails'),
+                'PRODUCT_SYNCHRONIZATION_COLLECT_BASKETS' => Mage::helper('clerk')->getSetting('clerk/general/collect_baskets'),
+                'PRODUCT_SYNCHRONIZATION_ADDITIONAL_FIELDS' => Mage::helper('clerk')->getSetting('clerk/general/additional_fields'),
+                'PRODUCT_INCLUDE_OUT_OF_STOCK_PRODUCTS' => Mage::helper('clerk')->getSetting('clerk/general/include_out_of_stock_products'),
+                'PRODUCT_SYNCHRONIZATION_VISIBILITY' => Mage::helper('clerk')->getSetting('clerk/general/only_visibility'),
+                'PRODUCT_SYNCHRONIZATION_DISABLE_ORDER_SYNCHRONIZATION' => Mage::helper('clerk')->getSetting('clerk/general/disable_order_synchronization'),
+                'PRODUCT_SYNCHRONIZATION_ENABLE_ORDER_RETURN_SYNCHRONIZATION' => Mage::helper('clerk')->getSetting('clerk/general/enable_order_return_synchronization'),
+                'PRODUCT_SYNCHRONIZATION_IMAGE_WIDTH' => Mage::helper('clerk')->getSetting('clerk/general/image_w'),
+                'PRODUCT_SYNCHRONIZATION_IMAGE_HEIGHT' => Mage::helper('clerk')->getSetting('clerk/general/image_h'),
+                'PRODUCT_SYNCHRONIZATION_IMPORT_URL' => Mage::helper('clerk')->getSetting('clerk/general/url'),
+                
+                'SEARCH_ENABLED' => Mage::helper('clerk')->getSetting('clerk/search/active'),
+                'SEARCH_INCLUDE_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/search/show_categories'),
+                'SEARCH_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/search/categories'),
+                'SEARCH_PAGES' => Mage::helper('clerk')->getSetting('clerk/search/pages'),
+                'SEARCH_PAGES_TYPE' => Mage::helper('clerk')->getSetting('clerk/search/pages-type'),
+                'SEARCH_TEMPLATE' => Mage::helper('clerk')->getSetting('clerk/search/template'),
+                'SEARCH_NO_RESULTS_TEXT' => Mage::helper('clerk')->getSetting('clerk/search/no_results_text'),
+                'SEARCH_LOAD_MORE_TEXT' => Mage::helper('clerk')->getSetting('clerk/search/load_more_text'),
+                
+                'FACETED_SEARCH_ENABLED' =>  Mage::helper('clerk')->getSetting('clerk/faceted_search/active'),
+                'FACETED_SEARCH_DESIGN' => Mage::helper('clerk')->getSetting('clerk/faceted_search/design'),
+                'FACETED_SEARCH_ATTRIBUTES' => Mage::helper('clerk')->getSetting('clerk/faceted_search/attributes'),
+                'FACETED_SEARCH_MULTISELECT_ATTRIBUTES' => Mage::helper('clerk')->getSetting('clerk/faceted_search/multiselect_attributes'),
+                'FACETED_SEARCH_TITLES' => Mage::helper('clerk')->getSetting('clerk/faceted_search/titles'),
+
+                'LIVESEARCH_ENABLED' =>  Mage::helper('clerk')->getSetting('clerk/livesearch/active'),
+                'LIVESEARCH_INCLUDE_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/livesearch/show_categories'),
+                'LIVESEARCH_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/livesearch/categories'),
+                'LIVESEARCH_SUGGESTIONS' => Mage::helper('clerk')->getSetting('clerk/livesearch/suggestions'),
+                'LIVESEARCH_PAGES' => Mage::helper('clerk')->getSetting('clerk/livesearch/pages'),
+                'LIVESEARCH_PAGES_TYPE' => Mage::helper('clerk')->getSetting('clerk/livesearch/pages-type'),
+                'LIVESEARCH_DROPDOWN_POSITION' => Mage::helper('clerk')->getSetting('clerk/livesearch/dropdown-position'),
+                'LIVESEARCH_TEMPLATE' => Mage::helper('clerk')->getSetting('clerk/livesearch/template'),
+                'LIVESEARCH_INPUT_SELECTOR' => Mage::helper('clerk')->getSetting('clerk/livesearch/css_input_selector'),
+
+                'POWERSTEP_ENABLED' => Mage::helper('clerk')->getSetting('clerk/powerstep/active'),
+                'POWERSTEP_TYPE' => Mage::helper('clerk')->getSetting('clerk/powerstep/type'),
+                'POWERSTEP_TEMPLATES' => Mage::helper('clerk')->getSetting('clerk/powerstep/templates'),
+
+                'EXIT_INTENT_ENABLED' => Mage::helper('clerk')->getSetting('clerk/exit_intent/active'),
+                'EXIT_INTENT_TEMPLATE' => Mage::helper('clerk')->getSetting('clerk/exit_intent/template'),
+
+                'CATEGORY_ENABLED' => Mage::helper('clerk')->getSetting('clerk/category/enabled'),
+                'CATEGORY_CONTENT' => Mage::helper('clerk')->getSetting('clerk/category/content'),
+
+                'PRODUCT_ENABLED' => Mage::helper('clerk')->getSetting('clerk/product/enabled'),
+                'PRODUCT_CONTENT' => Mage::helper('clerk')->getSetting('clerk/product/content'),
+
+                'CART_ENABLED' => Mage::helper('clerk')->getSetting('clerk/cart/enabled'),
+                'CART_CONTENT' => Mage::helper('clerk')->getSetting('clerk/cart/content'),
+
+                'LOG_ENABLED' => Mage::helper('clerk')->getSetting('clerk/log/enabled'),
+                'LOG_LEVEL' => Mage::helper('clerk')->getSetting('clerk/log/level'),
+                'LOG_TO' => Mage::helper('clerk')->getSetting('clerk/log/to'),
+
+            ];
+
+            $this->getResponse()->setBody(json_encode($response));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Fetching Config "getconfigAction"', $e->getMessage());
+
+        }
+    }
+
+     /**
+     * Set Clerk module setting 
+     */
+    public function setconfigAction()
+    {
+        $this->logger = new ClerkLogger();
+
+        try {
+
+            $this->setStore();
+            $storeid = $this->getRequest()->getParam('store');
+            $post = $this->getRequest()->getRawBody();
+
+            if($post){
+                $arr_settings = json_decode($post, true);
+
+                $count = 0;
+                foreach ($arr_settings as $key => $value){
+
+                    /**
+                     * Using  - Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                     * $path - string - 'clerk/ *area* / *setting*'
+                     * $value - string/int
+                     * 'stores' - ($scope is set to 'stores' by default here because thats the level we use)
+                     * $storeid - int - the id of the store to save the setting to
+                     */
+
+                    // generel                   
+                    if ($key == "CLERK_ACTIVE"){
+                        $path = 'clerk/general/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LANGUAGE"){
+                        $path = 'clerk/general/lang';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PATH_INCLUDE_PAGES"){
+                        $path = 'clerk/general/collect_pages';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PAGES_ADDITIONAL_FIELDS"){
+                        $path = 'clerk/general/pages_additional_fields';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_REAL_TIME_ENABLED"){
+                        $path = 'clerk/general/realtime_updates';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_COLLECT_EMAILS"){
+                        $path = 'clerk/general/collect_emails';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_COLLECT_BASKETS"){
+                        $path = 'clerk/general/collect_baskets';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_ADDITIONAL_FIELDS"){
+                        $path = 'clerk/general/additional_fields';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_INCLUDE_OUT_OF_STOCK_PRODUCTS"){
+                        $path = 'clerk/general/include_out_of_stock_products';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_VISIBILITY"){
+                        $path = 'clerk/general/only_visibility';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_DISABLE_ORDER_SYNCHRONIZATION"){
+                        $path = 'clerk/general/disable_order_synchronization';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_ENABLE_ORDER_RETURN_SYNCHRONIZATION"){
+                        $path = 'clerk/general/enable_order_return_synchronization';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_IMAGE_WIDTH"){
+                        $path = 'clerk/general/image_w';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_SYNCHRONIZATION_IMAGE_HEIGHT"){
+                        $path = 'clerk/general/image_h';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    /* - not sure about this
+                    if ($key == "PRODUCT_SYNCHRONIZATION_IMPORT_URL"){
+                        $path = 'clerk/general/url';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    */
+                    
+                    //search
+                    if ($key == "SEARCH_ENABLED"){
+                        $path = 'clerk/search/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_INCLUDE_CATEGORIES"){
+                        $path = 'clerk/search/show_categories';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_CATEGORIES"){
+                        $path = 'clerk/search/categories';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_PAGES"){
+                        $path = 'clerk/search/pages';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_PAGES_TYPE"){
+                        $path = 'clerk/search/pages-type';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_TEMPLATE"){
+                        $path = 'clerk/search/template';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_NO_RESULTS_TEXT"){
+                        $path = 'clerk/search/no_results_text';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "SEARCH_LOAD_MORE_TEXT"){
+                        $path = 'clerk/search/load_more_text';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    
+                    //facets
+                    if ($key == "FACETED_SEARCH_ENABLED"){
+                        $path = 'clerk/faceted_search/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "FACETED_SEARCH_DESIGN"){
+                        $path = 'clerk/faceted_search/design';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "FACETED_SEARCH_ATTRIBUTES"){
+                        $path = 'clerk/faceted_search/attributes';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "FACETED_SEARCH_MULTISELECT_ATTRIBUTES"){
+                        $path = 'clerk/faceted_search/multiselect_attributes';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "FACETED_SEARCH_TITLES"){
+                        $path = 'clerk/faceted_search/titles';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    
+                    // livesearch
+                    if ($key == "LIVESEARCH_ENABLED"){
+                        $path = 'clerk/livesearch/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_INCLUDE_CATEGORIES"){
+                        $path = 'clerk/livesearch/show_categories';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_CATEGORIES"){
+                        $path = 'clerk/livesearch/categories';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_SUGGESTIONS"){
+                        $path = 'clerk/livesearch/suggestions';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_PAGES"){
+                        $path = 'clerk/livesearch/pages';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_PAGES_TYPE"){
+                        $path = 'clerk/livesearch/pages-type';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_DROPDOWN_POSITION"){
+                        $path = 'clerk/livesearch/dropdown-position';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_TEMPLATE"){
+                        $path = 'clerk/livesearch/template';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LIVESEARCH_INPUT_SELECTOR"){
+                        $path = 'clerk/livesearch/css_input_selector';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                   
+                    // powerstep
+                    if ($key == "POWERSTEP_ENABLED"){
+                        $path = 'clerk/powerstep/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "POWERSTEP_TYPE"){
+                        $path = 'clerk/powerstep/type';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "POWERSTEP_TEMPLATES"){
+                        $path = 'clerk/powerstep/templates';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    
+                    // exit intent
+                    if ($key == "EXIT_INTENT_ENABLED"){
+                        $path = 'clerk/exit_intent/active';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "EXIT_INTENT_TEMPLATE"){
+                        $path = 'clerk/exit_intent/template';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                   
+                    //category
+                    if ($key == "CATEGORY_ENABLED"){
+                        $path = 'clerk/category/enabled';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "CATEGORY_CONTENT"){
+                        $path = 'clerk/category/content';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+    
+                    // product
+                    if ($key == "PRODUCT_ENABLED"){
+                        $path = 'clerk/product/enabled';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "PRODUCT_CONTENT"){
+                        $path = 'clerk/product/content';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+    
+                    // cart 
+                    if ($key == "CART_ENABLED"){
+                        $path = 'clerk/cart/enabled';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "CART_CONTENT"){
+                        $path = 'clerk/cart/content';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+
+                    // log
+                    if ($key == "LOG_LEVEL"){
+                        $path = 'clerk/log/level';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LOG_TO"){
+                        $path = 'clerk/log/to';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    if ($key == "LOG_ENABLED"){
+                        $path = 'clerk/log/enabled';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+                    
+                
+                } // foreach
+
+                if($count !=0){
+                    Mage::getConfig()->cleanCache();
+                }
+            } // if post
+
+            
+            $this->getResponse()
+                ->setHttpResponseCode(200)
+                ->setHeader('Content-Type', 'application/json', true);
+
+            $response = [
+
+                'ok' => 'ok',
+                '$arr_settings' => $arr_settings,
+                'storeId' => $storeid
+                
+            ];
+
+            $this->getResponse()->setBody(json_encode($response));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR setting config "setconfigAction"', $e->getMessage());
+
+        }
+    }
+
+
+   /**
      * Return Customers
      */
     public function customerAction()
@@ -138,6 +569,34 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         try {
 
+            $collect_subscribers = Mage::getStoreConfigFlag('clerk/general/collect_subscribers');
+
+            if($collect_subscribers){
+
+                $_subscribers = mage::getModel('newsletter/subscriber')->getCollection()
+                ->setPageSize($limit)
+                ->setCurPage($page)
+                ->setOrder('subscriber_id', 'desc');
+                foreach ($_subscribers as $_sub) {
+                    $sub = $_sub->getData();
+                    $sub_object = [];
+                    if($sub){
+                        $unsub = $_sub->getUnsubscriptionLink();
+                        $name = '';
+                        $status = ($sub['subscriber_status'] == '1' || $sub['subscriber_status'] == 1) ? true : false;
+                        $email = $sub['subscriber_email'];
+                        $is_customer = ($sub['customer_id'] !== '0' && $sub['customer_id'] !== 0) ? true : false;
+                        $id = ($is_customer) ? $sub['customer_id'] : $sub['subscriber_id'];
+                        $sub_object['name'] = $name;
+                        $sub_object['subscribed'] = $status;
+                        $sub_object['email'] = $email;
+                        $sub_object['id'] = $id;
+                        $sub_object['unsub_url'] = $unsub;
+                        $customers[] = $sub_object;
+                    }
+                }
+            }
+            
             $_customers = mage::getModel('customer/customer')->getCollection()
             ->addAttributeToSelect('firstname')
             ->addAttributeToSelect('lastname')
@@ -148,14 +607,34 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             ->setPageSize($limit)
             ->setCurPage($page);
 
-            foreach ($_customers as $_customer) {
-                $customer = $_customer->getData();
-                
-                $customers[] = [
-                    'id' => $customer['entity_id'],
-                    'name' => $customer['firstname'] . ' ' . $customer['lastname'],
-                    'email' => $customer['email'],
-                ];
+            if($collect_subscribers){
+                foreach ($_customers as $_customer) {
+                    $customer = $_customer->getData();
+                    $email = $customer['email'];
+                    $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($email);
+                    $unsub = Mage::getModel('newsletter/subscriber')->loadByEmail($email)->getUnsubscriptionLink();
+                    $status = false;
+                    if($subscriber){
+                        $status = $subscriber->getData('subscriber_status') == Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED;
+                    }
+                    $customers[] = [
+                        'id' => $customer['entity_id'],
+                        'name' => $customer['firstname'] . ' ' . $customer['lastname'],
+                        'email' => $customer['email'],
+                        'subscribed' => $status,
+                        'unsub_url' => $unsub,
+                    ];
+                }
+            } else {
+                foreach ($_customers as $_customer) {
+                    $customer = $_customer->getData();
+                    
+                    $customers[] = [
+                        'id' => $customer['entity_id'],
+                        'name' => $customer['firstname'] . ' ' . $customer['lastname'],
+                        'email' => $customer['email'],
+                    ];
+                }
             }
 
             $this->getResponse()->setBody(json_encode($customers));

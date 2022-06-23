@@ -17,6 +17,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
 
         $values = json_decode($element->getValue(), true);
 
+        
+
         foreach (explode(',', $attributes) as $attribute) {
             $attribute = str_replace(' ','',$attribute);
 
@@ -31,9 +33,8 @@ class Clerk_Clerk_Block_Adminhtml_System_Config_Form_AttributeLabels extends Mag
                 $html .= '</tr>';
 
             }
-
         }
-
+        
         $html .= '</tbody></table></div>';
 
         $html .= $element->getAfterElementHtml();
