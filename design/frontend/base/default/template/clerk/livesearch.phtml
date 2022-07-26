@@ -1,0 +1,13 @@
+<span
+    class="clerk"
+    data-template="@<?php echo ltrim(Mage::helper('clerk')->getSetting('clerk/livesearch/template'),"@") ?>"
+    data-instant-search-suggestions="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/suggestions') ?>"
+    data-instant-search-categories="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/categories') ?>"
+    data-instant-search-pages="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/pages') ?>"
+    data-instant-search-pages-type="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/pages-type') ?>"
+    data-instant-search-positioning="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/dropdown-position') ?>"
+    data-instant-search="<?php echo Mage::helper('clerk')->getSetting('clerk/livesearch/css_input_selector') ?>">
+</span>
+<style type="text/css">
+	#search_autocomplete { display: none !important; }
+</style>

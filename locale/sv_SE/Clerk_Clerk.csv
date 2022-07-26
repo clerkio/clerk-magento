@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s har lagts till i din kundvagn.
+View Shopping Cart,Visa varukorgen
+You have %s products in your shopping cart,Du har %s produkter i din kundvagn
+Total,Total
+Continue Shopping,Fortsätt handla
+Checkout,Kolla upp
+Search settings,Sökinställningar
+Products,Produkter
+Categories,Kategorier
+Select a store to view dashboard,Välj en butik för att visa instrumentpanelen
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk är inte konfigurerad för denna butik. <a href='%s'>Klicka här för att konfigurera</a>
+Public and private key must be set in order to enable faceted search,Offentlig och privat nyckel måste ställas in för att möjliggöra facetterad sökning
+Public or private key invalid,Offentlig eller privat nyckel ogiltig
+Search results for '%s',Sökresultat för '%s'
+Page,Sida
+Popup,Dyka upp
+-- Please Select --,-- Vänligen välj --
+Content,Innehåll
+Clerk Content Options,Clerk Innehållsalternativ
+Select Product...,Välj produkt...
+Select Category...,Välj kategori...
+Select a store to view dashboard,Välj en butik för att visa instrumentpanelen
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk är inte konfigurerad för denna butik. <a href='%s'>Klicka här för att konfigurera</a>
+%s was successfully added to your shopping cart.,%s har lagts till i din kundvagn.
+You have %s products in your shopping cart,Du har %s produkter i din kundvagn
+Total,Total
+Continue Shopping,Fortsätt handla
+Checkout,Kolla upp
+Clerk,Clerk
+Dashboard,instrumentbräda
+Search results for '%s',Sökresultat för '%s'
+Filters,Filter
+Category,Kategori
+Categories,Kategorier
+Product,Produkt
+Products,Produkter
+View Shopping Cart,Visa varukorgen
+Add to Cart,Lägg till i kundvagn
+Continue Shopping,Fortsätt handla
+Continue to Checkout,Fortsätt till kassan

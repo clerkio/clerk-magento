@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s alış-veriş səbətinizə uğurla əlavə edildi.
+View Shopping Cart,Alış-veriş Səbətinə Baxın
+You have %s products in your shopping cart,Səbətinizdə %s məhsul var
+Total,Ümumi
+Continue Shopping,Alış-verişə davam edin
+Checkout,Yoxla
+Search settings,Axtarış parametrləri
+Products,Məhsullar
+Categories,Kateqoriyalar
+Select a store to view dashboard,İdarə panelinə baxmaq üçün mağaza seçin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk bu mağaza üçün konfiqurasiya edilməyib. <a href='%s'>Konfiqurasiya etmək üçün bura klikləyin</a>
+Public and private key must be set in order to enable faceted search,Üzlü axtarışı aktivləşdirmək üçün açıq və gizli açar təyin edilməlidir
+Public or private key invalid,Açıq və ya şəxsi açar etibarsızdır
+Search results for '%s',Axtarış nəticələri '%s'
+Page,Səhifə
+Popup,Popup
+-- Please Select --,-- Zəhmət olmasa seçin --
+Content,Məzmun
+Clerk Content Options,Clerk Məzmun Seçimləri
+Select Product...,Məhsul seçin...
+Select Category...,Kateqoriya seçin...
+Select a store to view dashboard,İdarə panelinə baxmaq üçün mağaza seçin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk bu mağaza üçün konfiqurasiya edilməyib. <a href='%s'>Konfiqurasiya etmək üçün bura klikləyin</a>
+%s was successfully added to your shopping cart.,%s alış-veriş səbətinizə uğurla əlavə edildi.
+You have %s products in your shopping cart,Səbətinizdə %s məhsul var
+Total,Ümumi
+Continue Shopping,Alış-verişə davam edin
+Checkout,Yoxla
+Clerk,Clerk
+Dashboard,İdarə paneli
+Search results for '%s',Axtarış nəticələri '%s'
+Filters,Filtrlər
+Category,Kateqoriya
+Categories,Kateqoriyalar
+Product,Məhsul
+Products,Məhsullar
+View Shopping Cart,Alış-veriş Səbətinə Baxın
+Add to Cart,Səbətə əlavə et
+Continue Shopping,Alış-verişə davam edin
+Continue to Checkout,Checkout-a davam edin

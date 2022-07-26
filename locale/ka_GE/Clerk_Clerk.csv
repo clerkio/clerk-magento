@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s წარმატებით დაემატა თქვენს კალათას.
+View Shopping Cart,იხილეთ კალათა
+You have %s products in your shopping cart,თქვენ გაქვთ %s პროდუქტები თქვენს კალათაში
+Total,სულ
+Continue Shopping,განაგრძეთ შოპინგი
+Checkout,გადახდა
+Search settings,ძებნის პარამეტრები
+Products,პროდუქტები
+Categories,კატეგორიები
+Select a store to view dashboard,აირჩიეთ მაღაზია საინფორმაციო დაფის სანახავად
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk არ არის კონფიგურირებული ამ მაღაზიისთვის. <a href='%s'>დააწკაპუნეთ აქ კონფიგურაციისთვის</a>
+Public and private key must be set in order to enable faceted search,"საჯარო და პირადი გასაღები უნდა იყოს დაყენებული იმისათვის, რომ ჩართოთ სახიანი ძებნა"
+Public or private key invalid,საჯარო ან პირადი გასაღები არასწორია
+Search results for '%s',Ძიების შედეგები '%s'
+Page,გვერდი
+Popup,ამომხტარი ფანჯარა
+-- Please Select --,-- გთხოვთ აირჩიეთ --
+Content,შინაარსი
+Clerk Content Options,Clerk შინაარსის პარამეტრები
+Select Product...,აირჩიეთ პროდუქტი...
+Select Category...,Აირჩიეთ კატეგორია...
+Select a store to view dashboard,აირჩიეთ მაღაზია საინფორმაციო დაფის სანახავად
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk არ არის კონფიგურირებული ამ მაღაზიისთვის. <a href='%s'>დააწკაპუნეთ აქ კონფიგურაციისთვის</a>
+%s was successfully added to your shopping cart.,%s წარმატებით დაემატა თქვენს კალათას.
+You have %s products in your shopping cart,თქვენ გაქვთ %s პროდუქტები თქვენს კალათაში
+Total,სულ
+Continue Shopping,განაგრძეთ შოპინგი
+Checkout,გადახდა
+Clerk,Clerk
+Dashboard,დაფა
+Search results for '%s',Ძიების შედეგები '%s'
+Filters,ფილტრები
+Category,კატეგორია
+Categories,კატეგორიები
+Product,პროდუქტი
+Products,პროდუქტები
+View Shopping Cart,იხილეთ კალათა
+Add to Cart,Კალათაში დამატება
+Continue Shopping,განაგრძეთ შოპინგი
+Continue to Checkout,განაგრძეთ Checkout-ზე

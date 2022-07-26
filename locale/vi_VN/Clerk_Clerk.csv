@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,_ * đã được thêm thành công vào giỏ hàng của bạn.
+View Shopping Cart,Xem giỏ hàng
+You have %s products in your shopping cart,Bạn có sản phẩm trong giỏ hàng của bạn
+Total,Tổng cộng
+Continue Shopping,Tiếp tục mua sắm
+Checkout,Thủ tục thanh toán
+Search settings,Thiết lập tìm kiếm
+Products,Các sản phẩm
+Categories,Thể loại
+Select a store to view dashboard,Chọn một cửa hàng để xem trang tổng quan
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk không được định cấu hình cho cửa hàng này. <a href='%s'> Nhấp vào đây để định cấu hình </a>
+Public and private key must be set in order to enable faceted search,Khóa công khai và khóa riêng tư phải được đặt để cho phép tìm kiếm theo từng khía cạnh
+Public or private key invalid,Khóa công khai hoặc khóa riêng tư không hợp lệ
+Search results for '%s',Tìm kiếm kết quả cho '%s'
+Page,Trang
+Popup,Cửa sổ bật lên
+-- Please Select --,-- Vui lòng chọn --
+Content,Nội dung
+Clerk Content Options,Clerk Tùy chọn Nội dung
+Select Product...,Chọn sản phẩm...
+Select Category...,Chọn danh mục ...
+Select a store to view dashboard,Chọn một cửa hàng để xem trang tổng quan
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk không được định cấu hình cho cửa hàng này. <a href='%s'> Nhấp vào đây để định cấu hình </a>
+%s was successfully added to your shopping cart.,_ * đã được thêm thành công vào giỏ hàng của bạn.
+You have %s products in your shopping cart,Bạn có sản phẩm trong giỏ hàng của bạn
+Total,Tổng cộng
+Continue Shopping,Tiếp tục mua sắm
+Checkout,Thủ tục thanh toán
+Clerk,Clerk
+Dashboard,bảng điều khiển
+Search results for '%s',Tìm kiếm kết quả cho '%s'
+Filters,Bộ lọc
+Category,Loại
+Categories,Thể loại
+Product,Sản phẩm
+Products,Các sản phẩm
+View Shopping Cart,Xem giỏ hàng
+Add to Cart,Thêm vào giỏ hàng
+Continue Shopping,Tiếp tục mua sắm
+Continue to Checkout,Tiếp tục thanh toán

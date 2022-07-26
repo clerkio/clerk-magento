@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s ຖືກເພີ່ມໃສ່ກະຕ່າຊື້ເຄື່ອງຂອງເຈົ້າສຳເລັດແລ້ວ.
+View Shopping Cart,ເບິ່ງໂຄງຮ່າງການຊື້ເຄື່ອງ
+You have %s products in your shopping cart,ທ່ານມີສິນຄ້າ %s ໃນກະຕ່າຊື້ເຄື່ອງຂອງທ່ານ
+Total,ທັງໝົດ
+Continue Shopping,ສືບຕໍ່ຊື້ເຄື່ອງ
+Checkout,ຈ່າຍເງິນ
+Search settings,ການຕັ້ງຄ່າການຊອກຫາ
+Products,ຜະລິດຕະພັນ
+Categories,ໝວດໝູ່
+Select a store to view dashboard,ເລືອກຮ້ານເພື່ອເບິ່ງ dashboard
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ບໍ່ໄດ້ກຳນົດຄ່າສຳລັບຮ້ານນີ້. <a href='%s'>ຄລິກທີ່ນີ້ເພື່ອກຳນົດຄ່າ</a>
+Public and private key must be set in order to enable faceted search,ຕ້ອງຕັ້ງກະແຈສາທາລະນະ ແລະສ່ວນຕົວເພື່ອໃຫ້ສາມາດຊອກຫາໄດ້
+Public or private key invalid,ກະແຈສາທາລະນະ ຫຼືສ່ວນຕົວບໍ່ຖືກຕ້ອງ
+Search results for '%s',ຜົນການຄົ້ນຫາສຳລັບ '%s'
+Page,ຫນ້າ
+Popup,ເດັ້ງ​ຂຶ້ນ
+-- Please Select --,-- ກະ​ລຸ​ນາ​ເລືອກ --
+Content,ເນື້ອໃນ
+Clerk Content Options,Clerk ຕົວເລືອກເນື້ອຫາ
+Select Product...,ເລືອກ​ຜະ​ລິດ​ຕະ​ພັນ...
+Select Category...,ເລືອກໝວດໝູ່...
+Select a store to view dashboard,ເລືອກຮ້ານເພື່ອເບິ່ງ dashboard
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ບໍ່ໄດ້ກຳນົດຄ່າສຳລັບຮ້ານນີ້. <a href='%s'>ຄລິກທີ່ນີ້ເພື່ອກຳນົດຄ່າ</a>
+%s was successfully added to your shopping cart.,%s ຖືກເພີ່ມໃສ່ກະຕ່າຊື້ເຄື່ອງຂອງເຈົ້າສຳເລັດແລ້ວ.
+You have %s products in your shopping cart,ທ່ານມີສິນຄ້າ %s ໃນກະຕ່າຊື້ເຄື່ອງຂອງທ່ານ
+Total,ທັງໝົດ
+Continue Shopping,ສືບຕໍ່ຊື້ເຄື່ອງ
+Checkout,ຈ່າຍເງິນ
+Clerk,Clerk
+Dashboard,ແຜງໜ້າປັດ
+Search results for '%s',ຜົນການຄົ້ນຫາສຳລັບ '%s'
+Filters,ການກັ່ນຕອງ
+Category,ປະເພດ
+Categories,ໝວດໝູ່
+Product,ຜະລິດຕະພັນ
+Products,ຜະລິດຕະພັນ
+View Shopping Cart,ເບິ່ງໂຄງຮ່າງການຊື້ເຄື່ອງ
+Add to Cart,ຕື່ມໃສ່ກະຕ່າ
+Continue Shopping,ສືບຕໍ່ຊື້ເຄື່ອງ
+Continue to Checkout,ສືບຕໍ່ໄປທີ່ Checkout

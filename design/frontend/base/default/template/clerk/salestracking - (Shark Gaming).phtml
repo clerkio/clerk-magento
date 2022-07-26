@@ -1,0 +1,19 @@
+<?php
+/** @var Clerk_Clerk_Block_SalesTracking $this */
+?>
+<?php
+if ($this->getShouldTrack()) {
+
+    echo '<span'.
+        'class="clerk"'.
+        'data-api="log/sale"'.
+        'data-key="'. $this->getPublicKey() .' ?>"'.
+        'data-sale="'. $this->getIncrementId() .' ?>"'.
+        'data-customer="'. $this->getCustomerId() .' ?>"'.
+        'data-products=\''.$this->getProducts() .' ?>\''.
+        'data-email="'. $this->getCustomerEmail() .' ?>"'.
+        '</span>';
+
+}
+
+?>

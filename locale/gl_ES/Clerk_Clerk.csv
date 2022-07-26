@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s engadiuse correctamente á túa cesta da compra.
+View Shopping Cart,Ver cesta da compra
+You have %s products in your shopping cart,Tes %s produtos na túa cesta da compra
+Total,Total
+Continue Shopping,Continuar comprando
+Checkout,Comprobar
+Search settings,Configuración de busca
+Products,Produtos
+Categories,Categorías
+Select a store to view dashboard,Selecciona unha tenda para ver o panel
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk non está configurado para esta tenda. <a href='%s'>Fai clic aquí para configurar</a>
+Public and private key must be set in order to enable faceted search,Débense establecer a clave pública e privada para activar a busca por facetas
+Public or private key invalid,A clave pública ou privada non é válida
+Search results for '%s',Resultados da busca para '%s'
+Page,Páx
+Popup,Elemento emerxente
+-- Please Select --,"-- Por favor, seleccione --"
+Content,Contido
+Clerk Content Options,Clerk Opcións de contido
+Select Product...,Seleccione o produto...
+Select Category...,Selecciona a categoría...
+Select a store to view dashboard,Selecciona unha tenda para ver o panel
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk non está configurado para esta tenda. <a href='%s'>Fai clic aquí para configurar</a>
+%s was successfully added to your shopping cart.,%s engadiuse correctamente á túa cesta da compra.
+You have %s products in your shopping cart,Tes %s produtos na túa cesta da compra
+Total,Total
+Continue Shopping,Continuar comprando
+Checkout,Comprobar
+Clerk,Clerk
+Dashboard,Panel de control
+Search results for '%s',Resultados da busca para '%s'
+Filters,Filtros
+Category,Categoría
+Categories,Categorías
+Product,Produto
+Products,Produtos
+View Shopping Cart,Ver cesta da compra
+Add to Cart,Engadir á cesta
+Continue Shopping,Continuar comprando
+Continue to Checkout,Continúe coa compra

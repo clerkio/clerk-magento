@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s lisättiin onnistuneesti ostoskoriin.
+View Shopping Cart,Näytä ostoskori
+You have %s products in your shopping cart,Ostoskorissasi on %s tuotteita
+Total,Kaikki yhteensä
+Continue Shopping,Jatka ostoksia
+Checkout,Tarkista
+Search settings,Hakuasetukset
+Products,Tuotteet
+Categories,Luokat
+Select a store to view dashboard,Valitse kauppa nähdäksesi hallintapaneelin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ei ole määritetty tälle kaupalle. <a href='%s'>Määritä napsauttamalla tätä</a>
+Public and private key must be set in order to enable faceted search,Julkinen ja yksityinen avain on asetettava fasetoidun haun mahdollistamiseksi
+Public or private key invalid,Julkinen tai yksityinen avain on virheellinen
+Search results for '%s',Etsi tuloksia '%s'
+Page,Sivu
+Popup,Ponnahdusikkuna
+-- Please Select --,-- Ole hyvä ja valitse --
+Content,Sisältö
+Clerk Content Options,Clerk Sisältöasetukset
+Select Product...,Valitse tuote...
+Select Category...,Valitse kategoria...
+Select a store to view dashboard,Valitse kauppa nähdäksesi hallintapaneelin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ei ole määritetty tälle kaupalle. <a href='%s'>Määritä napsauttamalla tätä</a>
+%s was successfully added to your shopping cart.,%s lisättiin onnistuneesti ostoskoriin.
+You have %s products in your shopping cart,Ostoskorissasi on %s tuotteita
+Total,Kaikki yhteensä
+Continue Shopping,Jatka ostoksia
+Checkout,Tarkista
+Clerk,Clerk
+Dashboard,Kojelauta
+Search results for '%s',Etsi tuloksia '%s'
+Filters,Suodattimet
+Category,Kategoria
+Categories,Luokat
+Product,Tuote
+Products,Tuotteet
+View Shopping Cart,Näytä ostoskori
+Add to Cart,Lisää ostoskoriin
+Continue Shopping,Jatka ostoksia
+Continue to Checkout,Jatka Checkoutiin

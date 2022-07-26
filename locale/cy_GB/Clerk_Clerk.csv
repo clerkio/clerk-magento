@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,* _* wedi'i ychwanegu'n llwyddiannus at eich trol siopa.
+View Shopping Cart,Gweld Cert Siopa
+You have %s products in your shopping cart,Mae gennych chi * _* o gynhyrchion yn eich trol siopa
+Total,Cyfanswm
+Continue Shopping,Parhau i Siopa
+Checkout,Desg dalu
+Search settings,Gosodiadau chwilio
+Products,Cynhyrchion
+Categories,Categorïau
+Select a store to view dashboard,Dewiswch siop i weld dangosfwrdd
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Nid yw Clerk wedi'i ffurfweddu ar gyfer y storfa hon. <a href='%s'>Cliciwch yma i ffurfweddu</a>
+Public and private key must be set in order to enable faceted search,Rhaid gosod allwedd gyhoeddus a phreifat er mwyn galluogi chwiliad wynebol
+Public or private key invalid,Allwedd gyhoeddus neu breifat yn annilys
+Search results for '%s',Canlyniadau chwilio am '%s'
+Page,Tudalen
+Popup,Naid
+-- Please Select --,-- Dewiswch --
+Content,Cynnwys
+Clerk Content Options,Clerk Dewisiadau Cynnwys
+Select Product...,Dewiswch Gynnyrch...
+Select Category...,Dewiswch Gategori...
+Select a store to view dashboard,Dewiswch siop i weld dangosfwrdd
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Nid yw Clerk wedi'i ffurfweddu ar gyfer y storfa hon. <a href='%s'>Cliciwch yma i ffurfweddu</a>
+%s was successfully added to your shopping cart.,* _* wedi'i ychwanegu'n llwyddiannus at eich trol siopa.
+You have %s products in your shopping cart,Mae gennych chi * _* o gynhyrchion yn eich trol siopa
+Total,Cyfanswm
+Continue Shopping,Parhau i Siopa
+Checkout,Desg dalu
+Clerk,Clerk
+Dashboard,Dangosfwrdd
+Search results for '%s',Canlyniadau chwilio am '%s'
+Filters,Hidlau
+Category,Categori
+Categories,Categorïau
+Product,Cynnyrch
+Products,Cynhyrchion
+View Shopping Cart,Gweld Cert Siopa
+Add to Cart,Ychwanegu at y Cart
+Continue Shopping,Parhau i Siopa
+Continue to Checkout,Parhewch i Desg dalu

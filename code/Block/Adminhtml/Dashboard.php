@@ -78,7 +78,7 @@ class Clerk_Clerk_Block_Adminhtml_Dashboard extends Mage_Adminhtml_Block_Templat
      */
     public function getStoreId()
     {
-        return $this->getRequest()->getParam('store');
+        return $this->getRequest()->getParam('store') ? $this->getRequest()->getParam('store') : Mage::app()->getDefaultStoreView()->getId();
     }
 
     /**

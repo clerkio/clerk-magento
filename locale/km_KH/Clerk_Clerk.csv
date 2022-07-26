@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s ត្រូវបានបន្ថែមដោយជោគជ័យទៅក្នុងរទេះទិញទំនិញរបស់អ្នក។
+View Shopping Cart,មើលរទេះទិញទំនិញ
+You have %s products in your shopping cart,អ្នកមាន %s ផលិតផលនៅក្នុងរទេះទិញទំនិញរបស់អ្នក។
+Total,សរុប
+Continue Shopping,បន្តការទិញទំនិញ
+Checkout,ពិនិត្យ​មុន​ពេល​ចេញ
+Search settings,ការកំណត់ស្វែងរក
+Products,ផលិតផល
+Categories,ប្រភេទ
+Select a store to view dashboard,ជ្រើសរើសហាងដើម្បីមើលផ្ទាំងគ្រប់គ្រង
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk មិនត្រូវបានកំណត់រចនាសម្ព័ន្ធសម្រាប់ហាងនេះទេ។ <a href='%s'>ចុចទីនេះដើម្បីកំណត់រចនាសម្ព័ន្ធ</a>
+Public and private key must be set in order to enable faceted search,សោសាធារណៈ និងឯកជនត្រូវតែកំណត់ ដើម្បីបើកការស្វែងរកមុខ
+Public or private key invalid,សោសាធារណៈ ឬឯកជនមិនត្រឹមត្រូវ
+Search results for '%s',លទ្ធផលស្វែងរកសម្រាប់ '%s'
+Page,ទំព័រ
+Popup,ផុស​ឡើង
+-- Please Select --,--សូមជ្រើសរើស --
+Content,មាតិកា
+Clerk Content Options,Clerk ជម្រើសមាតិកា
+Select Product...,ជ្រើសរើសផលិតផល...
+Select Category...,ជ្រើសរើសប្រភេទ...
+Select a store to view dashboard,ជ្រើសរើសហាងដើម្បីមើលផ្ទាំងគ្រប់គ្រង
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk មិនត្រូវបានកំណត់រចនាសម្ព័ន្ធសម្រាប់ហាងនេះទេ។ <a href='%s'>ចុចទីនេះដើម្បីកំណត់រចនាសម្ព័ន្ធ</a>
+%s was successfully added to your shopping cart.,%s ត្រូវបានបន្ថែមដោយជោគជ័យទៅក្នុងរទេះទិញទំនិញរបស់អ្នក។
+You have %s products in your shopping cart,អ្នកមាន %s ផលិតផលនៅក្នុងរទេះទិញទំនិញរបស់អ្នក។
+Total,សរុប
+Continue Shopping,បន្តការទិញទំនិញ
+Checkout,ពិនិត្យ​មុន​ពេល​ចេញ
+Clerk,Clerk
+Dashboard,ផ្ទាំងគ្រប់គ្រង
+Search results for '%s',លទ្ធផលស្វែងរកសម្រាប់ '%s'
+Filters,តម្រង
+Category,ប្រភេទ
+Categories,ប្រភេទ
+Product,ផលិតផល
+Products,ផលិតផល
+View Shopping Cart,មើលរទេះទិញទំនិញ
+Add to Cart,បញ្ចូលទៅក្នុងរទេះ
+Continue Shopping,បន្តការទិញទំនិញ
+Continue to Checkout,បន្តទៅ Checkout

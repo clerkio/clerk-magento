@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%sがショッピングカートに正常に追加されました。
+View Shopping Cart,ショッピングカートを見る
+You have %s products in your shopping cart,ショッピングカートに%s個の商品があります
+Total,合計
+Continue Shopping,ショッピングを続ける
+Checkout,チェックアウト
+Search settings,検索設定
+Products,製品
+Categories,カテゴリ
+Select a store to view dashboard,ダッシュボードを表示するストアを選択します
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerkこのストアには設定されていません。 <ahref='%s'>設定するにはここをクリック</a>
+Public and private key must be set in order to enable faceted search,ファセット検索を有効にするには、公開鍵と秘密鍵を設定する必要があります
+Public or private key invalid,公開鍵または秘密鍵が無効です
+Search results for '%s',の検索結果 '%s'
+Page,ページ
+Popup,現れる
+-- Please Select --,-  選んでください  -
+Content,コンテンツ
+Clerk Content Options,Clerkコンテンツオプション
+Select Product...,製品を選択...
+Select Category...,カテゴリを選んでください...
+Select a store to view dashboard,ダッシュボードを表示するストアを選択します
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerkこのストアには設定されていません。 <ahref='%s'>設定するにはここをクリック</a>
+%s was successfully added to your shopping cart.,%sがショッピングカートに正常に追加されました。
+You have %s products in your shopping cart,ショッピングカートに%s個の商品があります
+Total,合計
+Continue Shopping,ショッピングを続ける
+Checkout,チェックアウト
+Clerk,Clerk
+Dashboard,ダッシュボード
+Search results for '%s',の検索結果 '%s'
+Filters,フィルタ
+Category,カテゴリー
+Categories,カテゴリ
+Product,製品
+Products,製品
+View Shopping Cart,ショッピングカートを見る
+Add to Cart,カートに追加
+Continue Shopping,ショッピングを続ける
+Continue to Checkout,チェックアウトを続行

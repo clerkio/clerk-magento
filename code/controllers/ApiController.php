@@ -247,7 +247,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                      * $storeid - int - the id of the store to save the setting to
                      */
 
-                    // generel                   
+                    // generel
                     if ($key == "CLERK_ACTIVE"){
                         $path = 'clerk/general/active';
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);

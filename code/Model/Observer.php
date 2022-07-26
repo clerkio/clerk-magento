@@ -51,8 +51,8 @@ class Clerk_Clerk_Model_Observer
         if (Mage::helper('clerk')->getSetting('clerk/powerstep/type') == 'page') {
             $request->setParam('return_url', Mage::getBaseUrl() . 'checkout/cart/clerk');
         } else {
-            $referer = $request->getHeader('referer');
-            $request->setParam('return_url', $referer);
+            //$referer = $request->getHeader('referer'); Adding referer overwrites the default redirect after add to cart.
+            //$request->setParam('return_url', $referer); This causes the powerstep state to not clear properly and makes add to cart animations not execute.
             Mage::getSingleton('core/session')->setFirePowerPopup(true);
         }
     }
@@ -64,74 +64,50 @@ class Clerk_Clerk_Model_Observer
      */
     public function updateBasket(Varien_Event_Observer $observer)
     {
-        foreach (Mage::app()->getWebsites() as $website) {
-            foreach ($website->getGroups() as $group) {
-                $stores = $group->getStores();
-                foreach ($stores as $store) {
 
-                    if (Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', $store->getId()) == '1') {
+        $store_id = (Mage::app()->getStore()->getStoreId() !== NULL) ? Mage::app()->getStore()->getStoreId() : 1;
 
-                        $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
+        if (Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', $store_id) == '1') {
 
-                        $cart_product_ids = array();
+            $cart_products = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
 
-                        foreach ($cart_products as $product) {
-                            if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
-                                $cart_product_ids[] = $product->getProduct()->getId();
-                            }
-                        }
+            $cart_product_ids = array();
 
-                        if (count($cart_product_ids) > 0) {
-                            
-                            $email = "";
+            foreach ($cart_products as $product) {
+                if (!in_array($product->getProduct()->getId(), $cart_product_ids)) {
+                    $cart_product_ids[] = $product->getProduct()->getId();
+                }
+            }
 
-                            if(Mage::getSingleton('customer/session')->isLoggedIn()) {
-                                $customer = Mage::getSingleton('customer/session')->getCustomer();
-                                $email = $customer->getEmail();
-                            }
+            if (count($cart_product_ids) > 0) {
+                
+                $email = "";
 
-                            if ($email != "") {
+                if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+                    $customer = Mage::getSingleton('customer/session')->getCustomer();
+                    $email = $customer->getEmail();
+                }
 
-                                $Endpoint = 'https://api.clerk.io/v2/log/basket/set';
+                if ($email != "") {
+                    $Endpoint = 'https://api.clerk.io/v2/log/basket/set';
 
-                                $data_string = json_encode([
-                                    'key' => Mage::helper('clerk')->getSetting('clerk/general/publicapikey', $store->getId()),
-                                    'products' => $cart_product_ids,
-                                    'email' => $email]);
+                    $data_string = json_encode([
+                        'key' => Mage::helper('clerk')->getSetting('clerk/general/publicapikey', $store_id),
+                        'products' => $cart_product_ids,
+                        'email' => $email]);
 
-                                $curl = curl_init();
+                    $curl = curl_init();
 
-                                curl_setopt($curl, CURLOPT_URL, $Endpoint);
-                                curl_setopt($curl, CURLOPT_POST, true);
-                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                                curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-                                curl_exec($curl);
-
-                            } else {
-
-                                echo "<script type='text/javascript'>(function(){
-                                    (function(w,d){
-                                        var e=d.createElement('script');e.type='text/javascript';e.async=true;
-                                        e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
-                                        var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
-                                        w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk|| function(){ w.__clerk_q.push(arguments) };
-                                    })(window,document);
-                                })();
-
-                                Clerk('config', {
-                                    key: '".Mage::helper('clerk')->getSetting('clerk/general/publicapikey', $store->getId())."',
-
-                                });
-
-                                Clerk('cart', 'set', [".implode(',', $cart_product_ids)."]);
-
-                                </script>";
-                            }
-                        }
-                    }
+                    curl_setopt($curl, CURLOPT_URL, $Endpoint);
+                    curl_setopt($curl, CURLOPT_POST, true);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+                    curl_exec($curl);
+                    curl_close($curl);
                 }
             }
         }
+
     }
 
 

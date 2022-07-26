@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem" ifconfig="clerk/general/active">
+                <type>skin_css</type>
+                <name>clerk/style.css</name>
+            </action>
+            <action method="addItem" ifconfig="clerk/general/active">
+                <type>skin_js</type>
+                <name>clerk/helper.js</name>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="clerk_tracking_script" after="-">
+                <action method="setTemplate" ifconfig="clerk/general/active">
+                    <template>clerk/tracking.phtml</template>
+                </action>
+            </block>
+            <block type="core/template" name="clerk_livesearch_script" after="-">
+                <action method="setTemplate" ifconfig="clerk/livesearch/active">
+                    <template>clerk/livesearch.phtml</template>
+                </action>
+            </block>
+            <block type="clerk/powerstep" name="clerk_powerstep" after="clerk_powerpopup_script">
+                <action method="setTemplate" ifconfig="clerk/powerstep/active">
+                    <template>clerk/powerpopup.phtml</template>
+                </action>
+            </block>
+            <block type="clerk/exitIntent" name="clerk_exit_intent_script" template="clerk/exitintent.phtml" after="-"/>
+        </reference>
+    </default>
+
+    <checkout_onepage_success>
+        <reference name="content">
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script" template="clerk/salestracking.phtml"/>
+        </reference>
+    </checkout_onepage_success>
+
+    <!-- Klarna success page -->
+    <checkout_klarna_success>
+        <reference name="content">
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script_klarna" template="clerk/salestracking.phtml"/>
+        </reference>
+    </checkout_klarna_success>
+
+    <!-- Trollweb klarna checkout -->
+    <trollweb_kco_index_success>
+        <reference name="content">
+            <block type="clerk/salesTracking" name="clerk_sales_tracking_script_klarna" template="clerk/salestracking.phtml"/>
+        </reference>
+    </trollweb_kco_index_success>
+
+    <checkout_cart_clerk>
+        <reference name="root">
+            <action method="setTemplate" ifconfig="clerk/general/active">
+                <template>page/1column.phtml</template>
+            </action>
+            <remove name="clerk_powerstep"/>
+        </reference>
+        <reference name="content">
+            <block type="clerk/powerstep" template="clerk/powerpage.phtml"/>
+        </reference>
+    </checkout_cart_clerk>
+
+    <checkout_cart_index>
+        <reference name="content">
+            <block type="clerk/widget_content" name="clerk_cart_after">
+                <action method="setBlockLocation">
+                    <value>cart</value>
+                </action>
+            </block>
+        </reference>
+    </checkout_cart_index>
+
+    <!--<catalog_product_view>-->
+        <!--<reference name="content">-->
+            <!--<block type="clerk/widget_content" name="clerk_product_after">-->
+                <!--<action method="setBlockLocation">-->
+                    <!--<value>product</value>-->
+                <!--</action>-->
+            <!--</block>-->
+        <!--</reference>-->
+    <!--</catalog_product_view>-->
+</layout>

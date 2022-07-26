@@ -37,10 +37,20 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
      */
     public function getSpanAttributes()
     {
+
+        //$filter_powerstep = Mage::getStoreConfigFlag('clerk/powerstep/exclude_duplicates_powerstep');
+        $filter_category = Mage::getStoreConfigFlag('clerk/category/exclude_duplicates_category');
+        $filter_product = Mage::getStoreConfigFlag('clerk/product/exclude_duplicates_product');
+        $filter_cart = Mage::getStoreConfigFlag('clerk/cart/exclude_duplicates_cart');
+
+        static $product_contents = 0;
+        static $cart_contents = 0;
+        static $category_contents = 0;
+
         $output = '';
         $spanAttributes = [
             'class' => 'clerk',
-            'data-template' => '@' . $this->getContent(),
+            'data-template' => '@' . $this->getContent()
         ];
 
         if ($this->getProductId()) {
@@ -53,6 +63,20 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
 
             if ($productId) {
                 $spanAttributes['data-products'] = json_encode([$productId]);
+                if($filter_product){
+                    $unique_class = "clerk_" . (string)$product_contents;
+                    $spanAttributes['class'] = 'clerk ' . $unique_class;
+                    if($product_contents > 0){
+                        $filter_string = '';
+                        for($i = 0; $i < $product_contents; $i++){
+                            if($i > 0){
+                                $filter_string .= ', ';
+                            }
+                            $filter_string .= '.clerk_'.strval($i);
+                        }
+                    $spanAttributes['data-exclude-from'] = $filter_string;
+                    }
+                }
             }
         }
 
@@ -66,18 +90,48 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
 
             if ($categoryId) {
                 $spanAttributes['data-category'] = $categoryId;
+                if($filter_category){
+                    $unique_class = "clerk_" . (string)$category_contents;
+                    $spanAttributes['class'] = 'clerk ' . $unique_class;
+                    if($category_contents > 0){
+                        $filter_string = '';
+                        for($i = 0; $i < $category_contents; $i++){
+                            if($i > 0){
+                                $filter_string .= ', ';
+                            }
+                            $filter_string .= '.clerk_'.strval($i);
+                        }
+                    $spanAttributes['data-exclude-from'] = $filter_string;
+                    }
+                }
             }
         }
 
         if ($this->getBlockLocation() === 'cart') {
             $spanAttributes['data-template'] = '@' . $this->getCartContent();
             $spanAttributes['data-products'] = $this->getCartProducts();
+            if($filter_cart){
+                $unique_class = "clerk_" . (string)$cart_contents;
+                $spanAttributes['class'] = 'clerk ' . $unique_class;
+                if($cart_contents > 0){
+                    $filter_string = '';
+                    for($i = 0; $i < $cart_contents; $i++){
+                        if($i > 0){
+                            $filter_string .= ', ';
+                        }
+                        $filter_string .= '.clerk_'.strval($i);
+                    }
+                $spanAttributes['data-exclude-from'] = $filter_string;
+                }
+            }
         }
 
         foreach ($spanAttributes as $attribute => $value) {
             $output .= ' ' . $attribute . '=\'' . $value . '\'';
         }
-
+        $product_contents++;
+        $cart_contents++;
+        $category_contents++;
         return trim($output);
     }
 
@@ -109,8 +163,10 @@ class Clerk_Clerk_Block_Widget_Content extends Mage_Core_Block_Template implemen
                 }
             }
 
-            $json_string = json_encode($cart_product_ids);
-            
+            $ids = Mage::getSingleton('checkout/cart')->getProductIds();
+
+            $json_string = json_encode(array_values($cart_product_ids));
+
         return $json_string;
     }
 }

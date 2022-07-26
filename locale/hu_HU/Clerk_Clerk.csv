@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s sikeresen bekerült a kosarába.
+View Shopping Cart,Bevásárlókosár megtekintése
+You have %s products in your shopping cart,%s termék van a kosarában
+Total,Teljes
+Continue Shopping,Folytatni a vásárlást
+Checkout,Pénztár
+Search settings,Keresési beállítások
+Products,Termékek
+Categories,Kategóriák
+Select a store to view dashboard,Válassza ki az üzletet az irányítópult megtekintéséhez
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk nincs konfigurálva ehhez az áruházhoz. <a href='%s'>A konfiguráláshoz kattintson ide</a>
+Public and private key must be set in order to enable faceted search,Nyilvános és privát kulcsot kell beállítani a fazettált keresés engedélyezéséhez
+Public or private key invalid,A nyilvános vagy privát kulcs érvénytelen
+Search results for '%s',Keresés eredménye '%s'
+Page,oldal
+Popup,Felugrik
+-- Please Select --,"-- Kérlek, válassz --"
+Content,Tartalom
+Clerk Content Options,Clerk Tartalombeállítások
+Select Product...,Termék kiválasztása...
+Select Category...,Válassz kategóriát...
+Select a store to view dashboard,Válassza ki az üzletet az irányítópult megtekintéséhez
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk nincs konfigurálva ehhez az áruházhoz. <a href='%s'>A konfiguráláshoz kattintson ide</a>
+%s was successfully added to your shopping cart.,%s sikeresen bekerült a kosarába.
+You have %s products in your shopping cart,%s termék van a kosarában
+Total,Teljes
+Continue Shopping,Folytatni a vásárlást
+Checkout,Pénztár
+Clerk,Clerk
+Dashboard,Irányítópult
+Search results for '%s',Keresés eredménye '%s'
+Filters,Szűrők
+Category,Kategória
+Categories,Kategóriák
+Product,Termék
+Products,Termékek
+View Shopping Cart,Bevásárlókosár megtekintése
+Add to Cart,Kosárba
+Continue Shopping,Folytatni a vásárlást
+Continue to Checkout,Tovább a Checkouthoz

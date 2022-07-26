@@ -62,21 +62,11 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
             $AttributeToSelect = explode(',', $AttributeToSelect);
 
-            $eavConfig = Mage::getModel('eav/config');
-            /* @var $eavConfig Mage_Eav_Model_Config */
-            $attributes = $eavConfig->getEntityAttributeCodes(
-                Mage_Catalog_Model_Product::ENTITY,
-                $this
-            );
-
-
-
             foreach ($AttributeToSelect as $key => $value) {
                 $product_id = (int)$this->getId();
                 $variant_ids = [];
                 $variant_stocks = [];
                 $variant_attribute_labels = [];
-                $variant_attribute_values = [];
                 $variant_attribute_options = [];
                 $variant_skus = [];
                 $variant_prices = [];
@@ -86,26 +76,19 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                 $add_stocks = false;
                 $add_prices = false;
                 $add_list_prices = false;
-                $attrCode = str_replace(' ','', $value);
-                $mainAttrText = $this->getAttributeText($attrCode);
-                $mainAttrVal = $this->getData($attrCode);
-                $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
-                if (null!==$attr->getId()){
-                    if(!isset( $data[$attrCode])){
-                        if($mainAttrVal !== NULL){
-                            $data[$attrCode] = $mainAttrVal;
+
+                switch($this->getTypeId()){
+                    case "configurable":
+                        $attrCode = str_replace(' ','', $value);
+                        $mainAttrText = $this->getAttributeText($attrCode);
+                        $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
+                        if (null!==$attr->getId()){
+                            if(!isset( $data[$attrCode])){
+                                if($mainAttrText){
+                                    $data[$attrCode.'_label'] = $mainAttrText;
+                                }
+                            }
                         }
-                        if($mainAttrText){
-                            $data[$attrCode.'_label'] = $mainAttrText;
-                        }
-                    }
-
-                }
-
-                    // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - start
-
-                    if($this->getTypeId() == "configurable"){
-
                         if(!isset($data['variant_skus'])){
                             $add_skus = true;
                         }
@@ -157,12 +140,6 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                                 }
                             }
 
-                            if(!is_array($simple_product->getData($attrCode))){
-                                if($this->sanitizeAttributes(strval($simple_product->getData($attrCode)))){
-                                    array_push($variant_attribute_values, strval($simple_product->getData($attrCode)));
-                                }
-                            }
-
                             $variant_label_object = $simple_product->getResource()->getAttribute($attrCode);
 
                             if($variant_label_object->usesSource()){
@@ -180,9 +157,6 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         if(!empty(array_values(array_unique($variant_attribute_labels)))){
                             $data["variant_" . $attrCode . "s_labels"] = array_values(array_unique($variant_attribute_labels));
                         }
-                        if(!empty(array_values(array_unique($variant_attribute_values)))){
-                            $data["variant_" . $attrCode . "s_values"] = array_values(array_unique($variant_attribute_values));
-                        }
 
                         if($add_skus){
                             $data['variant_skus'] = $variant_skus;
@@ -199,10 +173,19 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         if($add_list_prices){
                             $data['variant_list_prices'] = $variant_list_prices;
                         }
+                        break;
 
-                    }
-
-                    if ($this->getTypeId() == 'grouped'){
+                    case "grouped":
+                        $attrCode = str_replace(' ','', $value);
+                        $mainAttrText = $this->getAttributeText($attrCode);
+                        $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
+                        if (null!==$attr->getId()){
+                            if(!isset( $data[$attrCode])){
+                                if($mainAttrText){
+                                    $data[$attrCode.'_label'] = $mainAttrText;
+                                }
+                            }
+                        }
                         $simple_collection = Mage::getModel('catalog/product_type_grouped')->getAssociatedProducts($this);
                         $groupchildatributtes=[];
                         foreach($simple_collection as $simple_product){
@@ -230,9 +213,21 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         }
                         $groupchildatributtes = array_values(array_unique($groupchildatributtes));
                         $data["child_" . $attrCode . "s"] = $groupchildatributtes;
-                    }
+                        break;
 
-                    // 21-10-2021 KKY - Additional Fields for Configurable and Grouped Products - custom fields - end
+                    case "simple":
+                        $attrCode = str_replace(' ','', $value);
+                        $mainAttrText = $this->getAttributeText($attrCode);
+                        $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
+                        if (null!==$attr->getId()){
+                            if(!isset( $data[$attrCode])){
+                                if($mainAttrText){
+                                    $data[$attrCode.'_label'] = $mainAttrText;
+                                }
+                            }
+                        }
+                        break;
+                }
             }
         }
 

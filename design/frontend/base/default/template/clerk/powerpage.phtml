@@ -1,0 +1,106 @@
+    <div class="clerk-top-wrapper">
+        <div class="col6 left padding10">
+            <div class="col12 ">
+                <div class="alert alert-success">
+                    <?php echo $this->__('%s was successfully added to your shopping cart.', $this->getProduct()->getName()); ?>
+                </div>
+            </div>
+
+            <div class="col12">
+                <div class="col4 left clerk-product-image">
+                    <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize(100); ?>"
+                         alt="<?php echo $this->stripTags($this->getImageLabel($this->getProduct(), 'small_image'), null, true) ?>" />
+                </div>
+                <div class="col8 left">
+                    <span class="clerk-name"><?php echo $this->getProduct()->getName() ?></span>
+                    <?php echo $this->getLayout()->createBlock('catalog/product_price')->getPriceHtml($this->getProduct()); ?>
+                </div>
+            </div>
+            <div class="clerk-clearer"></div>
+        </div>
+
+        <div class="col6 left  padding10">
+            <div class="col12">
+                <button type="button" onclick="setLocation('<?php echo Mage::getUrl('checkout/cart') ?>')"
+                        class="button form-button clerk-to-cart">
+                        <?php echo Mage::helper('clerk')->__('View Shopping Cart'); ?>
+                </button>
+            </div>
+            <div class="col12">
+                <table class="table">
+                    <tr>
+                        <td class="clerk-text padding10-top" >
+                          <?php echo $this->__('You have %s products in your shopping cart', count($this->getQuote()->getAllVisibleItems())); ?>
+                       </td>
+                        <td></td>
+                    </tr>
+                    <tr class="clerk-total">
+                        <td class="clerk-text"><?php echo Mage::helper('clerk')->__('Total'); ?></td>
+                        <td class="clerk-price"><?php echo Mage::helper('core')->currency($this->getQuote()->getGrandTotal(), true, false); ?></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col12">
+                <div class="left">
+                    <button type="button" onclick="window.history.back()" class="button form-button clerk-continue-shopping">
+                        <?php echo Mage::helper('clerk')->__('Continue Shopping'); ?>
+                    </button>
+                </div>
+                <div class="right">
+                    <button type="button" onclick="setLocation('<?php echo Mage::helper('checkout/url')->getCheckoutUrl() ?>')"
+                            class="button form-button right"><?php echo Mage::helper('clerk')->__('Checkout'); ?>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clerk-clearer"></div>
+
+    <div class="clerk-results">
+        <?php
+        $Issetdataexclude = false;
+        $dataexcludestring = '';
+        $count = 0;
+        foreach ($this->getTemplates() as $template) :
+            $count++;
+            $id = 'clerk_'.time().$count;
+            ?>
+            <span class="clerk"
+                  id="<?php echo $id ?>"
+                  <?php if($Issetdataexclude) {
+                      echo 'data-exclude-from="'.$dataexcludestring.'"';
+                  } ?>
+                  data-template="@<?php echo $template ?>"
+                  data-products="[<?php echo $this->getProduct()->getId(); ?>]"
+                  data-category="<?php echo $this->getProduct()->getCategoryId(); ?>">
+            </span>
+        <?php
+
+            if ($count == 1) {
+
+                $dataexcludestring .= '#'.$id.':limit(4)';
+
+            }else {
+
+                $dataexcludestring .= ',#'.$id.':limit(4)';
+
+            }
+            $Issetdataexclude = true;
+        endforeach; ?>
+    </div>
+    <div class="clerk-clearer"></div>
+    <hr><br />
+    <div class="col12">
+        <div class="left">
+            <button type="button" onclick="window.history.back()" class="button form-button clerk-continue-shopping">
+                <?php echo Mage::helper('clerk')->__('Continue Shopping'); ?>
+            </button>
+        </div>
+        <div class="right">
+            <button type="button" onclick="setLocation('<?php echo Mage::helper('checkout/url')->getCheckoutUrl() ?>')"
+                    class="button form-button right"><?php echo Mage::helper('clerk')->__('Checkout'); ?>
+            </button>
+        </div>
+    </div>
+

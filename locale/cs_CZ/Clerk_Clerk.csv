@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s byl úspěšně přidán do vašeho nákupního košíku.
+View Shopping Cart,Zobrazit nákupní košík
+You have %s products in your shopping cart,V nákupním košíku máte %s produktů
+Total,Celkový
+Continue Shopping,Pokračovat v nákupu
+Checkout,Překontrolovat
+Search settings,Nastavení vyhledávání
+Products,produkty
+Categories,Kategorie
+Select a store to view dashboard,"Chcete-li zobrazit řídicí panel, vyberte obchod"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk není pro tento obchod nakonfigurován. <a href='%s'>Konfiguraci provedete kliknutím sem</a>
+Public and private key must be set in order to enable faceted search,"Aby bylo možné fasetované vyhledávání, musí být nastaven veřejný a soukromý klíč"
+Public or private key invalid,Veřejný nebo soukromý klíč je neplatný
+Search results for '%s',Výsledky hledání pro '%s'
+Page,Strana
+Popup,Vyskakovat
+-- Please Select --,-- Prosím vyberte --
+Content,Obsah
+Clerk Content Options,Clerk Možnosti obsahu
+Select Product...,Vyberte produkt...
+Select Category...,Vybrat kategorii...
+Select a store to view dashboard,"Chcete-li zobrazit řídicí panel, vyberte obchod"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk není pro tento obchod nakonfigurován. <a href='%s'>Konfiguraci provedete kliknutím sem</a>
+%s was successfully added to your shopping cart.,%s byl úspěšně přidán do vašeho nákupního košíku.
+You have %s products in your shopping cart,V nákupním košíku máte %s produktů
+Total,Celkový
+Continue Shopping,Pokračovat v nákupu
+Checkout,Překontrolovat
+Clerk,Clerk
+Dashboard,Přístrojová deska
+Search results for '%s',Výsledky hledání pro '%s'
+Filters,Filtry
+Category,Kategorie
+Categories,Kategorie
+Product,Produkt
+Products,produkty
+View Shopping Cart,Zobrazit nákupní košík
+Add to Cart,Přidat do košíku
+Continue Shopping,Pokračovat v nákupu
+Continue to Checkout,Pokračujte k pokladně

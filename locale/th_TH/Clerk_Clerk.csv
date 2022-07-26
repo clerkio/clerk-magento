@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s ถูกเพิ่มลงในตะกร้าสินค้าของคุณเรียบร้อยแล้ว
+View Shopping Cart,ดูตะกร้าสินค้า
+You have %s products in your shopping cart,คุณมีสินค้า %s ในตะกร้าสินค้าของคุณ
+Total,ทั้งหมด
+Continue Shopping,ช้อปปิ้งต่อ
+Checkout,เช็คเอาท์
+Search settings,ค้นหาการตั้งค่า
+Products,สินค้า
+Categories,หมวดหมู่
+Select a store to view dashboard,เลือกร้านค้าเพื่อดูแดชบอร์ด
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ไม่ได้รับการกำหนดค่าสำหรับร้านค้านี้ <a href='%s'>คลิกที่นี่เพื่อกำหนดค่า</a>
+Public and private key must be set in order to enable faceted search,ต้องตั้งค่าคีย์สาธารณะและส่วนตัวเพื่อเปิดใช้งานการค้นหาแบบเหลี่ยม
+Public or private key invalid,คีย์สาธารณะหรือคีย์ส่วนตัวไม่ถูกต้อง
+Search results for '%s',ผลการค้นหาสำหรับ '%s'
+Page,หน้าหนังสือ
+Popup,ป๊อปอัพ
+-- Please Select --,-- โปรดเลือก --
+Content,เนื้อหา
+Clerk Content Options,Clerk ตัวเลือกเนื้อหา
+Select Product...,เลือกสินค้า...
+Select Category...,เลือกหมวดหมู่...
+Select a store to view dashboard,เลือกร้านค้าเพื่อดูแดชบอร์ด
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ไม่ได้รับการกำหนดค่าสำหรับร้านค้านี้ <a href='%s'>คลิกที่นี่เพื่อกำหนดค่า</a>
+%s was successfully added to your shopping cart.,%s ถูกเพิ่มลงในตะกร้าสินค้าของคุณเรียบร้อยแล้ว
+You have %s products in your shopping cart,คุณมีสินค้า %s ในตะกร้าสินค้าของคุณ
+Total,ทั้งหมด
+Continue Shopping,ช้อปปิ้งต่อ
+Checkout,เช็คเอาท์
+Clerk,Clerk
+Dashboard,แผงควบคุม
+Search results for '%s',ผลการค้นหาสำหรับ '%s'
+Filters,ตัวกรอง
+Category,หมวดหมู่
+Categories,หมวดหมู่
+Product,ผลิตภัณฑ์
+Products,สินค้า
+View Shopping Cart,ดูตะกร้าสินค้า
+Add to Cart,ใส่ในรถเข็น
+Continue Shopping,ช้อปปิ้งต่อ
+Continue to Checkout,ดำเนินการชำระเงินต่อ

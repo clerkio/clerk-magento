@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s таны сагсанд амжилттай нэмэгдлээ.
+View Shopping Cart,Сагс харах
+You have %s products in your shopping cart,Таны сагсанд %s бүтээгдэхүүн байна
+Total,Нийт
+Continue Shopping,Худалдан авалтыг үргэлжлүүлэх
+Checkout,Тооцоо хийх
+Search settings,Хайлтын тохиргоо
+Products,Бүтээгдэхүүн
+Categories,Ангилал
+Select a store to view dashboard,Хяналтын самбарыг үзэхийн тулд дэлгүүрээ сонгоно уу
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk энэ дэлгүүрт тохируулагдаагүй байна. <a href='%s'>Энд дарж тохируулна уу</a>
+Public and private key must be set in order to enable faceted search,Талбайн хайлтыг идэвхжүүлэхийн тулд нийтийн болон хувийн түлхүүрийг тохируулах шаардлагатай
+Public or private key invalid,Нийтийн эсвэл хувийн түлхүүр хүчингүй
+Search results for '%s',Хайлтын үр дүн '%s'
+Page,Хуудас
+Popup,Попап
+-- Please Select --,-- Сонгоно уу --
+Content,Агуулга
+Clerk Content Options,Clerk Агуулгын сонголтууд
+Select Product...,Бүтээгдэхүүн сонгох...
+Select Category...,Ангилал сонгох...
+Select a store to view dashboard,Хяналтын самбарыг үзэхийн тулд дэлгүүрээ сонгоно уу
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk энэ дэлгүүрт тохируулагдаагүй байна. <a href='%s'>Энд дарж тохируулна уу</a>
+%s was successfully added to your shopping cart.,%s таны сагсанд амжилттай нэмэгдлээ.
+You have %s products in your shopping cart,Таны сагсанд %s бүтээгдэхүүн байна
+Total,Нийт
+Continue Shopping,Худалдан авалтыг үргэлжлүүлэх
+Checkout,Тооцоо хийх
+Clerk,Clerk
+Dashboard,Хяналтын самбар
+Search results for '%s',Хайлтын үр дүн '%s'
+Filters,Шүүлтүүр
+Category,Ангилал
+Categories,Ангилал
+Product,Бүтээгдэхүүн
+Products,Бүтээгдэхүүн
+View Shopping Cart,Сагс харах
+Add to Cart,Картанд нэмэх
+Continue Shopping,Худалдан авалтыг үргэлжлүүлэх
+Continue to Checkout,Тооцоо хийх рүү үргэлжлүүлнэ үү

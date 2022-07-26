@@ -1,0 +1,52 @@
+<?php
+$baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
+$currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+$currentCurrencySymbol = Mage::app()->getLocale()->currency($currentCurrencyCode)->getSymbol();
+$rates = Mage::getModel('directory/currency')->getCurrencyRates($baseCurrencyCode, $currentCurrencyCode);
+$currentLocale = Mage::app()->getLocale()->getLocaleCode();
+$currentLocaleInStandardFormat = str_replace('_', '-', $currentLocale);
+$toLocaleStringOptions = array(
+    'minimumFractionDigits' => 2,
+    'maximumFractionDigits' => 2,
+    'style' => 'currency',
+    'currency' => $currentCurrencyCode
+);
+$public_key = Mage::getStoreConfig('clerk/general/publicapikey');
+$form_key = Mage::getSingleton('core/session')->getFormKey();
+$collect_emails = Mage::getStoreConfigFlag('clerk/general/collect_emails');
+?>
+<script type="text/javascript">
+    (function(w,d){
+        var e=d.createElement('script');e.type='text/javascript';e.async=true;
+        e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
+        var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
+        w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk||function(){w.__clerk_q.push(arguments)};
+    })(window,document);
+    Clerk('config', {
+        key: '<?php echo $public_key; ?>',
+        collect_email: <?php echo $collect_emails ? 'true' : 'false'; ?>,
+        <?php if (strpos(Mage::helper('clerk')->getSetting('clerk/general/lang'), 'auto_') === false) {
+            echo "language: '".Mage::helper('clerk')->getSetting('clerk/general/lang')."',";
+        }?>
+        formatters: {
+            form_key: function () {
+                return '<?php echo $form_key; ?>';
+            },
+            <?php if ($rates && isset($rates[$currentCurrencyCode])) : ?>
+            price_in_currency: function(price) {
+                price =  Math.round(price * 100) / 100;
+                var price_converted = Math.round((price * <?php echo (float)$rates[$currentCurrencyCode]; ?>) * 100) / 100;
+                return price_converted.toLocaleString(
+                        <?php echo json_encode($currentLocaleInStandardFormat) ?>,
+                        <?php echo json_encode($toLocaleStringOptions) ?>
+                    );
+            }
+            <?php endif; ?>
+        },
+        globals: {
+            uenc: '<?php echo base64_encode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>',
+            formkey: '<?php echo $form_key; ?>'
+        }
+    });
+</script>
+

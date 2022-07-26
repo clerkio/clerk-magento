@@ -1,0 +1,12 @@
+<?php
+/** @var Clerk_Clerk_Block_SalesTracking $this */
+?>
+<span
+    class="clerk"
+    data-api="log/sale"
+    data-key="<?php echo $this->getPublicKey(); ?>"
+    data-sale="<?php echo $this->getIncrementId(); ?>"
+    data-customer="<?php echo $this->getCustomerId(); ?>"
+    data-products='<?php echo $this->getProducts(); ?>'
+    data-email="<?php echo $this->getCustomerEmail(); ?>">
+</span>

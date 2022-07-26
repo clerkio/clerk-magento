@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s је успешно додат у корпу за куповину.
+View Shopping Cart,Прикажи корпу за куповину
+You have %s products in your shopping cart,Имате %s производа у корпи за куповину
+Total,Укупно
+Continue Shopping,Наставите куповину
+Checkout,Проверити
+Search settings,Подешавања претраге
+Products,Производи
+Categories,Категорије
+Select a store to view dashboard,Изаберите продавницу да бисте видели контролну таблу
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk није конфигурисано за ову продавницу. <а хреф='%s'>Кликните овде да бисте конфигурисали</а>
+Public and private key must be set in order to enable faceted search,Јавни и приватни кључ морају бити подешени да би се омогућило фасетирано претраживање
+Public or private key invalid,Јавни или приватни кључ је неважећи
+Search results for '%s',Резултати претраге за '%s'
+Page,Страна
+Popup,Попуп
+-- Please Select --,-- Молимо изаберите --
+Content,Садржај
+Clerk Content Options,--- Опције садржаја
+Select Product...,Изаберите производ...
+Select Category...,Изаберите категорију...
+Select a store to view dashboard,Изаберите продавницу да бисте видели контролну таблу
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk није конфигурисано за ову продавницу. <а хреф='%s'>Кликните овде да бисте конфигурисали</а>
+%s was successfully added to your shopping cart.,%s је успешно додат у корпу за куповину.
+You have %s products in your shopping cart,Имате %s производа у корпи за куповину
+Total,Укупно
+Continue Shopping,Наставите куповину
+Checkout,Проверити
+Clerk,Clerk
+Dashboard,Командна табла
+Search results for '%s',Резултати претраге за '%s'
+Filters,Филтери
+Category,Категорија
+Categories,Категорије
+Product,Производ
+Products,Производи
+View Shopping Cart,Прикажи корпу за куповину
+Add to Cart,Додај у колица
+Continue Shopping,Наставите куповину
+Continue to Checkout,Наставите до Цхецкоут

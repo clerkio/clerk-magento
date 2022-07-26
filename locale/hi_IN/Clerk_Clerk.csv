@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s को आपके शॉपिंग कार्ट में सफलतापूर्वक जोड़ दिया गया था।
+View Shopping Cart,शॉपिंग कार्ट देखें
+You have %s products in your shopping cart,क्या आपके शिपिंग कार्ट में उत्पाद हैं
+Total,कुल
+Continue Shopping,खरीदारी जारी रखें
+Checkout,चेक आउट
+Search settings,खोज सेंटिंग
+Products,उत्पादों
+Categories,श्रेणियाँ
+Select a store to view dashboard,डैशबोर्ड देखने के लिए स्टोर चुनें
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk इस स्टोर के लिए कॉन्फ़िगर नहीं किया गया है। <a href='%s'>कॉन्फ़िगर करने के लिए यहां क्लिक करें</a>
+Public and private key must be set in order to enable faceted search,मुखर खोज को सक्षम करने के लिए सार्वजनिक और निजी कुंजी सेट की जानी चाहिए
+Public or private key invalid,सार्वजनिक या निजी कुंजी अमान्य
+Search results for '%s',के लिए खोज परिणाम '%s'
+Page,पृष्ठ
+Popup,पॉप अप
+-- Please Select --,-- कृपया चयन कीजिए --
+Content,विषय
+Clerk Content Options,Clerk सामग्री विकल्प
+Select Product...,उत्पाद चुनें...
+Select Category...,श्रेणी चुनना...
+Select a store to view dashboard,डैशबोर्ड देखने के लिए स्टोर चुनें
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk इस स्टोर के लिए कॉन्फ़िगर नहीं किया गया है। <a href='%s'>कॉन्फ़िगर करने के लिए यहां क्लिक करें</a>
+%s was successfully added to your shopping cart.,%s को आपके शॉपिंग कार्ट में सफलतापूर्वक जोड़ दिया गया था।
+You have %s products in your shopping cart,क्या आपके शिपिंग कार्ट में उत्पाद हैं
+Total,कुल
+Continue Shopping,खरीदारी जारी रखें
+Checkout,चेक आउट
+Clerk,Clerk
+Dashboard,डैशबोर्ड
+Search results for '%s',के लिए खोज परिणाम '%s'
+Filters,फिल्टर
+Category,श्रेणी
+Categories,श्रेणियाँ
+Product,उत्पाद
+Products,उत्पादों
+View Shopping Cart,शॉपिंग कार्ट देखें
+Add to Cart,कार्ट में डालें
+Continue Shopping,खरीदारी जारी रखें
+Continue to Checkout,चेकआउट करना जारी रखें

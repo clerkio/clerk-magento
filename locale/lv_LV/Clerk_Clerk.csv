@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s ir veiksmīgi pievienots jūsu iepirkumu grozam.
+View Shopping Cart,Skatīt iepirkumu grozu
+You have %s products in your shopping cart,Jūsu iepirkumu grozā ir %s preces
+Total,Kopā
+Continue Shopping,Turpināt iepirkties
+Checkout,Izrakstīties
+Search settings,Meklēšanas iestatījumi
+Products,Produkti
+Categories,Kategorijas
+Select a store to view dashboard,"Atlasiet veikalu, lai skatītu informācijas paneli"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nav konfigurēts šim veikalam. <a href='%s'>Noklikšķiniet šeit, lai konfigurētu</a>"
+Public and private key must be set in order to enable faceted search,"Lai iespējotu fasetētu meklēšanu, ir jāiestata publiskā un privātā atslēga"
+Public or private key invalid,Publiskā vai privātā atslēga nav derīga
+Search results for '%s',Meklēšanas rezultāti '%s'
+Page,Lappuse
+Popup,Uznirstošais logs
+-- Please Select --,-- Lūdzu izvēlieties --
+Content,Saturs
+Clerk Content Options,Clerk Satura opcijas
+Select Product...,Izvēlieties produktu...
+Select Category...,Atlasiet kategoriju...
+Select a store to view dashboard,"Atlasiet veikalu, lai skatītu informācijas paneli"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nav konfigurēts šim veikalam. <a href='%s'>Noklikšķiniet šeit, lai konfigurētu</a>"
+%s was successfully added to your shopping cart.,%s ir veiksmīgi pievienots jūsu iepirkumu grozam.
+You have %s products in your shopping cart,Jūsu iepirkumu grozā ir %s preces
+Total,Kopā
+Continue Shopping,Turpināt iepirkties
+Checkout,Izrakstīties
+Clerk,Clerk
+Dashboard,Mērinstrumentu panelis
+Search results for '%s',Meklēšanas rezultāti '%s'
+Filters,Filtri
+Category,Kategorija
+Categories,Kategorijas
+Product,Produkts
+Products,Produkti
+View Shopping Cart,Skatīt iepirkumu grozu
+Add to Cart,Pievienot grozam
+Continue Shopping,Turpināt iepirkties
+Continue to Checkout,Turpiniet uz Checkout

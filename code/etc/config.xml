@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>4.6.2</version>
+            <version>4.7.0</version>
         </Clerk_Clerk>
     </modules>
     <global>
@@ -229,6 +229,7 @@
                 <active>0</active>
                 <type>popup</type>
                 <templates>power-step-others-also-bought</templates>
+                <exclude_duplicates_powerstep>0</exclude_duplicates_powerstep>
             </powerstep>
             <exit_intent>
                 <active>0</active>
@@ -237,14 +238,17 @@
             <category>
                 <enabled>0</enabled>
                 <content>category-page-popular</content>
+                <exclude_duplicates_category>0</exclude_duplicates_category>
             </category>
             <product>
                 <enabled>0</enabled>
                 <content>product-page-alternatives,product-page-others-also-bought</content>
+                <exclude_duplicates_product>0</exclude_duplicates_product>
             </product>
             <cart>
                 <enabled>0</enabled>
                 <content>cart-others-also-bought</content>
+                <exclude_duplicates_cart>0</exclude_duplicates_cart>
             </cart>
             <log>
                 <enabled>1</enabled>

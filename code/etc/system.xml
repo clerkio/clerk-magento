@@ -316,7 +316,6 @@
                                 <active>1</active>
                             </depends>
                             <frontend_type>text</frontend_type>
-                            <validate>required-entry</validate>
                             <sort_order>50</sort_order>
                             <show_in_store>1</show_in_store>
                         </design>
@@ -451,6 +450,13 @@
                             <show_in_store>1</show_in_store>
                             <comment>Use comma-separated list to use multiple contents</comment>
                         </templates>
+                        <exclude_duplicates_powerstep>
+                            <label>Filter Duplicates</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </exclude_duplicates_powerstep>
                     </fields>
                 </powerstep>
                 <exit_intent module="clerk">
@@ -502,6 +508,13 @@
                             <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
                         </content>
+                        <exclude_duplicates_category>
+                            <label>Filter Duplicates</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </exclude_duplicates_category>
                     </fields>
                 </category>
                 <product module="clerk">
@@ -528,6 +541,13 @@
                             <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
                         </content>
+                        <exclude_duplicates_product>
+                            <label>Filter Duplicates</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </exclude_duplicates_product>
                     </fields>
                 </product>
                 <cart module="clerk">
@@ -554,6 +574,13 @@
                             <sort_order>20</sort_order>
                             <show_in_store>1</show_in_store>
                         </content>
+                        <exclude_duplicates_cart>
+                            <label>Filter Duplicates</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </exclude_duplicates_cart>
                     </fields>
                 </cart>
                 <log module="clerk">

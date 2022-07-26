@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s wurde erfolgreich zu Ihrem Warenkorb hinzugefügt.
+View Shopping Cart,Einkaufswagen anzeigen
+You have %s products in your shopping cart,Sie haben %s Produkte in Ihrem Warenkorb
+Total,Gesamt
+Continue Shopping,Mit dem Einkaufen fortfahren
+Checkout,Kasse
+Search settings,Sucheinstellungen
+Products,Produkte
+Categories,Kategorien
+Select a store to view dashboard,"Wählen Sie einen Shop aus, um das Dashboard anzuzeigen"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ist für diesen Shop nicht konfiguriert. <a href='%s'>Klicken Sie hier zum Konfigurieren</a>
+Public and private key must be set in order to enable faceted search,"Öffentlicher und privater Schlüssel müssen festgelegt werden, um die facettierte Suche zu aktivieren"
+Public or private key invalid,Öffentlicher oder privater Schlüssel ungültig
+Search results for '%s',Suchergebnisse für '%s'
+Page,Buchseite
+Popup,Aufpoppen
+-- Please Select --,-- Bitte auswählen --
+Content,Inhalt
+Clerk Content Options,Clerk Inhaltsoptionen
+Select Product...,Ausgewähltes Produkt...
+Select Category...,Kategorie wählen...
+Select a store to view dashboard,"Wählen Sie einen Shop aus, um das Dashboard anzuzeigen"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ist für diesen Shop nicht konfiguriert. <a href='%s'>Klicken Sie hier zum Konfigurieren</a>
+%s was successfully added to your shopping cart.,%s wurde erfolgreich zu Ihrem Warenkorb hinzugefügt.
+You have %s products in your shopping cart,Sie haben %s Produkte in Ihrem Warenkorb
+Total,Gesamt
+Continue Shopping,Mit dem Einkaufen fortfahren
+Checkout,Kasse
+Clerk,Clerk
+Dashboard,Armaturenbrett
+Search results for '%s',Suchergebnisse für '%s'
+Filters,Filter
+Category,Kategorie
+Categories,Kategorien
+Product,Produkt
+Products,Produkte
+View Shopping Cart,Einkaufswagen anzeigen
+Add to Cart,in den Warenkorb legen
+Continue Shopping,Mit dem Einkaufen fortfahren
+Continue to Checkout,Weiter zur Kasse

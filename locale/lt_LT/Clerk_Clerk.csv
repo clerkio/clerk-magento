@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s sėkmingai įtrauktas į pirkinių krepšelį.
+View Shopping Cart,Peržiūrėti pirkinių krepšelį
+You have %s products in your shopping cart,Jūsų pirkinių krepšelyje yra %s produktų
+Total,Iš viso
+Continue Shopping,Tęsti apsipirkimą
+Checkout,Patikra
+Search settings,Paieškos nustatymai
+Products,Produktai
+Categories,Kategorijos
+Select a store to view dashboard,"Norėdami peržiūrėti prietaisų skydelį, pasirinkite parduotuvę"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nesukonfigūruotas šiai parduotuvei. <a href='%s'>Jei norite sukonfigūruoti, spustelėkite čia</a>"
+Public and private key must be set in order to enable faceted search,"Norint įjungti briaunuotą paiešką, reikia nustatyti viešąjį ir privatųjį raktą"
+Public or private key invalid,Viešasis arba privatus raktas netinkamas
+Search results for '%s',Pieškos rezultatai '%s'
+Page,Puslapis
+Popup,Iššokantis langas
+-- Please Select --,-- Prašome pasirinkti --
+Content,Turinys
+Clerk Content Options,Clerk Turinio parinktys
+Select Product...,Pasirinkite gaminį...
+Select Category...,Pasirinkite kategoriją...
+Select a store to view dashboard,"Norėdami peržiūrėti prietaisų skydelį, pasirinkite parduotuvę"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nesukonfigūruotas šiai parduotuvei. <a href='%s'>Jei norite sukonfigūruoti, spustelėkite čia</a>"
+%s was successfully added to your shopping cart.,%s sėkmingai įtrauktas į pirkinių krepšelį.
+You have %s products in your shopping cart,Jūsų pirkinių krepšelyje yra %s produktų
+Total,Iš viso
+Continue Shopping,Tęsti apsipirkimą
+Checkout,Patikra
+Clerk,Clerk
+Dashboard,Prietaisų skydelis
+Search results for '%s',Pieškos rezultatai '%s'
+Filters,Filtrai
+Category,Kategorija
+Categories,Kategorijos
+Product,Produktas
+Products,Produktai
+View Shopping Cart,Peržiūrėti pirkinių krepšelį
+Add to Cart,Į krepšelį
+Continue Shopping,Tęsti apsipirkimą
+Continue to Checkout,Eikite į „Checkout“.

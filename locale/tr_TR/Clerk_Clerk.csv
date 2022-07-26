@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s alışveriş sepetinize başarıyla eklendi.
+View Shopping Cart,Alışveriş Sepetini Görüntüle
+You have %s products in your shopping cart,Alışveriş sepetinizde %s ürün var
+Total,Toplam
+Continue Shopping,Alışverişe devam
+Checkout,Ödeme
+Search settings,Arama ayarları
+Products,Ürün:% s
+Categories,Kategoriler
+Select a store to view dashboard,Kontrol panelini görüntülemek için bir mağaza seçin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk bu mağaza için yapılandırılmamış. <a href='%s'>Yapılandırmak için burayı tıklayın</a>
+Public and private key must be set in order to enable faceted search,Yönlü aramayı etkinleştirmek için genel ve özel anahtar ayarlanmalıdır
+Public or private key invalid,Genel veya özel anahtar geçersiz
+Search results for '%s',İçin arama sonuçları '%s'
+Page,Sayfa
+Popup,Açılır
+-- Please Select --,-- Lütfen seçin --
+Content,İçerik
+Clerk Content Options,Clerk İçerik Seçenekleri
+Select Product...,Ürünü seç...
+Select Category...,Kategori seç...
+Select a store to view dashboard,Kontrol panelini görüntülemek için bir mağaza seçin
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk bu mağaza için yapılandırılmamış. <a href='%s'>Yapılandırmak için burayı tıklayın</a>
+%s was successfully added to your shopping cart.,%s alışveriş sepetinize başarıyla eklendi.
+You have %s products in your shopping cart,Alışveriş sepetinizde %s ürün var
+Total,Toplam
+Continue Shopping,Alışverişe devam
+Checkout,Ödeme
+Clerk,Clerk
+Dashboard,Gösterge Paneli
+Search results for '%s',İçin arama sonuçları '%s'
+Filters,filtreler
+Category,Kategori
+Categories,Kategoriler
+Product,Ürün
+Products,Ürün:% s
+View Shopping Cart,Alışveriş Sepetini Görüntüle
+Add to Cart,Sepete ekle
+Continue Shopping,Alışverişe devam
+Continue to Checkout,Ödemeye Devam Et

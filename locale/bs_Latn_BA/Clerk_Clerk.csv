@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s je uspješno dodan u vašu korpu za kupovinu.
+View Shopping Cart,Pogledaj korpu za kupovinu
+You have %s products in your shopping cart,Imate %s proizvode u korpi za kupovinu
+Total,Ukupno
+Continue Shopping,Nastavite sa kupovinom
+Checkout,Provjeri
+Search settings,Postavke pretrage
+Products,Proizvodi
+Categories,Kategorije
+Select a store to view dashboard,Odaberite trgovinu da vidite kontrolnu tablu
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk nije konfigurisano za ovu trgovinu. <a href='%s'>Kliknite ovdje za konfiguraciju</a>
+Public and private key must be set in order to enable faceted search,Javni i privatni ključ moraju biti postavljeni da bi se omogućilo fasetirano pretraživanje
+Public or private key invalid,Javni ili privatni ključ je nevažeći
+Search results for '%s',Rezultati pretrage za '%s'
+Page,Stranica
+Popup,Iskočiti
+-- Please Select --,-- Molimo odaberite --
+Content,Sadržaj
+Clerk Content Options,Clerk Opcije sadržaja
+Select Product...,Odaberite proizvod...
+Select Category...,Odaberite kategoriju...
+Select a store to view dashboard,Odaberite trgovinu da vidite kontrolnu tablu
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk nije konfigurisano za ovu trgovinu. <a href='%s'>Kliknite ovdje za konfiguraciju</a>
+%s was successfully added to your shopping cart.,%s je uspješno dodan u vašu korpu za kupovinu.
+You have %s products in your shopping cart,Imate %s proizvode u korpi za kupovinu
+Total,Ukupno
+Continue Shopping,Nastavite sa kupovinom
+Checkout,Provjeri
+Clerk,Clerk
+Dashboard,Dashboard
+Search results for '%s',Rezultati pretrage za '%s'
+Filters,Filteri
+Category,Kategorija
+Categories,Kategorije
+Product,Proizvod
+Products,Proizvodi
+View Shopping Cart,Pogledaj korpu za kupovinu
+Add to Cart,Dodaj u korpu
+Continue Shopping,Nastavite sa kupovinom
+Continue to Checkout,Nastavite na naplatu

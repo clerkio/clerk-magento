@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s با موفقیت به سبد خرید شما اضافه شد.
+View Shopping Cart,مشاهده سبد خرید
+You have %s products in your shopping cart,شما %s محصولات را در سبد خرید خود دارید
+Total,جمع
+Continue Shopping,به خرید ادامه دهید
+Checkout,وارسی
+Search settings,تنظیمات جستجو
+Products,محصولات
+Categories,دسته بندی ها
+Select a store to view dashboard,یک فروشگاه را برای مشاهده داشبورد انتخاب کنید
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk برای این فروشگاه پیکربندی نشده است. <a href='%s'>برای پیکربندی اینجا را کلیک کنید</a>
+Public and private key must be set in order to enable faceted search,کلید عمومی و خصوصی باید برای فعال کردن جستجوی وجهی تنظیم شوند
+Public or private key invalid,کلید عمومی یا خصوصی نامعتبر است
+Search results for '%s',نتایج جستجو برای '%s'
+Page,صفحه
+Popup,پنجره بازشو
+-- Please Select --,-- لطفا انتخاب کنید --
+Content,محتوا
+Clerk Content Options,Clerk گزینه های محتوا
+Select Product...,انتخاب محصول...
+Select Category...,دسته را انتخاب کنید...
+Select a store to view dashboard,یک فروشگاه را برای مشاهده داشبورد انتخاب کنید
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk برای این فروشگاه پیکربندی نشده است. <a href='%s'>برای پیکربندی اینجا را کلیک کنید</a>
+%s was successfully added to your shopping cart.,%s با موفقیت به سبد خرید شما اضافه شد.
+You have %s products in your shopping cart,شما %s محصولات را در سبد خرید خود دارید
+Total,جمع
+Continue Shopping,به خرید ادامه دهید
+Checkout,وارسی
+Clerk,Clerk
+Dashboard,داشبورد
+Search results for '%s',نتایج جستجو برای '%s'
+Filters,فیلترها
+Category,دسته بندی
+Categories,دسته بندی ها
+Product,تولید - محصول
+Products,محصولات
+View Shopping Cart,مشاهده سبد خرید
+Add to Cart,به سبد خرید اضافه کنید
+Continue Shopping,به خرید ادامه دهید
+Continue to Checkout,به پرداخت ادامه دهید

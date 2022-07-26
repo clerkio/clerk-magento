@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s был успешно добавлен в вашу корзину.
+View Shopping Cart,Посмотреть корзину
+You have %s products in your shopping cart,У вас %s товаров в корзине
+Total,Общий
+Continue Shopping,Продолжить покупки
+Checkout,Проверить
+Search settings,Настройки поиска
+Products,Товары
+Categories,Категории
+Select a store to view dashboard,Выберите магазин для просмотра панели инструментов
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk не настроен для этого магазина. <a href='%s'>Нажмите здесь, чтобы настроить</a>"
+Public and private key must be set in order to enable faceted search,"Открытый и закрытый ключ должны быть установлены, чтобы включить фасетный поиск"
+Public or private key invalid,Открытый или закрытый ключ недействителен
+Search results for '%s',Результаты поиска для '%s'
+Page,Страница
+Popup,Выскакивать
+-- Please Select --,-- Пожалуйста выберите --
+Content,Содержание
+Clerk Content Options,Clerk Параметры содержимого
+Select Product...,Выберите продукт...
+Select Category...,Выбрать категорию...
+Select a store to view dashboard,Выберите магазин для просмотра панели инструментов
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk не настроен для этого магазина. <a href='%s'>Нажмите здесь, чтобы настроить</a>"
+%s was successfully added to your shopping cart.,%s был успешно добавлен в вашу корзину.
+You have %s products in your shopping cart,У вас %s товаров в корзине
+Total,Общий
+Continue Shopping,Продолжить покупки
+Checkout,Проверить
+Clerk,Clerk
+Dashboard,Приборная доска
+Search results for '%s',Результаты поиска для '%s'
+Filters,Фильтры
+Category,Категория
+Categories,Категории
+Product,Товар
+Products,Товары
+View Shopping Cart,Посмотреть корзину
+Add to Cart,Добавить в корзину
+Continue Shopping,Продолжить покупки
+Continue to Checkout,Перейти к оформлению заказа

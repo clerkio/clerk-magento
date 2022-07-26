@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s 장바구니에 성공적으로 추가되었습니다.
+View Shopping Cart,장바구니 보기
+You have %s products in your shopping cart,장바구니에 %s 제품이 있습니다.
+Total,총
+Continue Shopping,쇼핑을 계속
+Checkout,점검
+Search settings,검색 설정
+Products,제품
+Categories,카테고리
+Select a store to view dashboard,대시보드를 볼 매장 선택
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk 이 저장소에 대해 구성되지 않았습니다. <a href='%s'>구성하려면 여기를 클릭하십시오.</a>
+Public and private key must be set in order to enable faceted search,패싯 검색을 사용하려면 공개 및 개인 키를 설정해야 합니다.
+Public or private key invalid,공개 또는 개인 키가 잘못되었습니다.
+Search results for '%s',에 대한 검색 결과 '%s'
+Page,페이지
+Popup,팝업
+-- Please Select --,-- 선택 해주세요 --
+Content,콘텐츠
+Clerk Content Options,Clerk 콘텐츠 옵션
+Select Product...,제품 선택...
+Select Category...,카테고리 선택...
+Select a store to view dashboard,대시보드를 볼 매장 선택
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk 이 저장소에 대해 구성되지 않았습니다. <a href='%s'>구성하려면 여기를 클릭하십시오.</a>
+%s was successfully added to your shopping cart.,%s 장바구니에 성공적으로 추가되었습니다.
+You have %s products in your shopping cart,장바구니에 %s 제품이 있습니다.
+Total,총
+Continue Shopping,쇼핑을 계속
+Checkout,점검
+Clerk,Clerk
+Dashboard,계기반
+Search results for '%s',에 대한 검색 결과 '%s'
+Filters,필터
+Category,범주
+Categories,카테고리
+Product,제품
+Products,제품
+View Shopping Cart,장바구니 보기
+Add to Cart,장바구니에 추가
+Continue Shopping,쇼핑을 계속
+Continue to Checkout,계속 결제

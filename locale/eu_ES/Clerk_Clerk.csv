@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s behar bezala gehitu da zure erosketa saskian.
+View Shopping Cart,Ikusi Erosketa Saskia
+You have %s products in your shopping cart,%s produktuak dituzu zure erosketa saskian
+Total,Guztira
+Continue Shopping,Jarraitu Erosketak
+Checkout,Errebisatu
+Search settings,Bilaketa-ezarpenak
+Products,Produktuak
+Categories,Kategoriak
+Select a store to view dashboard,Hautatu denda bat panela ikusteko
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ez dago denda honetarako konfiguratuta. <a href='%s'>Egin klik hemen konfiguratzeko</a>
+Public and private key must be set in order to enable faceted search,Gako publikoa eta pribatua ezarri behar dira bilaketa alderdiak gaitzeko
+Public or private key invalid,Gako publikoa edo pribatua baliogabea
+Search results for '%s','%s' bilaketaren emaitzak
+Page,Orria
+Popup,Agertu
+-- Please Select --,-- Aukeratu mesedez --
+Content,Edukia
+Clerk Content Options,Clerk Edukien aukerak
+Select Product...,Hautatu produktua...
+Select Category...,Hautatu Kategoria...
+Select a store to view dashboard,Hautatu denda bat panela ikusteko
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk ez dago denda honetarako konfiguratuta. <a href='%s'>Egin klik hemen konfiguratzeko</a>
+%s was successfully added to your shopping cart.,%s behar bezala gehitu da zure erosketa saskian.
+You have %s products in your shopping cart,%s produktuak dituzu zure erosketa saskian
+Total,Guztira
+Continue Shopping,Jarraitu Erosketak
+Checkout,Errebisatu
+Clerk,Clerk
+Dashboard,Aginte-panela
+Search results for '%s','%s' bilaketaren emaitzak
+Filters,Iragazkiak
+Category,Kategoria
+Categories,Kategoriak
+Product,Produktua
+Products,Produktuak
+View Shopping Cart,Ikusi Erosketa Saskia
+Add to Cart,Gehitu saskira
+Continue Shopping,Jarraitu Erosketak
+Continue to Checkout,Jarraitu Ordainketara

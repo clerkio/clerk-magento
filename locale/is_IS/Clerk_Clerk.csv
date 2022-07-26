@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s var bætt við innkaupakörfuna þína.
+View Shopping Cart,Skoða innkaupakörfu
+You have %s products in your shopping cart,Þú ert með %s vörur í innkaupakörfunni þinni
+Total,Samtals
+Continue Shopping,Halda áfram að versla
+Checkout,Athuga
+Search settings,Leitarstillingar
+Products,Vörur
+Categories,Flokkar
+Select a store to view dashboard,Veldu verslun til að skoða mælaborðið
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk er ekki stillt fyrir þessa verslun. <a href='%s'>Smelltu hér til að stilla</a>
+Public and private key must be set in order to enable faceted search,Opinn og einkalykill verður að vera stilltur til að virkja flöturleit
+Public or private key invalid,Opinn eða einkalykill ógildur
+Search results for '%s',Leitarniðurstöður fyrir '%s'
+Page,Bls
+Popup,Skjóta upp kollinum
+-- Please Select --,-- Vinsamlegast veldu --
+Content,Efni
+Clerk Content Options,Clerk Efnisvalkostir
+Select Product...,Veldu vöru...
+Select Category...,Veldu flokk...
+Select a store to view dashboard,Veldu verslun til að skoða mælaborðið
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk er ekki stillt fyrir þessa verslun. <a href='%s'>Smelltu hér til að stilla</a>
+%s was successfully added to your shopping cart.,%s var bætt við innkaupakörfuna þína.
+You have %s products in your shopping cart,Þú ert með %s vörur í innkaupakörfunni þinni
+Total,Samtals
+Continue Shopping,Halda áfram að versla
+Checkout,Athuga
+Clerk,Clerk
+Dashboard,Mælaborð
+Search results for '%s',Leitarniðurstöður fyrir '%s'
+Filters,Síur
+Category,Flokkur
+Categories,Flokkar
+Product,Vara
+Products,Vörur
+View Shopping Cart,Skoða innkaupakörfu
+Add to Cart,Bæta í körfu
+Continue Shopping,Halda áfram að versla
+Continue to Checkout,Haltu áfram í Checkout

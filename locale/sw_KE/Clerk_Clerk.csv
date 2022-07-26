@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s iliongezwa kwa rukwama yako ya ununuzi.
+View Shopping Cart,Tazama Rukwama ya Ununuzi
+You have %s products in your shopping cart,Una %s bidhaa kwenye toroli yako ya ununuzi
+Total,Jumla
+Continue Shopping,Endelea Kununua
+Checkout,Angalia
+Search settings,Mipangilio ya utafutaji
+Products,Bidhaa
+Categories,Kategoria
+Select a store to view dashboard,Chagua duka ili kutazama dashibodi
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk haijasanidiwa kwa duka hili. <a href='%s'>Bofya hapa ili kusanidi</a>
+Public and private key must be set in order to enable faceted search,Ufunguo wa umma na wa faragha lazima uwekewe ili kuwezesha utafutaji wa vipengele
+Public or private key invalid,Ufunguo wa umma au wa kibinafsi ni batili
+Search results for '%s',Tafuta matokeo ya '%s'
+Page,Ukurasa
+Popup,Ibukizi
+-- Please Select --,-- Tafadhali chagua --
+Content,Maudhui
+Clerk Content Options,Clerk Chaguzi za Maudhui
+Select Product...,Chagua Bidhaa...
+Select Category...,Chagua Aina...
+Select a store to view dashboard,Chagua duka ili kutazama dashibodi
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk haijasanidiwa kwa duka hili. <a href='%s'>Bofya hapa ili kusanidi</a>
+%s was successfully added to your shopping cart.,%s iliongezwa kwa rukwama yako ya ununuzi.
+You have %s products in your shopping cart,Una %s bidhaa kwenye toroli yako ya ununuzi
+Total,Jumla
+Continue Shopping,Endelea Kununua
+Checkout,Angalia
+Clerk,Clerk
+Dashboard,Dashibodi
+Search results for '%s',Tafuta matokeo ya '%s'
+Filters,Vichujio
+Category,Kategoria
+Categories,Kategoria
+Product,Bidhaa
+Products,Bidhaa
+View Shopping Cart,Tazama Rukwama ya Ununuzi
+Add to Cart,Ongeza kwenye Cart
+Continue Shopping,Endelea Kununua
+Continue to Checkout,Endelea kwenye Malipo

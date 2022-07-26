@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s bol úspešne pridaný do vášho nákupného košíka.
+View Shopping Cart,Zobraziť nákupný košík
+You have %s products in your shopping cart,V nákupnom košíku máte %s produktov
+Total,Celkom
+Continue Shopping,Pokračovať v nákupe
+Checkout,Odhlásiť sa
+Search settings,Nastavenia vyhľadávania
+Products,Produkty
+Categories,Kategórie
+Select a store to view dashboard,"Ak chcete zobraziť informačný panel, vyberte obchod"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nie je nakonfigurovaný pre tento obchod. <a href='%s'>Ak chcete konfigurovať, kliknite sem</a>"
+Public and private key must be set in order to enable faceted search,Na povolenie fazetového vyhľadávania je potrebné nastaviť verejný a súkromný kľúč
+Public or private key invalid,Verejný alebo súkromný kľúč je neplatný
+Search results for '%s',Výsledky vyhľadávania pre '%s'
+Page,Stránka
+Popup,Objaviť sa
+-- Please Select --,-- Prosím vyber --
+Content,Obsah
+Clerk Content Options,Clerk Možnosti obsahu
+Select Product...,Vybrať produkt...
+Select Category...,Vybrať kategóriu...
+Select a store to view dashboard,"Ak chcete zobraziť informačný panel, vyberte obchod"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk nie je nakonfigurovaný pre tento obchod. <a href='%s'>Ak chcete konfigurovať, kliknite sem</a>"
+%s was successfully added to your shopping cart.,%s bol úspešne pridaný do vášho nákupného košíka.
+You have %s products in your shopping cart,V nákupnom košíku máte %s produktov
+Total,Celkom
+Continue Shopping,Pokračovať v nákupe
+Checkout,Odhlásiť sa
+Clerk,Clerk
+Dashboard,Dashboard
+Search results for '%s',Výsledky vyhľadávania pre '%s'
+Filters,Filtre
+Category,Kategória
+Categories,Kategórie
+Product,Produkt
+Products,Produkty
+View Shopping Cart,Zobraziť nákupný košík
+Add to Cart,Pridať do košíka
+Continue Shopping,Pokračovať v nákupe
+Continue to Checkout,Pokračujte do pokladne

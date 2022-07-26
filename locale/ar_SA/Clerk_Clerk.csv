@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,* _ * تم إضافته بنجاح إلى عربة التسوق الخاصة بك.
+View Shopping Cart,عرض عربة التسوق
+You have %s products in your shopping cart,لديك سلع في كارت التسوق
+Total,المجموع
+Continue Shopping,مواصلة التسوق
+Checkout,الدفع
+Search settings,إعدادات البحث
+Products,منتجات
+Categories,فئات
+Select a store to view dashboard,حدد متجرا لعرض لوحة القيادة
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk لم يتم تكوينه لهذا المتجر. <a href='%s'> انقر هنا للتهيئة </a>
+Public and private key must be set in order to enable faceted search,يجب تعيين المفتاح العام والخاص لتمكين البحث ذو الأوجه
+Public or private key invalid,المفتاح العام أو الخاص غير صالح
+Search results for '%s',نتائج البحث عن '%s'
+Page,صفحة
+Popup,يظهر فجأة
+-- Please Select --,- الرجاء التحديد -
+Content,محتوى
+Clerk Content Options,Clerk خيارات المحتوى
+Select Product...,حدد المنتج...
+Select Category...,اختر الفئة...
+Select a store to view dashboard,حدد متجرا لعرض لوحة القيادة
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk لم يتم تكوينه لهذا المتجر. <a href='%s'> انقر هنا للتهيئة </a>
+%s was successfully added to your shopping cart.,* _ * تم إضافته بنجاح إلى عربة التسوق الخاصة بك.
+You have %s products in your shopping cart,لديك سلع في كارت التسوق
+Total,المجموع
+Continue Shopping,مواصلة التسوق
+Checkout,الدفع
+Clerk,Clerk
+Dashboard,لوحة القيادة
+Search results for '%s',نتائج البحث عن '%s'
+Filters,المرشحات
+Category,فئة
+Categories,فئات
+Product,منتج
+Products,منتجات
+View Shopping Cart,عرض عربة التسوق
+Add to Cart,أضف إلى السلة
+Continue Shopping,مواصلة التسوق
+Continue to Checkout,الاستمرار في الخروج

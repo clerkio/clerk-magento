@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s було успішно додано до вашого кошика для покупок.
+View Shopping Cart,Переглянути кошик для покупок
+You have %s products in your shopping cart,У вашому кошику для покупок є %s продуктів
+Total,Всього
+Continue Shopping,Продовжити покупки
+Checkout,Перевірити
+Search settings,Налаштування пошуку
+Products,Продукти
+Categories,Категорії
+Select a store to view dashboard,"Виберіть магазин, щоб переглянути інформаційну панель"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk не налаштовано для цього магазину. <a href='%s'>Натисніть тут, щоб налаштувати</a>"
+Public and private key must be set in order to enable faceted search,"Щоб увімкнути фасетний пошук, необхідно встановити відкритий та закритий ключ"
+Public or private key invalid,Недійсний відкритий або закритий ключ
+Search results for '%s',Результати пошуку для '%s'
+Page,Сторінка
+Popup,Вискочити
+-- Please Select --,-- Виберіть будь ласка --
+Content,Зміст
+Clerk Content Options,-Clerk Параметри вмісту
+Select Product...,Виберіть продукт...
+Select Category...,Виберіть категорію...
+Select a store to view dashboard,"Виберіть магазин, щоб переглянути інформаційну панель"
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,"Clerk не налаштовано для цього магазину. <a href='%s'>Натисніть тут, щоб налаштувати</a>"
+%s was successfully added to your shopping cart.,%s було успішно додано до вашого кошика для покупок.
+You have %s products in your shopping cart,У вашому кошику для покупок є %s продуктів
+Total,Всього
+Continue Shopping,Продовжити покупки
+Checkout,Перевірити
+Clerk,Clerk
+Dashboard,Панель приладів
+Search results for '%s',Результати пошуку для '%s'
+Filters,Фільтри
+Category,Категорія
+Categories,Категорії
+Product,Продукт
+Products,Продукти
+View Shopping Cart,Переглянути кошик для покупок
+Add to Cart,Додати в кошик
+Continue Shopping,Продовжити покупки
+Continue to Checkout,Перейдіть до оплати

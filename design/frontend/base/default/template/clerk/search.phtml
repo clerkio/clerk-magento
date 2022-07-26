@@ -1,0 +1,39 @@
+<?php
+/** @var Clerk_Clerk_Block_Search $this */
+?>
+<div class="page-title">
+  <h1><?php echo $this->getTitleText(); ?></h1>
+</div>
+<span <?php echo $this->getSpanAttributes(); ?>></span>
+
+<div class="category-products">
+    <ul id="<?php echo $this->getTargetId(); ?>" class="products-grid"></ul>
+</div>
+
+<div id="clerk-search-no-results" style="display: none;">
+    <p class="note-msg"><?php echo $this->getNoResultsText(); ?></p>
+</div>
+
+<script type="text/javascript">
+    var total_loaded = 0;
+    function _clerk_after_load_event(data) {
+        total_loaded += data.response.result.length;
+
+        // Use Clerk jQuery if needed (this is when site version is <= 1.4.3)
+        $_ = useClerkjQuery() ? Clerk.ui.$ : jQuery
+
+        // If limit is undefined set limit to result length
+        var e = $_('#clerk-search');
+        if (typeof e.data('limit') === "undefined"){
+        e.data('limit', data.response.result.length)
+        }
+
+        // If total is 0, show no results
+        if (total_loaded == 0) {
+            $_('#clerk-search-no-results').show();
+        } else {
+            $_('#clerk-search-no-results').hide();
+        }
+
+    }
+</script>

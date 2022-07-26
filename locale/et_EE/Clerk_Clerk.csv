@@ -1,0 +1,40 @@
+%s was successfully added to your shopping cart.,%s lisati edukalt teie ostukorvi.
+View Shopping Cart,Vaata ostukorvi
+You have %s products in your shopping cart,Teie ostukorvis on %s tooteid
+Total,Kokku
+Continue Shopping,Jätka ostlemist
+Checkout,Kassasse
+Search settings,Otsinguseaded
+Products,Tooted
+Categories,Kategooriad
+Select a store to view dashboard,Juhtpaneeli vaatamiseks valige pood
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk pole selle poe jaoks seadistatud. <a href='%s'>Klõpsake seadistamiseks siin</a>
+Public and private key must be set in order to enable faceted search,Lihtotsingu lubamiseks tuleb määrata avalik ja privaatvõti
+Public or private key invalid,Avalik või privaatvõti on kehtetu
+Search results for '%s',Otsi tulemusi '%s'
+Page,Lehekülg
+Popup,Hüpikaken
+-- Please Select --,-- Palun vali --
+Content,Sisu
+Clerk Content Options,Clerk Sisu valikud
+Select Product...,Valige toode...
+Select Category...,Vali kategooria...
+Select a store to view dashboard,Juhtpaneeli vaatamiseks valige pood
+Clerk is not configured for this store. <a href='%s'>Click here to configure</a>,Clerk pole selle poe jaoks seadistatud. <a href='%s'>Klõpsake seadistamiseks siin</a>
+%s was successfully added to your shopping cart.,%s lisati edukalt teie ostukorvi.
+You have %s products in your shopping cart,Teie ostukorvis on %s tooteid
+Total,Kokku
+Continue Shopping,Jätka ostlemist
+Checkout,Kassasse
+Clerk,Clerk
+Dashboard,Armatuurlaud
+Search results for '%s',Otsi tulemusi '%s'
+Filters,Filtrid
+Category,Kategooria
+Categories,Kategooriad
+Product,Toode
+Products,Tooted
+View Shopping Cart,Vaata ostukorvi
+Add to Cart,Lisa ostukorvi
+Continue Shopping,Jätka ostlemist
+Continue to Checkout,Jätkake kassasse
