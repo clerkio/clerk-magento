@@ -264,7 +264,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
     public function sanitizeAttributes($value)
     {
-        if($value == "" || $value == NULL){
+        if($value === "" || $value === NULL){
             return false;
         } else {
             return true;
