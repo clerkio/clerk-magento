@@ -192,18 +192,22 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'POWERSTEP_ENABLED' => Mage::helper('clerk')->getSetting('clerk/powerstep/active'),
                 'POWERSTEP_TYPE' => Mage::helper('clerk')->getSetting('clerk/powerstep/type'),
                 'POWERSTEP_TEMPLATES' => Mage::helper('clerk')->getSetting('clerk/powerstep/templates'),
+                'POWERSTEP_FILTER_DUPLICATES' => Mage::helper('clerk')->getSetting('clerk/powerstep/exclude_duplicates_powerstep'),
 
                 'EXIT_INTENT_ENABLED' => Mage::helper('clerk')->getSetting('clerk/exit_intent/active'),
                 'EXIT_INTENT_TEMPLATE' => Mage::helper('clerk')->getSetting('clerk/exit_intent/template'),
 
                 'CATEGORY_ENABLED' => Mage::helper('clerk')->getSetting('clerk/category/enabled'),
                 'CATEGORY_CONTENT' => Mage::helper('clerk')->getSetting('clerk/category/content'),
+                'CATEGORY_FILTER_DUPLICATES' => Mage::helper('clerk')->getSetting('clerk/category/exclude_duplicates_category'),
 
                 'PRODUCT_ENABLED' => Mage::helper('clerk')->getSetting('clerk/product/enabled'),
                 'PRODUCT_CONTENT' => Mage::helper('clerk')->getSetting('clerk/product/content'),
+                'PRODUCT_FILTER_DUPLICATES' => Mage::helper('clerk')->getSetting('clerk/product/exclude_duplicates_product'),
 
                 'CART_ENABLED' => Mage::helper('clerk')->getSetting('clerk/cart/enabled'),
                 'CART_CONTENT' => Mage::helper('clerk')->getSetting('clerk/cart/content'),
+                'CART_FILTER_DUPLICATES' => Mage::helper('clerk')->getSetting('clerk/cart/exclude_duplicates_cart'),
 
                 'LOG_ENABLED' => Mage::helper('clerk')->getSetting('clerk/log/enabled'),
                 'LOG_LEVEL' => Mage::helper('clerk')->getSetting('clerk/log/level'),
@@ -458,7 +462,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                    
+                    if ($key == "POWERSTEP_FILTER_DUPLICATES"){
+                        $path = 'clerk/powerstep/exclude_duplicates_powerstep';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+
                     // exit intent
                     if ($key == "EXIT_INTENT_ENABLED"){
                         $path = 'clerk/exit_intent/active';
@@ -482,7 +491,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-    
+                    if ($key == "CATEGORY_FILTER_DUPLICATES"){
+                        $path = 'clerk/category/exclude_duplicates_category';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+
                     // product
                     if ($key == "PRODUCT_ENABLED"){
                         $path = 'clerk/product/enabled';
@@ -494,7 +508,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-    
+                    if ($key == "PRODUCT_FILTER_DUPLICATES"){
+                        $path = 'clerk/product/exclude_duplicates_product';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+
                     // cart 
                     if ($key == "CART_ENABLED"){
                         $path = 'clerk/cart/enabled';
@@ -506,7 +525,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-
+                    if ($key == "CART_FILTER_DUPLICATES"){
+                        $path = 'clerk/cart/exclude_duplicates_product';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
                     // log
                     if ($key == "LOG_LEVEL"){
                         $path = 'clerk/log/level';
