@@ -163,6 +163,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'PRODUCT_SYNCHRONIZATION_IMAGE_WIDTH' => Mage::helper('clerk')->getSetting('clerk/general/image_w'),
                 'PRODUCT_SYNCHRONIZATION_IMAGE_HEIGHT' => Mage::helper('clerk')->getSetting('clerk/general/image_h'),
                 'PRODUCT_SYNCHRONIZATION_IMPORT_URL' => Mage::helper('clerk')->getSetting('clerk/general/url'),
+                'SUBSCRIBER_SYNCHRONIZATION_ENABLED' => Mage::helper('clerk')->getSetting('clerk/general/collect_subscribers'),
+
                 
                 'SEARCH_ENABLED' => Mage::helper('clerk')->getSetting('clerk/search/active'),
                 'SEARCH_INCLUDE_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/search/show_categories'),
@@ -267,6 +269,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
+                    if ($key == "SUBSCRIBER_SYNCHRONIZATION_ENABLED"){
+                        $path = 'clerk/general/collect_subscribers';
+                        Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
+                        $count++;
+                    }
+
                     if ($key == "PAGES_ADDITIONAL_FIELDS"){
                         $path = 'clerk/general/pages_additional_fields';
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
