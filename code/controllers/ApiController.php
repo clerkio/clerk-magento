@@ -627,7 +627,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     }
                 }
             }
-            
+
             $_customers = mage::getModel('customer/customer')->getCollection()
             ->addAttributeToSelect('firstname')
             ->addAttributeToSelect('lastname')
@@ -637,6 +637,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             ->addAttributeToFilter('store_id', $storeid)
             ->setPageSize($limit)
             ->setCurPage($page);
+
+            $collect_emails = Mage::getStoreConfigFlag('clerk/general/collect_emails');
 
             if($collect_subscribers){
                 foreach ($_customers as $_customer) {
@@ -659,11 +661,17 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             } else {
                 foreach ($_customers as $_customer) {
                     $customer = $_customer->getData();
-                    
+
+                    if($collect_emails){
+                        $customer_email = $customer['email'];
+                    } else {
+                        $customer_email = '';
+                    }
+
                     $customers[] = [
                         'id' => $customer['entity_id'],
                         'name' => $customer['firstname'] . ' ' . $customer['lastname'],
-                        'email' => $customer['email'],
+                        'email' => $customer_email,
                     ];
                 }
             }
