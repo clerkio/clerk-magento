@@ -96,7 +96,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
     }
 
-     /**
+    /**
      * @params $orderId, $productId, $quantity
      * @throws Exception
      */
@@ -120,7 +120,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
                     $data['private_key'] = $this->getPrivateKey($storeId);
 
                     $this->post('log/returned', $data);
- 
+
                 }
             }
 

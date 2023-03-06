@@ -30,24 +30,30 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $this->setStore();
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
-            $input = $this->getRequest()->getHeader('CLERK-PRIVATE-KEY');
-            $privatekey = $this->getRequest()->getParam('private_key');
-            $key = $this->getRequest()->getParam('key');
+            $key = false;
+            $privatekey = false;
 
-            $secret = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
-            $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
-            
+            $request_body = $this->getRequest()->getRawBody();
 
-            if($secret && $privatekey == trim($secret) && $key && $key == trim($publicapikey) ){
-                return parent::preDispatch();
+            if($request_body){
+                $request_body = json_decode($request_body) ? (array) json_decode($request_body) : array();
+                $privatekey = array_key_exists('private_key', $request_body) ? $request_body['private_key'] : false;
+                $key = array_key_exists('key', $request_body) ? $request_body['key'] : false;
             }
 
-            if (!$secret || $input !== trim($secret)) {
+            $privateapikey = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
+            $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+
+            if($this->timingSafeEquals($privateapikey, $privatekey) && $this->timingSafeEquals($publicapikey, $key)){
+
+                return parent::preDispatch();
+
+            } else {
 
                 $response = [
                     'error' => [
                         'code' => 403,
-                        'message' => 'Invalid public or private key supplied',
+                        'message' => 'Invalid public or private key supplied'
                     ]
                 ];
 
@@ -57,9 +63,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                     ->setBody(json_encode($response))
                     ->sendResponse();
                 exit;
-            }
 
-            return parent::preDispatch();
+            }
 
         } catch (Exception $e) {
 
@@ -102,6 +107,37 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($response))->sendResponse();
 
         exit;
+    }
+
+    /**
+     * Timing safe key comparison
+     *
+     * @return boolean
+     */
+    private function timingSafeEquals($safe, $user)
+    {
+        if(!is_string($safe) || !is_string($user)){
+            return false;
+        }
+
+        $safeLen = strlen($safe);
+        $userLen = strlen($user);
+
+        if ($userLen < 8 || $safeLen < 8){
+            return false;
+        }
+
+        if ($userLen != $safeLen) {
+            return false;
+        }
+
+        $result = 0;
+
+        for ($i = 0; $i < $userLen; $i++) {
+            $result |= (ord($safe[$i]) ^ ord($user[$i]));
+        }
+
+        return $result === 0;
     }
 
     /**
@@ -165,7 +201,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'PRODUCT_SYNCHRONIZATION_IMPORT_URL' => Mage::helper('clerk')->getSetting('clerk/general/url'),
                 'SUBSCRIBER_SYNCHRONIZATION_ENABLED' => Mage::helper('clerk')->getSetting('clerk/general/collect_subscribers'),
 
-                
+
                 'SEARCH_ENABLED' => Mage::helper('clerk')->getSetting('clerk/search/active'),
                 'SEARCH_INCLUDE_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/search/show_categories'),
                 'SEARCH_CATEGORIES' => Mage::helper('clerk')->getSetting('clerk/search/categories'),
@@ -174,7 +210,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'SEARCH_TEMPLATE' => Mage::helper('clerk')->getSetting('clerk/search/template'),
                 'SEARCH_NO_RESULTS_TEXT' => Mage::helper('clerk')->getSetting('clerk/search/no_results_text'),
                 'SEARCH_LOAD_MORE_TEXT' => Mage::helper('clerk')->getSetting('clerk/search/load_more_text'),
-                
+
                 'FACETED_SEARCH_ENABLED' =>  Mage::helper('clerk')->getSetting('clerk/faceted_search/active'),
                 'FACETED_SEARCH_DESIGN' => Mage::helper('clerk')->getSetting('clerk/faceted_search/design'),
                 'FACETED_SEARCH_ATTRIBUTES' => Mage::helper('clerk')->getSetting('clerk/faceted_search/attributes'),
@@ -453,7 +489,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                   
+
                     // powerstep
                     if ($key == "POWERSTEP_ENABLED"){
                         $path = 'clerk/powerstep/active';
@@ -487,7 +523,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                   
+
                     //category
                     if ($key == "CATEGORY_ENABLED"){
                         $path = 'clerk/category/enabled';
@@ -522,7 +558,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         $count++;
                     }
 
-                    // cart 
+                    // cart
                     if ($key == "CART_ENABLED"){
                         $path = 'clerk/cart/enabled';
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
