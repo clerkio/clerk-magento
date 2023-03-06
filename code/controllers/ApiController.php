@@ -226,8 +226,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
-     /**
-     * Set Clerk module setting 
+    /**
+     * Set Clerk module setting
      */
     public function setconfigAction()
     {
@@ -337,7 +337,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         $count++;
                     }
                     */
-                    
+
                     //search
                     if ($key == "SEARCH_ENABLED"){
                         $path = 'clerk/search/active';
@@ -379,7 +379,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                    
+
                     //facets
                     if ($key == "FACETED_SEARCH_ENABLED"){
                         $path = 'clerk/faceted_search/active';
@@ -406,7 +406,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                    
+
                     // livesearch
                     if ($key == "LIVESEARCH_ENABLED"){
                         $path = 'clerk/livesearch/active';
@@ -554,8 +554,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                         Mage::getConfig()->saveConfig($path, $value, 'stores', $storeid);
                         $count++;
                     }
-                    
-                
+
                 } // foreach
 
                 if($count !=0){
@@ -563,7 +562,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 }
             } // if post
 
-            
             $this->getResponse()
                 ->setHttpResponseCode(200)
                 ->setHeader('Content-Type', 'application/json', true);
@@ -573,7 +571,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'ok' => 'ok',
                 '$arr_settings' => $arr_settings,
                 'storeId' => $storeid
-                
+
             ];
 
             $this->getResponse()->setBody(json_encode($response));
@@ -586,7 +584,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
 
-   /**
+    /**
      * Return Customers
      */
     public function customerAction()

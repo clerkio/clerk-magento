@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Clerk_Clerk>
-            <version>4.8.0</version>
+            <version>4.8.2</version>
         </Clerk_Clerk>
     </modules>
     <global>
@@ -170,7 +170,7 @@
                     </clerk_clean_catalog_images_cache_after>
                 </observers>
             </clean_catalog_images_cache_after>
-              <sales_order_creditmemo_save_after>
+            <sales_order_creditmemo_save_after>
                 <observers>
                     <clerk_sales_order_creditmemo_save_after>
                         <class>clerk/observer</class>
