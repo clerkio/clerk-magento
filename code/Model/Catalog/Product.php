@@ -105,12 +105,28 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                             $add_list_prices = true;
                         }
 
+                        $tier_sub_pricing = array();
                         $confchildIds = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getId());
                         $confchildatributtes=[];
                         foreach($confchildIds[0] as $cid){
                             $colectinformation = "";
                             $simple_product = Mage::getModel('catalog/product')->load($cid);
                             $entity_attrCode = "entity_". $attrCode; // needed for id and such
+
+                            $variant_tier_prices = $simple_product->getTierPrice();
+
+                            if(count($variant_tier_prices) > 0){
+                                $_qtys = array();
+                                $_prcs = array();
+                                foreach($variant_tier_prices as $tier_price){
+                                    $_qtys[] = (integer)$tier_price['price_qty'];
+                                    $_prcs[] = (float)$tier_price['price'];
+                                }
+                                $tier_sub_pricing[$cid] = array(
+                                    'quantities' => $_qtys,
+                                    'prices' => $_prcs
+                                );
+                            }
 
                             if($add_skus && $this->sanitizeAttributes($simple_product->getSku())){
                                 array_push($variant_skus, $simple_product->getSku());
@@ -172,6 +188,12 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         }
                         if($add_list_prices){
                             $data['variant_list_prices'] = $variant_list_prices;
+                        }
+                        if(!empty($tier_sub_pricing)){
+                            foreach($tier_sub_pricing as $k => $v){
+                                $data['vtp_price_'.strval($k)] = $v['prices'];
+                                $data['vtp_qty_'.strval($k)] = $v['quantities'];
+                            }
                         }
                         break;
 
