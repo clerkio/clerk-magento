@@ -56,14 +56,15 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
         $data->setIsSaleable($this->isSaleable());
         $data->setStock(round($this->getStockItem()->getQty()));
 
-        $AttributeToSelect = str_replace(' ','',Mage::getStoreConfig('clerk/general/additional_fields'));
+        $attribute_to_select = str_replace(' ','',Mage::getStoreConfig('clerk/general/additional_fields'));
 
-        if (!empty($AttributeToSelect)) {
+        $first_pass = true;
 
-            $AttributeToSelect = explode(',', $AttributeToSelect);
+        if (!empty($attribute_to_select)) {
 
-            foreach ($AttributeToSelect as $key => $value) {
-                $product_id = (int)$this->getId();
+            $attribute_to_select = explode(',', $attribute_to_select);
+
+            foreach ($attribute_to_select as $key => $value) {
                 $variant_ids = [];
                 $variant_stocks = [];
                 $variant_attribute_labels = [];
@@ -71,11 +72,6 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                 $variant_skus = [];
                 $variant_prices = [];
                 $variant_list_prices = [];
-                $add_ids = false;
-                $add_skus = false;
-                $add_stocks = false;
-                $add_prices = false;
-                $add_list_prices = false;
 
                 switch($this->getTypeId()){
                     case "configurable":
@@ -89,61 +85,45 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                                 }
                             }
                         }
-                        if(!isset($data['variant_skus'])){
-                            $add_skus = true;
-                        }
-                        if(!isset($data['variant_ids'])){
-                            $add_ids = true;
-                        }
-                        if(!isset($data['variant_stocks'])){
-                            $add_stocks = true;
-                        }
-                        if(!isset($data['variant_prices'])){
-                            $add_prices = true;
-                        }
-                        if(!isset($data['variant_list_prices'])){
-                            $add_list_prices = true;
-                        }
 
                         $tier_sub_pricing = array();
                         $confchildIds = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getId());
-                        $confchildatributtes=[];
                         foreach($confchildIds[0] as $cid){
                             $colectinformation = "";
                             $simple_product = Mage::getModel('catalog/product')->load($cid);
                             $entity_attrCode = "entity_". $attrCode; // needed for id and such
 
-                            $variant_tier_prices = $simple_product->getTierPrice();
+                            if($first_pass){
 
-                            if(count($variant_tier_prices) > 0){
-                                $_qtys = array();
-                                $_prcs = array();
-                                foreach($variant_tier_prices as $tier_price){
-                                    $_qtys[] = (integer)$tier_price['price_qty'];
-                                    $_prcs[] = (float)$tier_price['price'];
+                                $variant_tier_prices = $simple_product->getTierPrice();
+
+                                if(count($variant_tier_prices) > 0){
+                                    $_qtys = array();
+                                    $_prcs = array();
+                                    foreach($variant_tier_prices as $tier_price){
+                                        $_qtys[] = (integer)$tier_price['price_qty'];
+                                        $_prcs[] = (float)$tier_price['price'];
+                                    }
+                                    $tier_sub_pricing[$cid] = array(
+                                        'quantities' => $_qtys,
+                                        'prices' => $_prcs
+                                    );
                                 }
-                                $tier_sub_pricing[$cid] = array(
-                                    'quantities' => $_qtys,
-                                    'prices' => $_prcs
-                                );
-                            }
 
-                            if($add_skus && $this->sanitizeAttributes($simple_product->getSku())){
-                                array_push($variant_skus, $simple_product->getSku());
-                            }
-                            if($add_stocks && $this->sanitizeAttributes((integer)$simple_product->getStockItem()->getQty())){
-                                array_push($variant_stocks, (integer)$simple_product->getStockItem()->getQty());
-                            }
-                            if($add_ids && $this->sanitizeAttributes($simple_product->getId())){
-                                array_push($variant_ids, $simple_product->getId());
-                            }
-                            if($add_prices){
+                                if($this->sanitizeAttributes($simple_product->getSku())){
+                                    array_push($variant_skus, $simple_product->getSku());
+                                }
+                                if($this->sanitizeAttributes((integer)$simple_product->getStockItem()->getQty())){
+                                    array_push($variant_stocks, (integer)$simple_product->getStockItem()->getQty());
+                                }
+                                if($this->sanitizeAttributes($simple_product->getId())){
+                                    array_push($variant_ids, $simple_product->getId());
+                                }
                                 $price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($simple_product,$simple_product->getFinalPrice());
                                 if($this->sanitizeAttributes($price)){
                                     array_push($variant_prices, (float)$price);
                                 }
-                            }
-                            if($add_list_prices){
+
                                 $list_price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($simple_product,$simple_product->getRegularPrice());
                                 if($this->sanitizeAttributes($list_price)){
                                     array_push($variant_list_prices, (float)$list_price);
@@ -174,25 +154,27 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                             $data["variant_" . $attrCode . "s_labels"] = array_values(array_unique($variant_attribute_labels));
                         }
 
-                        if($add_skus){
-                            $data['variant_skus'] = $variant_skus;
-                        }
-                        if($add_ids){
-                            $data['variant_ids'] = $variant_ids;
-                        }
-                        if($add_stocks){
-                            $data['variant_stocks'] = $variant_stocks;
-                        }
-                        if($add_prices){
-                            $data['variant_prices'] = $variant_prices;
-                        }
-                        if($add_list_prices){
-                            $data['variant_list_prices'] = $variant_list_prices;
-                        }
-                        if(!empty($tier_sub_pricing)){
-                            foreach($tier_sub_pricing as $k => $v){
-                                $data['vtp_price_'.strval($k)] = $v['prices'];
-                                $data['vtp_qty_'.strval($k)] = $v['quantities'];
+                        if($first_pass){
+                            if(!empty($variant_skus)){
+                                $data['variant_skus'] = $variant_skus;
+                            }
+                            if(!empty($variant_skus)){
+                                $data['variant_ids'] = $variant_ids;
+                            }
+                            if(!empty($variant_skus)){
+                                $data['variant_stocks'] = $variant_stocks;
+                            }
+                            if(!empty($variant_skus)){
+                                $data['variant_prices'] = $variant_prices;
+                            }
+                            if(!empty($variant_skus)){
+                                $data['variant_list_prices'] = $variant_list_prices;
+                            }
+                            if(!empty($tier_sub_pricing)){
+                                foreach($tier_sub_pricing as $k => $v){
+                                    $data['vtp_price_'.strval($k)] = $v['prices'];
+                                    $data['vtp_qty_'.strval($k)] = $v['quantities'];
+                                }
                             }
                         }
                         break;
@@ -251,6 +233,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         break;
                 }
             }
+        $first_pass = false;
         }
 
         Mage::dispatchEvent('clerk_get_export_data', array('product' => $this, 'data' => $data));
