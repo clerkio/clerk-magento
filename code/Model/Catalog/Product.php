@@ -98,8 +98,10 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                                 $variant_tier_prices = $simple_product->getTierPrice();
 
                                 if(count($variant_tier_prices) > 0){
-                                    $_qtys = array();
-                                    $_prcs = array();
+                                    $variant_price = (float)$simple_product->getPrice();
+                                    $variant_min_qty = (integer)$simple_product->getStockItem()->getMinSaleQty();
+                                    $_qtys = array($variant_min_qty);
+                                    $_prcs = array($variant_price);
                                     foreach($variant_tier_prices as $tier_price){
                                         $_qtys[] = (integer)$tier_price['price_qty'];
                                         $_prcs[] = (float)$tier_price['price'];
