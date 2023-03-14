@@ -173,6 +173,7 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                                 $data['variant_list_prices'] = $variant_list_prices;
                             }
                             if(!empty($tier_sub_pricing)){
+                                $data['has_tierprice'] = true;
                                 foreach($tier_sub_pricing as $k => $v){
                                     $data['vtp_price_'.strval($k)] = $v['prices'];
                                     $data['vtp_qty_'.strval($k)] = $v['quantities'];
