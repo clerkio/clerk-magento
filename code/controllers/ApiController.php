@@ -775,7 +775,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         try {
 
             // Handler for product endpoint. E.g.
-            // http://store.com/clerk/api/product/id/24
+            // https://store.com/clerk/api/product/id/24
             $id = $this->getRequest()->getParam('id', false);
 
             if ($id) {
@@ -867,11 +867,11 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
                 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
-                    $Url = "http://" . $_SERVER['HTTP_HOST'];
+                    $Url = "https://" . $_SERVER['HTTP_HOST'];
 
                 else {
 
-                    $Url = "http://" . $_SERVER['HTTP_HOST'];
+                    $Url = "https://" . $_SERVER['HTTP_HOST'];
 
                 }
 

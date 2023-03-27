@@ -44,7 +44,7 @@
                                 <active>1</active>
                             </depends>
                             <comment>
-                                <![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
+                                <![CDATA[Can be found under General at <a href="https://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
                             <sort_order>20</sort_order>
@@ -56,7 +56,7 @@
                                 <active>1</active>
                             </depends>
                             <comment>
-                                <![CDATA[Can be found under General at <a href="http://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
+                                <![CDATA[Can be found under General at <a href="https://my.clerk.io" target="blank">my.clerk.io</a>]]></comment>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
                             <sort_order>30</sort_order>

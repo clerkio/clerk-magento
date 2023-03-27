@@ -69,11 +69,11 @@ class ClerkLogger
         header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         else {
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         }
 
@@ -101,7 +101,7 @@ class ClerkLogger
 
                 if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
 
-                    $Endpoint = 'http://api.clerk.io/v2/log/debug';
+                    $Endpoint = 'https://api.clerk.io/v2/log/debug';
 
                     $data_string = json_encode([
                         'key' =>$this->Key,
@@ -151,11 +151,11 @@ class ClerkLogger
         header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         else {
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         }
 
@@ -178,7 +178,7 @@ class ClerkLogger
 
             if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
 
-                $Endpoint = 'http://api.clerk.io/v2/log/debug';
+                $Endpoint = 'https://api.clerk.io/v2/log/debug';
 
                 $data_string = json_encode([
                     'debug' => '1',
@@ -226,11 +226,11 @@ class ClerkLogger
         header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         else {
 
-            $Metadata['uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $Metadata['uri'] = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
         }
 
@@ -259,7 +259,7 @@ class ClerkLogger
 
                 if (Mage::helper('clerk')->getSetting('clerk/log/to') == 'collect') {
 
-                    $Endpoint = 'http://api.clerk.io/v2/log/debug';
+                    $Endpoint = 'https://api.clerk.io/v2/log/debug';
 
                     $data_string = json_encode([
                         'debug' => '1',

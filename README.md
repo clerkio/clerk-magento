@@ -1,7 +1,7 @@
 clerk.io for Magento
 ====================
 
-[clerk.io](http://www.clerk.io) is a international tech-startup based in
+[clerk.io](https://www.clerk.io) is a international tech-startup based in
 Copenhagen targeting the eCommerce industry. We help webshops sell more
 through an intelligent search function and targeted product recommendations.
 
@@ -22,7 +22,7 @@ Installation
 To setup this module, you'll need a Clerk account.
 
   1. Contact Clerk and get your credentials for
-     [my.clerk.io](http://my.clerk.io).
+     [my.clerk.io](https://my.clerk.io).
   2. Download the latest packaged Community Extension from the releases
      folder.
   3. Install it on your Magento instance through magento connect, you have to
