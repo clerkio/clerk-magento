@@ -120,10 +120,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     private function verifyJwtToken ( $token_string = null ) {
 
-        if( ! $token_string ) {
-            return false;
-        }
-        if( ! is_string( $token_string ) ) {
+        if( ! $token_string || ! is_string( $token_string ) ) {
             return false;
         }
 
