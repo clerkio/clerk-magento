@@ -353,6 +353,72 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
+
+    public function rotatePrivateKey()
+    {
+        try {
+        $this->logger = new ClerkLogger();
+        $this->setStore();
+        $store_id = $this->getRequest()->getParam('store');
+        $request_body = $this->getRequest()->getRawBody();
+
+        if($request_body){
+            $request_array = json_decode($post, true);
+            if(
+                isset($request_array['private_key']) &&
+                is_string($request_array['private_key']) &&
+                isset($request_array['new_private_key']) &&
+                is_string($request_array['new_private_key'])
+            ){
+                Mage::getConfig()->saveConfig('clerk/general/privateapikey', $request_array['new_private_key'], 'stores', $store_id);
+
+                $this->getResponse()
+                ->setHttpResponseCode(200)
+                ->setHeader('Content-Type', 'application/json', true);
+        
+                $response = [
+                    'status' => 'ok',
+                    'message' => 'Changed API key for current store',
+                    'store_id' => $store_id
+                ];
+        
+                $this->getResponse()->setBody(json_encode($response));
+            } else {
+                $this->getResponse()
+                ->setHttpResponseCode(200)
+                ->setHeader('Content-Type', 'application/json', true);
+        
+                $response = [
+                    'status' => 'ok',
+                    'message' => 'Could not change API keys due to invalid request body contents.',
+                    'store_id' => $store_id
+                ];
+        
+                $this->getResponse()->setBody(json_encode($response));
+            }
+        }
+
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR setting config "rotatePrivateKey"', $e->getMessage());
+
+            $this->getResponse()
+            ->setHttpResponseCode(200)
+            ->setHeader('Content-Type', 'application/json', true);
+    
+            $response = [
+                'status' => 'error',
+                'message' => 'Could not change API key for current store due to error.',
+                'data' => $e
+            ];
+    
+            $this->getResponse()->setBody(json_encode($response));
+
+        }
+
+    }
+
     /**
      * Set Clerk module setting
      */
