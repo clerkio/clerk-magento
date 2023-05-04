@@ -64,6 +64,33 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
         }
     }
 
+    public function postTokenVerification($data = null)
+    {
+        if( ! $data ) {
+            return false;
+        }
+
+        $this->logger = new ClerkLogger();
+        try {
+            $url = $this->baseUrl . 'token/verify';
+            $client = new Zend_Http_Client();
+            $json = json_encode($data);
+            try {
+                $response = $client->setUri($url)
+                    ->setRawData($json, 'application/json')
+                    ->request('POST');
+            } catch (\Zend_Http_Client_Exception $e) {
+                Mage::throwException($e->getMessage());
+            }
+
+            return $response->getBody();
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "postTokenVerification"', ['error' => $e->getMessage()]);
+
+        }
+    }
+
     /**
      * @param $productId
      * @throws Exception
@@ -96,7 +123,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
 
     }
 
-    /**
+     /**
      * @params $orderId, $productId, $quantity
      * @throws Exception
      */
@@ -120,7 +147,7 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
                     $data['private_key'] = $this->getPrivateKey($storeId);
 
                     $this->post('log/returned', $data);
-
+ 
                 }
             }
 

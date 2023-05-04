@@ -35,8 +35,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             $request_body = $this->getRequest()->getRawBody();
 
-            $authorized_request = $this->verifyJwtToken($this->getHeaderToken());
-
             if($request_body){
                 $request_body = json_decode($request_body) ? (array) json_decode($request_body) : array();
                 $privatekey = array_key_exists('private_key', $request_body) ? $request_body['private_key'] : false;
@@ -46,7 +44,13 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $privateapikey = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
             $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
 
-            if($this->timingSafeEquals($privateapikey, $privatekey) && $this->timingSafeEquals($publicapikey, $key)){
+            $valid_keys = (bool) ($this->timingSafeEquals($privateapikey, $privatekey) && $this->timingSafeEquals($publicapikey, $key));
+
+            $header_token = $this->getHeaderToken();
+
+            $verified_token = $this->verifyJwtToken($header_token);
+
+            if($valid_keys && $verified_token){
 
                 return parent::preDispatch();
 
@@ -55,11 +59,13 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 $response = [
                     'error' => [
                         'code' => 403,
-                        'message' => 'Invalid public or private key supplied'
+                        'message' => 'Invalid Authorization',
+                        'keys_valid' => $valid_keys,
+                        'token_valid' => $verified_token
                     ]
                 ];
 
-                $this->logger->warn('Invalid public or private key supplied', ['response' => $response]);
+                $this->logger->warn('Invalid Authorization', ['response' => $response]);
                 $this->getResponse()
                     ->setHeader('HTTP/1.1', '403', true)
                     ->setBody(json_encode($response))
@@ -124,18 +130,21 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             return false;
         }
 
-        $endpoint = 'https://api.clerk.io/v2/token/verify';
         $body_params = array(
             'token' => $token_string
         );
 
-        $response = $this->curlMethodPost($endpoint, $body_params);
+        $response = Mage::getModel('clerk/communicator')->postTokenVerification($body_params);
+
+        if( ! $response ) {
+            return false;
+        }
 
         try {
 
-            $rsp_array = json_decode($response);
+            $rsp_array = json_decode($response, true);
 
-            if($rsp_array['status'] == 'ok') {
+            if( isset($rsp_array['status']) && $rsp_array['status'] == 'ok') {
                 return true;
             }
 
@@ -172,22 +181,22 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
      */
     private function curlMethodPost($url, $params = array())
     {
-        try {
+        $client = new Varien_Http_Client($url);
+        $client->setMethod(Varien_Http_Client::POST);
 
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_POST, true);
-            if ( ! empty( $params ) ) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+        if( ! empty($params) ) {
+            foreach($params as $key => $value){
+                $client->setParameterPost($key, $value);
             }
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $response = curl_exec($curl);
-            curl_close($curl);
-            return $response;
+        }
 
+        try{
+            $response = $client->request();
+            if ($response->isSuccessful()) {
+                return $response->getBody();
+            }
         } catch (\Exception $e) {
-
             $this->logger->error('POST Request Error', ['error' => $e->getMessage()]);
-
         }
     }
 
