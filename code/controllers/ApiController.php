@@ -354,7 +354,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
 
-    public function rotatePrivateKey()
+    public function rotatekeyAction()
     {
         try {
         $this->logger = new ClerkLogger();
@@ -389,7 +389,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 ->setHeader('Content-Type', 'application/json', true);
         
                 $response = [
-                    'status' => 'ok',
+                    'status' => 'error',
                     'message' => 'Could not change API keys due to invalid request body contents.',
                     'store_id' => $store_id
                 ];
@@ -401,7 +401,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
         } catch (Exception $e) {
 
-            $this->logger->error('ERROR setting config "rotatePrivateKey"', $e->getMessage());
+            $this->logger->error('ERROR setting config "rotatekeyAction"', $e->getMessage());
 
             $this->getResponse()
             ->setHttpResponseCode(200)
