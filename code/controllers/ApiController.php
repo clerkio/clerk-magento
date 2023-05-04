@@ -35,6 +35,8 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             $request_body = $this->getRequest()->getRawBody();
 
+            $authorized_request = $this->verifyJwtToken($this->getHeaderToken());
+
             if($request_body){
                 $request_body = json_decode($request_body) ? (array) json_decode($request_body) : array();
                 $privatekey = array_key_exists('private_key', $request_body) ? $request_body['private_key'] : false;
@@ -107,6 +109,89 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody(json_encode($response))->sendResponse();
 
         exit;
+    }
+
+
+
+    /**
+     * Function calls JWT verification endpoint
+     * @param string
+     * @return bool
+     */
+    private function verifyJwtToken ( $token_string = null ) {
+
+        if( ! $token_string ) {
+            return false;
+        }
+        if( ! is_string( $token_string ) ) {
+            return false;
+        }
+
+        $endpoint = 'https://api.clerk.io/v2/token/verify';
+        $body_params = array(
+            'token' => $token_string
+        );
+
+        $response = $this->curlMethodPost($endpoint, $body_params);
+
+        try {
+
+            $rsp_array = json_decode($response);
+
+            if($rsp_array['status'] == 'ok') {
+                return true;
+            }
+
+            return false;
+
+        } catch (\Exception $e) {
+
+            $this->logger->error('verifyJwtToken Error', ['error' => $e->getMessage()]);
+
+        }
+
+    }
+
+    private function getHeaderToken()
+    {
+        try {
+            $token = '';
+            $auth_header = $this->getRequest()->getHeader('Authorization');
+            if( null !== $auth_header && is_string($auth_header)) {
+                $token = count(explode(' ', $auth_header)) > 1 ? explode(' ', $auth_header)[1] : $token;
+            }
+
+            return $token;
+
+        } catch (\Exception $e) {
+
+            $this->logger->error('getHeaderToken Error', ['error' => $e->getMessage()]);
+
+        }
+    }
+
+    /**
+     * Use CURL to send POST request with BODY.
+     */
+    private function curlMethodPost($url, $params = array())
+    {
+        try {
+
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_POST, true);
+            if ( ! empty( $params ) ) {
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+            }
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return $response;
+
+        } catch (\Exception $e) {
+
+            $this->logger->error('POST Request Error', ['error' => $e->getMessage()]);
+
+        }
     }
 
     /**
