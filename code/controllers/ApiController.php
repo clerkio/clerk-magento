@@ -177,30 +177,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Use CURL to send POST request with BODY.
-     */
-    private function curlMethodPost($url, $params = array())
-    {
-        $client = new Varien_Http_Client($url);
-        $client->setMethod(Varien_Http_Client::POST);
-
-        if( ! empty($params) ) {
-            foreach($params as $key => $value){
-                $client->setParameterPost($key, $value);
-            }
-        }
-
-        try{
-            $response = $client->request();
-            if ($response->isSuccessful()) {
-                return $response->getBody();
-            }
-        } catch (\Exception $e) {
-            $this->logger->error('POST Request Error', ['error' => $e->getMessage()]);
-        }
-    }
-
-    /**
      * Timing safe key comparison
      *
      * @return boolean
