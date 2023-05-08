@@ -37,14 +37,12 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             if($request_body){
                 $request_body = json_decode($request_body) ? (array) json_decode($request_body) : array();
-                $privatekey = array_key_exists('private_key', $request_body) ? $request_body['private_key'] : false;
                 $key = array_key_exists('key', $request_body) ? $request_body['key'] : false;
             }
 
-            $privateapikey = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
             $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
 
-            $valid_keys = (bool) ($this->timingSafeEquals($privateapikey, $privatekey) && $this->timingSafeEquals($publicapikey, $key));
+            $valid_keys = (bool) $this->timingSafeEquals($publicapikey, $key);
 
             $header_token = $this->getHeaderToken();
 
