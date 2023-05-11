@@ -31,7 +31,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
             $key = false;
-            $privatekey = false;
 
             $request_body = $this->getRequest()->getRawBody();
 
@@ -337,7 +336,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $request_body = $this->getRequest()->getRawBody();
 
         if($request_body){
-            $request_array = json_decode($post, true);
+            $request_array = json_decode($request_body, true);
             if(
                 isset($request_array['private_key']) &&
                 is_string($request_array['private_key']) &&
