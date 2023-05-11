@@ -338,8 +338,6 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         if($request_body){
             $request_array = json_decode($request_body, true);
             if(
-                isset($request_array['private_key']) &&
-                is_string($request_array['private_key']) &&
                 isset($request_array['new_private_key']) &&
                 is_string($request_array['new_private_key'])
             ){
