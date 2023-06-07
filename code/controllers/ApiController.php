@@ -159,7 +159,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
     {
         try {
             $token = '';
-            $auth_header = $this->getRequest()->getHeader('Authorization');
+            $auth_header = $this->getRequest()->getHeader('Authorized');
             if( null !== $auth_header && is_string($auth_header)) {
                 $token = count(explode(' ', $auth_header)) > 1 ? explode(' ', $auth_header)[1] : $token;
             }
