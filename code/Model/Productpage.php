@@ -36,7 +36,6 @@ class Clerk_Clerk_Model_Productpage
         $this->collection = Mage::getResourceModel('catalog/product_collection')
             ->setOrder('entity_id', Varien_Db_Select::SQL_ASC)
             ->setVisibility($visibility)
-            #->addFieldToFilter('visibility', $visibility) //only include visible products
             ->setPageSize($limit)
             ->setCurPage($page)
             ->addStoreFilter();
