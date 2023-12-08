@@ -901,6 +901,10 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
                             try {
 
+                                if(str_replace(' ', '', $Additional_Field == '')){
+                                  continue;
+                                }
+
                                 if ($page->{str_replace(' ', '', $Additional_Field)} != null) {
 
                                     $item[str_replace(' ', '', $Additional_Field)] = $page->{str_replace(' ', '', $Additional_Field)};
