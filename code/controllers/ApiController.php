@@ -40,12 +40,13 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             }
 
             $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+            $valid_key = $this->timingSafeEquals($publicapikey, $key);
 
             $header = $this->getRequest()->getHeader('X-Authentication-Clerk');
             $authorized = Mage::helper('clerk')->validateJwt($header);
 
 
-            if ($this->timingSafeEquals($publicapikey, $key) && $authorized) {
+            if ($valid_key && $authorized) {
 
                 return parent::preDispatch();
 
@@ -1084,7 +1085,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
             $this->setStore();
             $storeid = $this->getRequest()->getParam('store');
-            $post = $this->getRequest()->getRawBody();
+            $request_body = $this->getRequest()->getRawBody();
 
             $this->getResponse()
                 ->setHttpResponseCode(200)
@@ -1096,9 +1097,9 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
                 'storeId' => $storeid
             ];
 
-            if ($post) {
+            if ($request_body) {
 
-                $arr_settings = json_decode($post, true);
+                $arr_settings = json_decode($request_body, true);
 
                 if (isset($arr_settings['clerk_private_key'])) {
                     $path = 'clerk/general/privateapikey';
