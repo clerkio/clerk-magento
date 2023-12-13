@@ -23,7 +23,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         $i = Mage::getVersionInfo();
         $version = trim("{$i['major']}.{$i['minor']}.{$i['revision']}" . ($i['patch'] != '' ? ".{$i['patch']}" : "")
             . "-{$i['stability']}{$i['number']}", '.-');
-        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' .(string)Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
+        header('User-Agent: ClerkExtensionBot Magento 1/v' . $version . ' clerk/v' . (string) Mage::getConfig()->getNode()->modules->Clerk_Clerk->version . ' PHP/v' . phpversion());
         $this->logger = new ClerkLogger();
 
         try {
@@ -31,20 +31,21 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $this->getResponse()->setHeader('Content-type', 'application/json');
 
             $key = false;
-            $privatekey = false;
 
             $request_body = $this->getRequest()->getRawBody();
 
-            if($request_body){
+            if ($request_body) {
                 $request_body = json_decode($request_body) ? (array) json_decode($request_body) : array();
-                $privatekey = array_key_exists('private_key', $request_body) ? $request_body['private_key'] : false;
                 $key = array_key_exists('key', $request_body) ? $request_body['key'] : false;
             }
 
-            $privateapikey = Mage::helper('clerk')->getSetting('clerk/general/privateapikey');
             $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
 
-            if($this->timingSafeEquals($privateapikey, $privatekey) && $this->timingSafeEquals($publicapikey, $key)){
+            $header = $this->getRequest()->getHeader('X-Authentication-Clerk');
+            $authorized = Mage::helper('clerk')->validateJwt($header);
+
+
+            if ($this->timingSafeEquals($publicapikey, $key) && $authorized) {
 
                 return parent::preDispatch();
 
@@ -1076,4 +1077,49 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
         }
     }
 
+    public function rotatekeyAction()
+    {
+        $this->logger = new ClerkLogger();
+        try {
+
+            $this->setStore();
+            $storeid = $this->getRequest()->getParam('store');
+            $post = $this->getRequest()->getRawBody();
+
+            $this->getResponse()
+                ->setHttpResponseCode(200)
+                ->setHeader('Content-Type', 'application/json', true);
+
+            $response = [
+                'status' => 'error',
+                'message' => 'Failed to update Private API key',
+                'storeId' => $storeid
+            ];
+
+            if ($post) {
+
+                $arr_settings = json_decode($post, true);
+
+                if (isset($arr_settings['clerk_private_key'])) {
+                    $path = 'clerk/general/privateapikey';
+                    Mage::getConfig()->saveConfig($path, $arr_settings['clerk_private_key'], 'stores', $storeid);
+                    Mage::getConfig()->cleanCache();
+
+
+                    $response = [
+                        'status' => 'ok',
+                        'message' => 'Updated Private API key',
+                        'storeId' => $storeid
+                    ];
+                }
+            }
+
+            $this->getResponse()->setBody(json_encode($response));
+
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR setting config "setconfigAction"', $e->getMessage());
+
+        }
+    }
 }

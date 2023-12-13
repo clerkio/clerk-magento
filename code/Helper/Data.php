@@ -128,6 +128,45 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return trim((string) Mage::getStoreConfig($path, $store));
     }
 
+	public function validateJwt($header)
+	{
+
+		$parts = explode(' ', $header);
+
+		if (count($parts) !== 2) {
+			return false;
+		}
+		if ($parts[0] !== 'Bearer') {
+			return false;
+		}
+
+		$jwt = $parts[1];
+		$publicKey = $this->getSetting('clerk/general/public_key');
+
+		$query_params_array = [
+			'token' => $jwt,
+			'key' => $publicKey
+		];
+		try {
+			$response = Mage::getSingleton('clerk/communicator')->get("token/verify", $query_params_array);
+
+			// response is a Zend_Http_Response object,
+			// getBody() returns the body of the response as a string
+			$responseBody = $response->getBody();
+
+			// decode the json response body
+			$responseBody = json_decode($responseBody, true);
+
+			// if the response body contains a status property and it is set to 'ok'
+			if (isset($responseBody["status"]) && $responseBody["status"] === 'ok') {
+				return true;
+			}
+
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
     /**
      * Get parameters for endpoint
      *
