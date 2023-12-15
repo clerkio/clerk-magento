@@ -129,6 +129,45 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Validates the JWT
+     *
+     */
+    public function validateJwt($header)
+	{
+
+		$parts = explode(' ', $header);
+
+		if (count($parts) !== 2) {
+			return false;
+		}
+		if ($parts[0] !== 'Bearer') {
+			return false;
+		}
+
+		$jwt = $parts[1];
+        $publicKey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
+
+		$query_params_array = [
+			'token' => $jwt,
+			'key' => $publicKey
+		];
+		try {
+			$response = Mage::getSingleton('clerk/communicator')->getTokenVerify($query_params_array);
+
+			$responseBody = $response->getBody();
+
+			$responseBody = json_decode($responseBody, true);
+
+			if (isset($responseBody["status"]) && $responseBody["status"] === 'ok') {
+				return true;
+			}
+
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+    /**
      * Get parameters for endpoint
      *
      * @param $endpoint
