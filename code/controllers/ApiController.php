@@ -42,31 +42,28 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $publicapikey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
             $valid_key = $this->timingSafeEquals($publicapikey, $key);
 
-            $header = $this->getRequest()->getHeader('X-Authentication-Clerk');
-            $authorized = Mage::helper('clerk')->validateJwt($header);
-
-
-            if ($valid_key && $authorized) {
-
-                return parent::preDispatch();
-
-            } else {
-
-                $response = [
-                    'error' => [
-                        'code' => 403,
-                        'message' => 'Invalid public or private key supplied'
-                    ]
-                ];
-
-                $this->logger->warn('Invalid public or private key supplied', ['response' => $response]);
-                $this->getResponse()
-                    ->setHeader('HTTP/1.1', '403', true)
-                    ->setBody(json_encode($response))
-                    ->sendResponse();
-                exit;
-
+            if ($valid_key) {
+                $header = $this->getRequest()->getHeader('X-Authentication-Clerk');
+                $authorized = Mage::helper('clerk')->validateJwt($header);
+                if ($authorized) {
+                    return parent::preDispatch();
+                }
             }
+
+            $response = [
+                'error' => [
+                    'code' => 403,
+                    'message' => 'Invalid public or private key supplied'
+                ]
+            ];
+
+            $this->logger->warn('Invalid public or private key supplied', ['response' => $response]);
+            $this->getResponse()
+                ->setHeader('HTTP/1.1', '403', true)
+                ->setBody(json_encode($response))
+                ->sendResponse();
+            exit;
+
 
         } catch (Exception $e) {
 

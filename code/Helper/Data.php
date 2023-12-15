@@ -141,7 +141,7 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 
 		$jwt = $parts[1];
-		$publicKey = $this->getSetting('clerk/general/public_key');
+        $publicKey = Mage::helper('clerk')->getSetting('clerk/general/publicapikey');
 
 		$query_params_array = [
 			'token' => $jwt,
@@ -150,14 +150,10 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
 		try {
 			$response = Mage::getSingleton('clerk/communicator')->getTokenVerify($query_params_array);
 
-			// response is a Zend_Http_Response object,
-			// getBody() returns the body of the response as a string
 			$responseBody = $response->getBody();
 
-			// decode the json response body
 			$responseBody = json_decode($responseBody, true);
 
-			// if the response body contains a status property and it is set to 'ok'
 			if (isset($responseBody["status"]) && $responseBody["status"] === 'ok') {
 				return true;
 			}
