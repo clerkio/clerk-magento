@@ -43,7 +43,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
             $valid_key = $this->timingSafeEquals($publicapikey, $key);
 
             if ($valid_key) {
-                $header = $this->getRequest()->getHeader('X-Authentication-Clerk');
+                $header = $this->getRequest()->getHeader('X-Clerk-Authorization');
                 $authorized = Mage::helper('clerk')->validateJwt($header);
                 if ($authorized) {
                     return parent::preDispatch();
