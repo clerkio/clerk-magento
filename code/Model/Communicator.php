@@ -153,6 +153,28 @@ class Clerk_Clerk_Model_Communicator extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Verify a JWT on token/verify
+     * @param $endpoint
+     * @param array $data
+     * @return Zend_Http_Response
+     * @throws Exception
+     */
+    public function getTokenVerify($data = [])
+    {
+        $this->logger = new ClerkLogger();
+        try{
+
+            $response = $this->get("token/verify", $data);
+
+            return $response;
+        } catch (Exception $e) {
+
+            $this->logger->error('ERROR Communicator "getTokenVerify"', ['error' => $e->getMessage()]);
+
+        }
+    }
+
+    /**
      * @param $endpoint
      * @param array $data
      * @return Zend_Http_Response
