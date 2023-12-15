@@ -128,7 +128,11 @@ class Clerk_Clerk_Helper_Data extends Mage_Core_Helper_Abstract
         return trim((string) Mage::getStoreConfig($path, $store));
     }
 
-	public function validateJwt($header)
+    /**
+     * Validates the JWT
+     *
+     */
+    public function validateJwt($header)
 	{
 
 		$parts = explode(' ', $header);
