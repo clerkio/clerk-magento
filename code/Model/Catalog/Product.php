@@ -150,10 +150,10 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                         }
 
                         if(!empty(array_values(array_unique($variant_attribute_options)))){
-                            $data["variant_" . $attrCode . "s"] = array_values(array_unique($variant_attribute_options));
+                            $data["variant_" . $attrCode . "s"] = $this->flattenArray(array_values(array_unique($variant_attribute_options)));
                         }
                         if(!empty(array_values(array_unique($variant_attribute_labels)))){
-                            $data["variant_" . $attrCode . "s_labels"] = array_values(array_unique($variant_attribute_labels));
+                            $data["variant_" . $attrCode . "s_labels"] = $this->flattenArray(array_values(array_unique($variant_attribute_labels)));
                         }
 
                         if($first_pass){
@@ -278,5 +278,20 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
             return true;
         }
     }
+
+  /**
+   * Flatten array
+   *
+   * @param array $array
+   * @return arrray $array
+   */
+  public function flattenArray($array)
+  {
+    $return = [];
+    array_walk_recursive($array, function ($a) use (&$return) {
+      $return[] = $a;
+    });
+    return $return;
+  }
 
 }
