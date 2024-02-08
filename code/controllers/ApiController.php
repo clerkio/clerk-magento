@@ -900,7 +900,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
                             try {
 
-                                if(str_replace(' ', '', $Additional_Field == '')){
+                                if(str_replace(' ', '', $Additional_Field) == ''){
                                   continue;
                                 }
 
