@@ -16,7 +16,7 @@ if (Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', Mage::app
         }
     }
 }
-        
+
 $clerkJSUrl = $this->getClerkJSUrl();
 ?>
 <script>
@@ -51,6 +51,22 @@ $clerkJSUrl = $this->getClerkJSUrl();
             formkey: '<?php echo $this->getFormKey(); ?>'
         }
     });
+    <?php
+      if (Mage::getSingleton('customer/session')->isLoggedIn() && $this->collectEmails()) {
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $user_email = $customer->getEmail();
+        if ($user_email) {
+          ?>
+          if(window.Clerk == 'function'){
+            Clerk('call', 'log/email', {
+              email: "<?php echo $user_email; ?>";
+            });
+          }
+          <?php
+        }
+      }
+    ?>
+
 
      <?php if(Mage::helper('clerk')->getSetting('clerk/general/collect_baskets', Mage::app()->getStore()->getId()) == '1') : ?>
 
@@ -59,14 +75,11 @@ $clerkJSUrl = $this->getClerkJSUrl();
         var clerk_last_productids = [];
         if( localStorage.getItem('clerk_productids') !== null ){
             clerk_last_productids = localStorage.getItem('clerk_productids').split(",");
-            clerk_last_productids = clerk_last_productids.map(Number);  
+            clerk_last_productids = clerk_last_productids.map(Number);
         }
         clerk_productids = clerk_productids.sort((a, b) => a - b);
         clerk_last_productids = clerk_last_productids.sort((a, b) => a - b);
-        if(JSON.stringify(clerk_productids) == JSON.stringify(clerk_last_productids)){
-            // if equal - do nothing
-        }else{
-            // if not equal send cart to clerk
+        if(JSON.stringify(clerk_productids) != JSON.stringify(clerk_last_productids)){
             if(JSON.stringify(clerk_productids) === "[0]" ){
                 Clerk('cart', 'set', []);
             }else{
@@ -74,7 +87,6 @@ $clerkJSUrl = $this->getClerkJSUrl();
             }
         }
         localStorage.setItem("clerk_productids", clerk_productids);
-   
             let open = XMLHttpRequest.prototype.open; 
                 XMLHttpRequest.prototype.open = function() {
                     this.addEventListener("load", function(){
