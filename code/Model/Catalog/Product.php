@@ -76,7 +76,11 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
                 switch($this->getTypeId()){
                     case "configurable":
                         $attrCode = str_replace(' ','', $value);
-                        $mainAttrText = $this->getAttributeText($attrCode);
+                        try {
+                            $mainAttrText = $this->getAttributeText($attrCode);
+                        } catch (Exception $e) {
+                            continue;
+                        }
                         $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
                         if (null!==$attr->getId()){
                             if(!isset( $data[$attrCode])){
@@ -184,7 +188,11 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
                     case "grouped":
                         $attrCode = str_replace(' ','', $value);
-                        $mainAttrText = $this->getAttributeText($attrCode);
+                        try {
+                            $mainAttrText = $this->getAttributeText($attrCode);
+                        } catch (Exception $e) {
+                            continue;
+                        }
                         $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
                         if (null!==$attr->getId()){
                             if(!isset( $data[$attrCode])){
@@ -224,7 +232,11 @@ class Clerk_Clerk_Model_Catalog_Product extends Clerk_Clerk_Model_Catalog_Produc
 
                     case "simple":
                         $attrCode = str_replace(' ','', $value);
-                        $mainAttrText = $this->getAttributeText($attrCode);
+                        try {
+                            $mainAttrText = $this->getAttributeText($attrCode);
+                        } catch (Exception $e) {
+                            continue;
+                        }
                         $attr = Mage::getModel('catalog/resource_eav_attribute')->loadByCode('catalog_product',$attrCode);
                         if (null!==$attr->getId()){
                             if(!isset( $data[$attrCode])){
