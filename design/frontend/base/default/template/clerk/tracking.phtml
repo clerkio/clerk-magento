@@ -16,8 +16,44 @@ $form_key = Mage::getSingleton('core/session')->getFormKey();
 $collect_emails = Mage::getStoreConfigFlag('clerk/general/collect_emails');
 
 $storeName = Mage::app()->getStore()->getName();
-$storeSlug = preg_replace('/[^a-z]/', '', strtolower($storeName));
+$storeSlug = preg_replace('/'.'[^a-z]'.'/', '', strtolower($storeName));
 $clerkJsUrl = '://custom.clerk.io/' . $storeSlug . '.js';
+
+// Context: Get product ID
+$_ctxProduct = Mage::registry('current_product');
+$contextProductId = $_ctxProduct ? (int) $_ctxProduct->getId() : null;
+
+// Context: Get category ID (only if NOT on product page)
+$_ctxCategory = Mage::registry('current_category');
+$contextCategoryId = (!$_ctxProduct && $_ctxCategory) ? (int) $_ctxCategory->getId() : null;
+
+// Context: Get page ID (only if NOT on product or category page)
+$contextPageId = null;
+$isPageString = false;
+if (!$contextProductId && !$contextCategoryId) {
+    $request = Mage::app()->getRequest();
+    $fullActionName = $request->getModuleName() . '_' . $request->getControllerName() . '_' . $request->getActionName();
+
+    if ($fullActionName === 'cms_index_index') {
+        $contextPageId = 'homepage';
+        $isPageString = true;
+    } elseif ($fullActionName === 'cms_page_view') {
+        $pageId = $request->getParam('page_id');
+        if (!$pageId) {
+            $cmsPage = Mage::getSingleton('cms/page');
+            $pageId = $cmsPage->getId();
+        }
+        if ($pageId) {
+            $contextPageId = (int) $pageId;
+        }
+    } else {
+        $actionParts = explode('_', $fullActionName);
+        if (isset($actionParts[0])) {
+            $contextPageId = $actionParts[0];
+            $isPageString = true;
+        }
+    }
+}
 ?>
 <script type="text/javascript">
     (function(w,d){
@@ -52,5 +88,11 @@ $clerkJsUrl = '://custom.clerk.io/' . $storeSlug . '.js';
             formkey: '<?php echo $form_key; ?>'
         }
     });
-</script>
 
+    // Clerk.js Context
+    Clerk('context', {
+        product: <?php echo $contextProductId !== null ? $contextProductId : 'null'; ?>,
+        category: <?php echo $contextCategoryId !== null ? $contextCategoryId : 'null'; ?>,
+        page: <?php echo $contextPageId !== null ? ($isPageString ? "'". htmlspecialchars($contextPageId) . "'" : $contextPageId) : 'null'; ?>
+    });
+</script>
