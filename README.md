@@ -3,9 +3,6 @@
 The official [Clerk.io](https://clerk.io) extension for Magento 1. It connects your store to Clerk.io's AI platform, giving you personalized search, product recommendations, and visitor tracking out of the box.
 
 **Version:** 4.8.6 · **PHP:** 5.3+ · **Magento:** 1.9.x
-
-> **Note:** Magento 1 has reached end-of-life. This extension is maintained for existing installations. New stores should use [Magento 2](https://github.com/clerkio/clerk-magento2) or another supported platform.
-
 ---
 
 ## What It Does
