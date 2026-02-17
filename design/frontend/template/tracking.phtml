@@ -59,7 +59,7 @@ $clerkJSUrl = $this->getClerkJSUrl();
           ?>
           if(window.Clerk == 'function'){
             Clerk('call', 'log/email', {
-              email: "<?php echo $user_email; ?>";
+              email: "<?php echo $user_email; ?>"
             });
           }
           <?php
