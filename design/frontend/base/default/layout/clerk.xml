@@ -12,7 +12,7 @@
             </action>
         </reference>
         <reference name="before_body_end">
-            <block type="core/template" name="clerk_tracking_script" after="-">
+            <block type="clerk/tracking" name="clerk_tracking_script" after="-">
                 <action method="setTemplate" ifconfig="clerk/general/active">
                     <template>clerk/tracking.phtml</template>
                 </action>
