@@ -876,7 +876,7 @@ class Clerk_Clerk_ApiController extends Mage_Core_Controller_Front_Action
 
                 $items = array();
                 $Additional_Fields = explode(',', Mage::getStoreConfig('clerk/general/pages_additional_fields'));
-                $pages = Mage::getModel('cms/page')->getCollection();
+                $pages = Mage::getModel('cms/page')->getCollection()->addFieldToFilter('is_active', 1);
 
                 foreach ($pages as $page) {
 
